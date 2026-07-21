@@ -3,9 +3,10 @@
 // /writing view (per ARCHITECTURE routes); /posts is the full archive,
 // reachable from /writing and the homepage's "all posts →".
 const nav = [
-  { href: '/writing', label: 'Writing' },
   { href: '/about', label: 'About' },
-  { href: '/cv', label: 'CV' },
+  { href: '/cv', label: 'CV'},
+  { href: '/posts', label: 'Blog' },
+  { href: '/writing', label: 'Writing' }
 ];
 
 const { pathname } = Astro.url;
