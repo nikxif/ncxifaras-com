@@ -1,0 +1,102 @@
+---
+// posts/[...page].astro — the full archive, paginated. Route: /posts, /posts/2 …
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import { getPublishedPosts, getAllTags } from '../../lib/posts';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getPublishedPosts();
+  return paginate(posts, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const tags = await getAllTags();
+---
+
+<BaseLayout
+  title="Writing — Nick Xifaras"
+  description="Opinion pieces, tutorials, OSINT write-ups, and notes."
+>
+  <section class="container">
+    <SectionHead title="All posts" count={page.total} />
+
+    <div class="list">
+      {page.data.map((p) => <PostCard post={p} />)}
+    </div>
+
+    {
+      tags.length > 0 && (
+        <nav class="tagcloud" aria-label="Tags">
+          <span class="text-meta">tags:</span>
+          {tags.map((t) => (
+            <a href={`/tags/${t}`} class="link-plain text-meta tag">
+              #{t}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+
+    {
+      (page.url.prev || page.url.next) && (
+        <nav class="pager" aria-label="Pagination">
+          {page.url.prev ? (
+            <a href={page.url.prev} class="link-plain">
+              ← newer
+            </a>
+          ) : (
+            <span />
+          )}
+          <span class="text-meta">
+            {page.currentPage} / {page.lastPage}
+          </span>
+          {page.url.next ? (
+            <a href={page.url.next} class="link-plain">
+              older →
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    padding-block: var(--space-6) var(--space-4);
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: var(--width-content);
+  }
+
+  .tagcloud {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    border-top: var(--border-hair);
+    padding-top: var(--space-3);
+  }
+
+  .tag:hover {
+    color: var(--cobalt-deep);
+  }
+
+  .pager {
+    margin-top: var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.94rem;
+  }
+</style>

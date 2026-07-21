@@ -1,0 +1,142 @@
+---
+// cv.astro — v1: hand-written data, deliberately quiet styling (DESIGN.md).
+// The `cv` object below mirrors the shape the future master-CV transform will
+// emit (D5), so swapping to generated data later is a data swap, not a rewrite.
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const cv = {
+  summary:
+    'Physician & software developer. Clinical medicine, digital-health policy, and custom software; heading toward neuroscience, neurorehabilitation, and brain–computer interfaces.',
+  sections: [
+    {
+      heading: 'Experience',
+      items: [
+        {
+          title: '[Role]',
+          org: '[Organisation]',
+          period: '[20XX–20XX]',
+          notes: ['[Accomplishment-oriented bullet]', '[Another]'],
+        },
+      ],
+    },
+    {
+      heading: 'Education',
+      items: [
+        {
+          title: 'MD, Medicine',
+          org: 'National & Kapodistrian University of Athens',
+          period: '[years]',
+          notes: [],
+        },
+        {
+          title: 'BSc, Computing',
+          org: 'Goldsmiths, University of London',
+          period: '[years]',
+          notes: [],
+        },
+      ],
+    },
+    {
+      heading: 'Selected work',
+      items: [
+        {
+          title: '[Project or publication]',
+          org: '',
+          period: '[year]',
+          notes: ['[One-line description]'],
+        },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="CV — Nick Xifaras"
+  description="Curriculum vitae: physician & software developer, Athens."
+>
+  <section class="container cv">
+    <h1>Curriculum vitae</h1>
+    <p class="summary">{cv.summary}</p>
+    <p class="text-meta">
+      Full PDF version available on request · <a href="mailto:info@ncxifaras.com">info@ncxifaras.com</a>
+    </p>
+
+    {
+      cv.sections.map((s) => (
+        <section class="block">
+          <h2>{s.heading}</h2>
+          {s.items.map((it) => (
+            <article class="item">
+              <div class="row">
+                <h3>{it.title}</h3>
+                <span class="text-meta">{it.period}</span>
+              </div>
+              {it.org && <p class="org">{it.org}</p>}
+              {it.notes.length > 0 && (
+                <ul>
+                  {it.notes.map((n) => (
+                    <li>{n}</li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+        </section>
+      ))
+    }
+  </section>
+</BaseLayout>
+
+<style>
+  /* Deliberately quiet: hairlines not heavy rules, no accents beyond links */
+  .cv {
+    max-width: var(--width-content);
+    padding-block: var(--space-6);
+  }
+
+  .summary {
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    margin-block: var(--space-3);
+    max-width: 52ch;
+  }
+
+  .block {
+    margin-top: var(--space-5);
+  }
+
+  .block h2 {
+    font-size: var(--text-lg);
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-1);
+    margin-bottom: var(--space-3);
+  }
+
+  .item + .item {
+    margin-top: var(--space-3);
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+  }
+
+  .row h3 {
+    font-size: 1.05rem;
+  }
+
+  .org {
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+
+  .item ul {
+    margin-top: var(--space-1);
+    padding-left: 1.3em;
+    color: var(--ink-soft);
+    font-size: 1rem;
+  }
+</style>

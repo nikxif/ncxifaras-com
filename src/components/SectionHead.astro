@@ -1,0 +1,54 @@
+---
+// SectionHead.astro — the bold, obvious section heading (DESIGN.md: headings
+// should never be easy to miss). Strong rule underneath, optional mono count
+// and an "all →" link on the right.
+interface Props {
+  title: string;
+  count?: string | number;
+  moreHref?: string;
+  moreLabel?: string;
+}
+
+const { title, count, moreHref, moreLabel = 'all →' } = Astro.props;
+---
+
+<div class="sec-head">
+  <h2>{title}</h2>
+  {count !== undefined && <span class="text-meta">/ {count}</span>}
+  {
+    moreHref && (
+      <a href={moreHref} class="link-plain more">
+        {moreLabel}
+      </a>
+    )
+  }
+</div>
+
+<style>
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    border-bottom: var(--border-strong);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .more {
+    margin-left: auto;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--cobalt-deep);
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-quick);
+  }
+
+  .more:hover {
+    border-color: var(--cobalt);
+  }
+</style>

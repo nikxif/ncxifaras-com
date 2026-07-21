@@ -1,0 +1,22 @@
+---
+// posts/[id].astro — one page per post. Content Layer: identifier is post.id.
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PostLayout {post}>
+  <Content />
+</PostLayout>

@@ -1,0 +1,87 @@
+---
+// PostCard.astro — how a post appears on any index. Text-first for Phase 2;
+// the cover system (generated Bauhaus / duotone photo) slots in above the
+// meta row in Phase 3 without changing this card's API.
+import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+  /** Feature style: bigger title, longer dek. */
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const { title, description, pubDate, category } = post.data;
+const href = `/posts/${post.id}`;
+---
+
+<article class:list={['card', { featured }]}>
+  <div class="meta text-meta">
+    <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
+    <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+  </div>
+  <h3 class="title">
+    <a href={href} class="link-plain">{title}</a>
+  </h3>
+  <p class="dek">{description}</p>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* Category chip: colour = information (D12) */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-weight: var(--weight-medium);
+  }
+
+  .chip::before {
+    content: '';
+    width: 0.62em;
+    height: 0.62em;
+    border-radius: 1px;
+    background: var(--_cat, var(--ink));
+  }
+
+  .cat-osint    { --_cat: var(--cat-osint); }
+  .cat-policy   { --_cat: var(--cat-policy); }
+  .cat-tutorial { --_cat: var(--cat-tutorial); }
+  .cat-note     { --_cat: var(--cat-note); }
+
+  .title {
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+  }
+
+  .featured .title {
+    font-size: var(--text-2xl);
+  }
+
+  .title a:hover {
+    color: var(--cobalt-deep);
+  }
+
+  .dek {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+
+  .featured .dek {
+    font-size: var(--text-base);
+    color: var(--ink);
+  }
+</style>

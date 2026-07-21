@@ -1,0 +1,18 @@
+---
+// Analytics.astro — GoatCounter (cookieless, no consent banner needed; D10).
+// Rendered only in production builds so local dev doesn't pollute the stats.
+// CSP note: gc.zgo.at (script) + nikxif.goatcounter.com (beacon) must be
+// allowed in public/_headers — see PHASE2-README.
+const enabled = import.meta.env.PROD;
+---
+
+{
+  enabled && (
+    <script
+      is:inline
+      data-goatcounter="https://nikxif.goatcounter.com/count"
+      async
+      src="https://gc.zgo.at/count.js"
+    />
+  )
+}

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   tokens.css — the single source of truth for the visual system.
+   Everything here is deliberately tunable: change a value, the whole site
+   follows. See docs/DESIGN.md for the rationale behind each choice.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette · ground ------------------------------------------------ */
+  --paper:    #FAF7F0;   /* page background — warm chalk */
+  --paper-2:  #F2ECDD;   /* panels, generated-cover ground */
+  --ink:      #1A1714;   /* primary text — warm near-black */
+  --ink-soft: #544F45;   /* secondary text */
+  --line:     #E2DBCB;   /* hairlines */
+
+  /* ---- Palette · accents (Bauhaus trio) -------------------------------- */
+  /* The exact cobalt is an OPEN item — tune freely, everything references
+     the token. Darker/lighter candidates to try live in DESIGN.md. */
+  --cobalt:    #1E45C9;  /* dominant accent */
+  --vermilion: #DE3F24;  /* secondary pop */
+  --ochre:     #E7A32A;  /* tertiary pop */
+
+  /* Darkened variants for small text ON light ground (contrast-safe) */
+  --cobalt-deep:    #12297F;
+  --vermilion-deep: #8A2413;
+  --ochre-deep:     #6B4B06;
+
+  /* ---- Category → colour (cap: ~4–5 clean categories, see D12) --------- */
+  --cat-osint:    var(--cobalt);
+  --cat-policy:   var(--vermilion);
+  --cat-tutorial: var(--ochre);
+  --cat-note:     var(--ink);
+
+  /* ---- Typography ------------------------------------------------------ */
+  /* Commissioner replaced Archivo (which has NO Greek subset — see D9).
+     All three faces ship native Greek; Alegreya even has polytonic. */
+  --font-display: 'Commissioner Variable', system-ui, -apple-system, sans-serif;
+  --font-serif:   'Alegreya Variable', Georgia, 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Menlo, monospace;
+
+  /* Fluid type scale (mobile → desktop) */
+  --text-xs:   0.79rem;                                /* meta, labels     */
+  --text-sm:   0.89rem;                                /* sidenotes, small */
+  --text-base: clamp(1.13rem, 1.05rem + 0.35vw, 1.19rem); /* body ≈18–19px */
+  --text-lg:   clamp(1.25rem, 1.15rem + 0.5vw, 1.38rem);  /* ledes        */
+  --text-xl:   clamp(1.5rem, 1.3rem + 1vw, 1.9rem);       /* h3 / card h  */
+  --text-2xl:  clamp(1.9rem, 1.5rem + 1.8vw, 2.6rem);     /* h2 / section */
+  --text-3xl:  clamp(2.4rem, 1.8rem + 3.2vw, 4.25rem);    /* h1 / hero    */
+
+  --leading-tight: 1.05;   /* display headlines */
+  --leading-snug:  1.2;    /* card titles       */
+  --leading-body:  1.62;   /* long-form reading */
+
+  --weight-body:     400;
+  --weight-medium:   500;
+  --weight-heading:  700;
+  --weight-display:  800;
+
+  /* ---- Spacing rhythm -------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  /* ---- Layout ---------------------------------------------------------- */
+  --width-content: 46rem;    /* comfortable prose measure (~65ch Alegreya) */
+  --width-wide:    70rem;    /* index grids, hero                          */
+  --width-sidenote: 16rem;   /* the margin column (Phase 3)                */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* ---- Details --------------------------------------------------------- */
+  --radius: 2px;             /* near-square: printed-object, not app-card  */
+  --border-strong: 1.5px solid var(--ink);
+  --border-hair:   1px solid var(--line);
+
+  --transition-quick: 140ms ease;
+}

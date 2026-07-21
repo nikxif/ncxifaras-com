@@ -1,0 +1,39 @@
+# _headers — Cloudflare Pages
+# IMPORTANT: put this file in Astro's `public/` directory. Everything in
+# public/ is copied verbatim to the build root (dist/), which is where
+# Cloudflare Pages looks for it. It will NOT work if left elsewhere.
+# Docs: https://developers.cloudflare.com/pages/configuration/headers/
+
+# ── Applies to every response ────────────────────────────────────────────────
+/*
+  # HTML revalidates every time, so edits/new posts appear immediately.
+  # (Hashed assets under /_astro/ are overridden below to cache forever.)
+  Cache-Control: public, max-age=0, must-revalidate
+
+  # --- Content Security Policy ---
+  # First-party only, plus GoatCounter. REPLACE `YOURCODE` with your GoatCounter
+  # site code — e.g. if your GoatCounter URL is https://ncxifaras.goatcounter.com,
+  # then YOURCODE.goatcounter.com becomes ncxifaras.goatcounter.com.
+  # If you SELF-HOST GoatCounter instead, replace BOTH `gc.zgo.at` (the count.js
+  # host) and `YOURCODE.goatcounter.com` (the beacon host) with your own domain.
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://gc.zgo.at; connect-src 'self' https://nikxif.goatcounter.com; img-src 'self' data: https://nikxif.goatcounter.com; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests
+
+  # --- Other security headers ---
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=()
+
+  # --- HSTS ---
+  # Forces HTTPS for this domain + all subdomains for 180 days.
+  # CAUTION: this is sticky — once a browser sees it, it refuses HTTP for the
+  # whole max-age. Do NOT add `preload` yet; only add it (and submit at
+  # hstspreload.org) once you're 100% sure every subdomain is HTTPS-only.
+  # Keep HSTS defined ONLY here — don't also enable it in the Cloudflare
+  # dashboard, or you'll be managing it in two places.
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
+
+# ── Content-hashed build assets: safe to cache forever ───────────────────────
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,35 +1,18 @@
 // @ts-check
-
+import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
-	fonts: [
-		{
-			provider: fontProviders.local(),
-			name: 'Atkinson',
-			cssVariable: '--font-atkinson',
-			fallbacks: ['sans-serif'],
-			options: {
-				variants: [
-					{
-						src: ['./src/assets/fonts/atkinson-regular.woff'],
-						weight: 400,
-						style: 'normal',
-						display: 'swap',
-					},
-					{
-						src: ['./src/assets/fonts/atkinson-bold.woff'],
-						weight: 700,
-						style: 'normal',
-						display: 'swap',
-					},
-				],
-			},
-		},
-	],
+  // The canonical origin. Powers absolute URLs in RSS/sitemap and lets layouts
+  // emit <link rel="canonical"> — which is also what neutralises the
+  // ncxifaras-com.pages.dev duplicate for search engines.
+  site: 'https://ncxifaras.com',
+
+  integrations: [mdx(), sitemap()],
+
+  // Explicit default (URLs without trailing slashes). Locking it in avoids
+  // accidental duplicate-URL variants later.
+  trailingSlash: 'never',
 });
