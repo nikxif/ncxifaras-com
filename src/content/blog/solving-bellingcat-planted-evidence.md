@@ -8,6 +8,7 @@ featured: false
 draft: false
 coverMode: photo
 cover: ../../assets/solving-bellingcat-planted-evidence/planted-evidence-cover.jpg
+canonicalURL: "https://medium.com/@nixifaras/solving-bellingcats-planted-evidence-the-street-ai-tried-to-hide-9f581c97538b"
 ---
 
 I’m a doctor and computer scientist, not an investigator, and nobody pays me to work out where a photo was taken. I do the [Bellingcat challenges](https://challenge.bellingcat.com/) because the reasoning behind them is the same reasoning I want kept sharp for the day job, and _Planted Evidence_ was the one this month (July 2026) that actually made me earn it.

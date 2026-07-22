@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { unified } from '@astrojs/markdown-remark';
 import rehypeFigureCaption from './src/plugins/rehype-figure-caption.mjs';
 
 
@@ -21,6 +22,11 @@ export default defineConfig({
     ssr: { external: ['@resvg/resvg-js'] },
   },
   markdown: {
+    processor: unified({
+      rehypePlugins: [rehypeFigureCaption],
+      gfm: true,        // keep explicit — otherwise silently dropped
+      smartypants: true,
+    }),
     rehypePlugins: [rehypeFigureCaption],
   },
 });
