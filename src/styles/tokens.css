@@ -15,7 +15,7 @@
   /* ---- Palette · accents (Bauhaus trio) -------------------------------- */
   /* The exact cobalt is an OPEN item — tune freely, everything references
      the token. Darker/lighter candidates to try live in DESIGN.md. */
-  --cobalt:    #1E45C9;  /* dominant accent */
+  --cobalt:    #1A3AAE;  /* dominant accent */
   --vermilion: #DE3F24;  /* secondary pop */
   --ochre:     #E7A32A;  /* tertiary pop */
 

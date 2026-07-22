@@ -21,7 +21,7 @@ const { posts, tag } = Astro.props;
   <section class="container">
     <SectionHead title={`#${tag}`} count={posts.length} moreHref="/posts" moreLabel="all posts →" />
     <div class="list">
-      {posts.map((p) => <PostCard post={p} />)}
+      {posts.map((p) => <PostCard post={p} compact />)}
     </div>
   </section>
 </BaseLayout>

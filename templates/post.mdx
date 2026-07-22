@@ -1,0 +1,26 @@
+---
+title: "Replace me — this one has sidenotes"
+description: "One or two sentences. Search snippet, social preview, RSS blurb. ~150-160 chars."
+pubDate: 2026-01-01
+category: note
+tags: []
+featured: false
+draft: true
+coverMode: generated
+---
+import Sidenote from '../../components/Sidenote.astro';
+
+Body starts here. The import above is the only difference from a `.md` post —
+without it, `<Sidenote>` won't resolve.
+
+Write sidenotes **inline, mid-sentence**, right where the marker belongs,<Sidenote>Like this. No blank lines around it — it has to sit inside the paragraph to anchor correctly.</Sidenote> and carry on with the sentence.
+
+Use `label` when you want a custom marker<Sidenote label="†">A dagger instead of the running number. Numbering after it stays in sequence.</Sidenote> instead of a number.
+
+<!--
+SIDENOTE RULES:
+  - .mdx extension (not .md) or the import fails
+  - inline, inside a paragraph — never on its own line
+  - roughly one per paragraph; two in adjacent short paragraphs can overlap
+  - desktop: always visible in the margin. mobile: tap the [n] to expand.
+-->

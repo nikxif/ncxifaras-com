@@ -23,7 +23,7 @@ const tags = await getAllTags();
     <SectionHead title="All posts" count={page.total} />
 
     <div class="list">
-      {page.data.map((p) => <PostCard post={p} />)}
+      {page.data.map((p) => <PostCard post={p} compact />)}
     </div>
 
     {

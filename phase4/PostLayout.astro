@@ -15,7 +15,12 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
   post.data;
 ---
 
-<BaseLayout title={`${title} — Nick Xifaras`} {description} {canonicalURL}>
+<BaseLayout
+  title={`${title} — Nick Xifaras`}
+  {description}
+  {canonicalURL}
+  ogImage={`/og/${post.id}.png`}
+>
   <article class="container post">
     <header class="post-head">
       <p class="meta text-meta">

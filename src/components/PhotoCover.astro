@@ -1,0 +1,107 @@
+---
+// PhotoCover.astro — real photos, duotoned into the category colour so they
+// cohere with the generated covers (D12). Uses an SVG <feColorMatrix>/gradient-
+// map filter: any source image is mapped to a two-tone ramp (paper → category
+// colour → ink), same frame + label as GeneratedCover.
+import { Image } from 'astro:assets';
+import { CATEGORY_LABELS } from '../lib/posts';
+
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  category: 'osint' | 'policy' | 'tutorial' | 'note';
+  title?: string;
+}
+const { src, alt, category, title } = Astro.props;
+const label = CATEGORY_LABELS[category];
+
+// One filter instance per category so the duotone ramp uses the right colour.
+const filterId = `duo-${category}`;
+---
+
+<figure class:list={['pcover', `cat-${category}`]}>
+  {
+    typeof src === 'string' ? (
+      <img src={src} alt={alt} class="duo-img" loading="lazy" decoding="async" />
+    ) : (
+      <Image src={src} alt={alt} class="duo-img" widths={[320, 640]} loading="lazy" />
+    )
+  }
+
+  {/* The duotone filter. Kept inline so it travels with the component. */}
+  <svg class="duo-def" aria-hidden="true" focusable="false">
+    <filter id={filterId} color-interpolation-filters="sRGB">
+      {/* 1. desaturate to luminance */}
+      <feColorMatrix
+        type="matrix"
+        values="0.33 0.33 0.33 0 0
+                0.33 0.33 0.33 0 0
+                0.33 0.33 0.33 0 0
+                0    0    0    1 0"
+      />
+      {/* 2. map the grayscale ramp onto shadow(ink) → mid(category) → light(paper) */}
+      <feComponentTransfer>
+        <feFuncR tableValues="0.10 var(--duo-r) 0.98" type="table" />
+        <feFuncG tableValues="0.09 var(--duo-g) 0.97" type="table" />
+        <feFuncB tableValues="0.08 var(--duo-b) 0.94" type="table" />
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
+  <span class="pcover-label text-meta">{label}</span>
+  {title && <figcaption class="pcover-title">{title}</figcaption>}
+</figure>
+
+<style define:vars={{ filterId: `url(#duo-${category})` }}>
+  .pcover {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border: var(--border-strong);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0;
+    background: var(--cat, var(--paper-2));
+  }
+
+  .cat-osint    { --cat: var(--cat-osint); }
+  .cat-policy   { --cat: var(--cat-policy); }
+  .cat-tutorial { --cat: var(--cat-tutorial); }
+  .cat-note     { --cat: var(--cat-note); }
+
+  .duo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--filterId);
+  }
+
+  .duo-def {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  .pcover-label {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    background: color-mix(in srgb, var(--paper) 78%, transparent);
+    color: var(--ink);
+    padding: 0.2rem 0.45rem;
+    border-radius: var(--radius);
+    font-weight: var(--weight-medium);
+  }
+
+  .pcover-title {
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.7rem;
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: 1.05rem;
+    line-height: 1.1;
+    color: var(--paper);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+title: 'Sidenotes, and how they work here'
+description: 'A sample MDX post demonstrating the sidenote signature element — always-visible margin notes on desktop, tap-to-expand on mobile.'
+pubDate: 2026-07-22
+category: note
+tags: ['meta', 'sample']
+featured: false
+---
+import Sidenote from '../../components/Sidenote.astro';
+
+This post is an `.mdx` file, which is what lets it import and use components
+inline.<Sidenote>Plain `.md` posts can't use components — rename to `.mdx` when you want sidenotes.</Sidenote> On a wide screen the note to the right sits
+permanently in the margin, aligned to the top of this paragraph; on a phone it
+collapses to a tappable number.
+
+Sidenotes are for the aside you'd otherwise bury in a parenthesis: the clinical
+caveat, the citation, the "well, actually."<Sidenote label="†">You can pass a custom `label` — like this dagger — instead of the automatic number. It still counts, so the numbering after it stays in sequence.</Sidenote> They keep the main
+line of argument clean while the nuance stays one glance away, out in the margin.
+
+## Why margin notes, not footnotes
+
+Footnotes make you jump to the bottom of the page and back. Margin notes keep
+the aside beside the point it modifies,<Sidenote>This is the whole rationale from `DESIGN.md`, made real.</Sidenote> which suits annotated, technical writing far
+better.
+
+Authoring rule: put each `<Sidenote>` **inline, right where the marker should
+sit** — mid-sentence, no blank lines around it. It anchors to the paragraph
+it's written in, so every note lines up in the same margin column.

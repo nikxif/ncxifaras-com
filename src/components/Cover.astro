@@ -1,0 +1,24 @@
+---
+// Cover.astro — one entry point the cards/pages use. Dispatches to the right
+// treatment based on the post's coverMode, so callers never branch.
+import GeneratedCover from './GeneratedCover.astro';
+import PhotoCover from './PhotoCover.astro';
+import type { Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+  /** Render the title onto the cover (feature slots). */
+  withTitle?: boolean;
+}
+const { post, withTitle = false } = Astro.props;
+const { category, cover, coverMode, title } = post.data;
+const titleProp = withTitle ? title : undefined;
+---
+
+{
+  coverMode === 'photo' && cover ? (
+    <PhotoCover src={cover} alt={`Cover image for ${title}`} {category} title={titleProp} />
+  ) : (
+    <GeneratedCover {category} slug={post.id} title={titleProp} />
+  )
+}

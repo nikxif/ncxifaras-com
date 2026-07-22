@@ -21,8 +21,7 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     <div>
       <p class="eyebrow">physician / software developer · athens</p>
       <h1>
-        I build the tools<br />clinical work <span class="amp">&amp;</span><br />keeps
-        breaking.
+        I build the tools<br />clinical work <br /><span class="last-line">keeps breaking.</span>
       </h1>
       <p class="text-lede lede">
         A doctor who writes code, working across clinical medicine, digital-health
@@ -83,6 +82,10 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
   }
 
   .amp {
+    color: var(--vermilion);
+  }
+
+  .last-line {
     color: var(--vermilion);
   }
 

@@ -1,36 +1,68 @@
 ---
-// PostCard.astro — how a post appears on any index. Text-first for Phase 2;
-// the cover system (generated Bauhaus / duotone photo) slots in above the
-// meta row in Phase 3 without changing this card's API.
+// PostCard.astro — Phase 3-fixes: adds a `compact` variant (cover left, small,
+// text right) for list pages like /posts and /tags, so archive covers aren't
+// full-width. `featured` stays the big side-by-side; default stacks.
+import Cover from './Cover.astro';
 import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
-  /** Feature style: bigger title, longer dek. */
   featured?: boolean;
+  compact?: boolean;
 }
 
-const { post, featured = false } = Astro.props;
+const { post, featured = false, compact = false } = Astro.props;
 const { title, description, pubDate, category } = post.data;
 const href = `/posts/${post.id}`;
 ---
 
-<article class:list={['card', { featured }]}>
-  <div class="meta text-meta">
-    <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
-    <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+<article class:list={['card', { featured, compact }]}>
+  <a href={href} class="link-plain cover-link" tabindex="-1" aria-hidden="true">
+    <Cover {post} />
+  </a>
+  <div class="body">
+    <div class="meta text-meta">
+      <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+    </div>
+    <h3 class="title">
+      <a href={href} class="link-plain">{title}</a>
+    </h3>
+    <p class="dek">{description}</p>
   </div>
-  <h3 class="title">
-    <a href={href} class="link-plain">{title}</a>
-  </h3>
-  <p class="dek">{description}</p>
 </article>
 
 <style>
   .card {
     display: flex;
     flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cover-link {
+    display: block;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-2);
+  }
+
+  /* Feature: big cover left, text right */
+  .featured {
+    display: grid;
+    grid-template-columns: 22rem 1fr;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  /* Compact: small cover left, text right — for list/archive pages */
+  .compact {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--space-4);
+    align-items: center;
   }
 
   .meta {
@@ -39,7 +71,6 @@ const href = `/posts/${post.id}`;
     gap: var(--space-3);
   }
 
-  /* Category chip: colour = information (D12) */
   .chip {
     display: inline-flex;
     align-items: center;
@@ -69,6 +100,10 @@ const href = `/posts/${post.id}`;
     font-size: var(--text-2xl);
   }
 
+  .compact .title {
+    font-size: var(--text-lg);
+  }
+
   .title a:hover {
     color: var(--cobalt-deep);
   }
@@ -83,5 +118,27 @@ const href = `/posts/${post.id}`;
   .featured .dek {
     font-size: var(--text-base);
     color: var(--ink);
+  }
+
+  .compact .dek {
+    font-size: 0.95rem;
+    /* keep archive rows tight: clamp the dek to 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .featured,
+    .compact {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    /* On phones, don't shrink the compact cover to a sliver — let it stack. */
+    .compact .dek {
+      -webkit-line-clamp: 3;
+    }
   }
 </style>

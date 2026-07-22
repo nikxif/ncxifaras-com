@@ -1,0 +1,127 @@
+---
+// Sidenote.astro — the signature element (paragraph-anchored rebuild).
+//
+// Authoring: place it INLINE, mid-sentence, exactly where the marker should
+// sit:  ...the main claim.<Sidenote>the aside</Sidenote> The next sentence...
+// (Works in .mdx only — .md can't import components.)
+//
+// How the desktop margin placement works (and why it's robust):
+//   - The note body is position:absolute.
+//   - Its containing block is the PARAGRAPH (PostLayout sets
+//     `.prose p { position: relative }`), NOT the inline wrapper (which is
+//     static). So the note ignores where mid-sentence the marker sits and
+//     anchors to the paragraph box instead.
+//   - `left: 100%` → the paragraph's right edge; every paragraph is the same
+//     width (--width-content), so every note gets the SAME x  → they line up
+//     in one column.  `top: 0` → the paragraph's top → vertical alignment to
+//     the paragraph the note belongs to.
+//   - Always visible on desktop; no toggle, no JS.
+//
+// Mobile: no room for a margin, so the body collapses behind a [n] marker and
+// expands inline on tap (pure-CSS checkbox — CSP-safe, no inline script).
+//
+// Numbering: a single counter-increment on the wrapper (labelled notes still
+// increment, so a custom label like † doesn't desync the following numbers).
+
+interface Props {
+  /** Optional custom marker (e.g. "†") instead of the running number. */
+  label?: string;
+}
+const { label } = Astro.props;
+const id = 'sn-' + Math.random().toString(36).slice(2, 9);
+---
+
+<span class="sidenote-wrap">
+  <input type="checkbox" id={id} class="sn-toggle" aria-hidden="true" />
+  <label for={id} class="sn-marker" data-label={label} aria-hidden="true"></label>
+  <small class="sn-body" role="note"><slot /></small>
+</span>
+
+<style>
+  /* The wrapper is the ONLY place the counter advances. */
+  .sidenote-wrap {
+    counter-increment: sidenote;
+  }
+
+  .sn-marker {
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    line-height: 0;
+    vertical-align: super;
+    color: var(--cobalt-deep);
+    cursor: pointer;
+    padding-inline: 0.12em;
+  }
+  .sn-marker::after {
+    content: counter(sidenote);
+  }
+  .sn-marker[data-label]::after {
+    content: attr(data-label);
+  }
+  .sn-marker:hover {
+    color: var(--cobalt);
+    background: color-mix(in srgb, var(--ochre) 22%, transparent);
+  }
+
+  .sn-body {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--ochre);
+    padding-left: 0.9rem;
+  }
+  .sn-body :global(a) {
+    color: var(--cobalt-deep);
+  }
+
+  /* Visually-hidden checkbox (drives the mobile toggle only). */
+  .sn-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ---- DESKTOP (≥70rem): always visible, anchored to the paragraph -------
+     Breakpoint matches PostLayout: only switch to margin mode when the
+     viewport actually fits text + gap + note column. */
+  @media (min-width: 70rem) {
+    .sidenote-wrap {
+      position: static; /* ensure the paragraph, not this span, is the CB */
+    }
+    .sn-body {
+      position: absolute;
+      left: 100%;              /* → paragraph right edge (same for every note) */
+      top: 0;                  /* → paragraph top */
+      margin-left: 2rem;       /* the gutter; matches PostLayout's reserve */
+      width: var(--width-sidenote);
+      display: block;
+    }
+    /* marker stays as a quiet superscript number in the text */
+  }
+
+  /* ---- MOBILE / NARROW (<70rem): collapse behind the [n] marker ---------- */
+  @media (max-width: 69.999rem) {
+    .sn-marker {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+    .sn-marker::after {
+      content: '[' counter(sidenote) ']';
+    }
+    .sn-marker[data-label]::after {
+      content: '[' attr(data-label) ']';
+    }
+    .sn-body {
+      display: none;
+      margin-block: var(--space-2);
+    }
+    .sn-toggle:checked ~ .sn-body {
+      display: block;
+    }
+  }
+</style>
