@@ -1,12 +1,9 @@
 ---
-// GeneratedCover.astro — no-photo Bauhaus cover (collision-hardened).
-//
-// Fix from Phase 3: variety was `hash % 4` → only 4 outputs → twins were
-// common with a handful of posts. Now the composition space is
-// 6 layouts × 2 mirrors × 4 rotations of a secondary shape × 2 accent swaps
-// = ~96 visually-distinct outputs, all from INDEPENDENT bits of the hash, so
-// collisions among a small blog's posts are effectively nil — and still
-// fully deterministic per slug.
+// GeneratedCover.astro — no-photo Bauhaus cover.
+// Geometry now comes from src/lib/cover-geometry.ts (shared with the OG image
+// generator so they can't drift). Colours are passed as CSS vars, so tuning
+// --cobalt / --vermilion / --ochre in tokens.css still flows through here.
+import { coverInnerSVG } from '../lib/cover-geometry';
 import { CATEGORY_LABELS } from '../lib/posts';
 
 interface Props {
@@ -16,88 +13,22 @@ interface Props {
 }
 const { category, slug, title } = Astro.props;
 
-function hash(s: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0; // unsigned
-}
-const h = hash(slug);
-
-// Independent decisions from different bit ranges of one hash.
-// NB: use the UNSIGNED shift `>>>` everywhere — `>>` coerces to a signed
-// 32-bit int, so for hashes with the high bit set `(h >> n) % k` can go
-// negative, which then indexes arrays out of bounds (→ undefined.cx crash).
-const variant = h % 6; // which of 6 compositions
-const flip = ((h >>> 4) & 1) === 1; // mirror
-const rot = (h >>> 6) % 4; // 0/90/180/270 for the accent dot cluster
-const swap = ((h >>> 9) & 1) === 1; // swap which shapes get category vs ink
-
-const cat = `var(--cat-${category})`;
-const ink = 'var(--ink)';
-const a = swap ? cat : ink; // primary fill
-const b = swap ? ink : cat; // secondary fill
+const inner = coverInnerSVG(slug, {
+  cat: `var(--cat-${category})`,
+  ink: 'var(--ink)',
+  paper2: 'var(--paper-2)',
+});
 const label = CATEGORY_LABELS[category];
-
-// A small accent cluster placed by rotation, shared across variants for rhythm.
-const dot = [
-  { cx: 128, cy: 22 },
-  { cx: 138, cy: 78 },
-  { cx: 22, cy: 78 },
-  { cx: 22, cy: 22 },
-][rot];
 ---
 
 <div class:list={['gcover', `cat-${category}`]} aria-hidden={!title}>
-  <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="img" aria-label={title ? `Cover for ${title}` : `${label} post`}>
-    <g transform={flip ? 'translate(160,0) scale(-1,1)' : undefined}>
-      <rect width="160" height="100" fill="var(--paper-2)" />
-
-      {variant === 0 && (
-        <>
-          <circle cx="126" cy="6" r="44" fill={cat} />
-          <rect x="20" y="0" width="10" height="88" fill={ink} />
-        </>
-      )}
-      {variant === 1 && (
-        <>
-          <circle cx="2" cy="50" r="60" fill={cat} />
-          <rect x="64" y="80" width="96" height="8" fill={ink} />
-          <rect x="120" y="12" width="28" height="28" fill={b} />
-        </>
-      )}
-      {variant === 2 && (
-        <>
-          <polygon points="26,88 70,18 114,88" fill={cat} />
-          <circle cx="128" cy="30" r="22" fill="none" stroke={ink} stroke-width="8" />
-        </>
-      )}
-      {variant === 3 && (
-        <>
-          <path d="M160 0 H72 A88 88 0 0 1 160 88 Z" fill={cat} />
-          <circle cx="34" cy="30" r="15" fill="none" stroke={ink} stroke-width="7" />
-        </>
-      )}
-      {variant === 4 && (
-        <>
-          <rect x="0" y="0" width="70" height="100" fill={cat} />
-          <circle cx="112" cy="50" r="30" fill={b} />
-          <rect x="128" y="0" width="8" height="100" fill={ink} />
-        </>
-      )}
-      {variant === 5 && (
-        <>
-          <circle cx="80" cy="50" r="40" fill={cat} />
-          <rect x="0" y="46" width="160" height="8" fill={ink} />
-          <rect x="40" y="0" width="8" height="100" fill={a} opacity="0.9" />
-        </>
-      )}
-
-      {/* shared accent dot, positioned by rotation */}
-      <circle cx={dot.cx} cy={dot.cy} r="8" fill={b} />
-    </g>
+  <svg
+    viewBox="0 0 160 100"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-label={title ? `Cover for ${title}` : `${label} post`}
+  >
+    <Fragment set:html={inner} />
   </svg>
 
   <span class="gcover-label text-meta">{label}</span>

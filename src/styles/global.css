@@ -113,9 +113,14 @@ a:hover {
   background: color-mix(in srgb, var(--ochre) 45%, transparent);
 }
 
+/* Two-tone focus ring. The ink outline guarantees ≥3:1 on the light paper
+   (ochre alone was only 2.03:1 — below WCAG 1.4.11); the ochre halo keeps the
+   brand accent and carries the contrast on dark/coloured surfaces (e.g. the
+   ink skip-link), where the ink outline would vanish. */
 :focus-visible {
-  outline: 3px solid var(--ochre);
-  outline-offset: 3px;
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ochre) 55%, transparent);
   border-radius: var(--radius);
 }
 

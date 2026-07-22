@@ -15,4 +15,7 @@ export default defineConfig({
   // Explicit default (URLs without trailing slashes). Locking it in avoids
   // accidental duplicate-URL variants later.
   trailingSlash: 'never',
+  vite: {
+    ssr: { external: ['@resvg/resvg-js'] },
+  },
 });
