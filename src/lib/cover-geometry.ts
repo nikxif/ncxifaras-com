@@ -8,7 +8,9 @@
 // and every shift is UNSIGNED (`>>>`) — a signed `>>` on a high-bit hash goes
 // negative and indexes arrays out of bounds. (That was the /hello crash.)
 
-export type Category = 'osint' | 'policy' | 'tutorial' | 'note';
+// Category lives in palette.ts (single source of truth); re-exported here so
+// existing `import { type Category } from './cover-geometry'` keeps working.
+export type { Category } from './palette';
 
 export function coverHash(s: string): number {
   let h = 2166136261;

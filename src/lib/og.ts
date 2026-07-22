@@ -9,7 +9,8 @@ import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { coverSVG, type Category } from './cover-geometry';
+import { coverSVG } from './cover-geometry';
+import { CATEGORY_HEX, INK, INK_SOFT, PAPER, PAPER_2, type Category } from './palette';
 import { CATEGORY_LABELS, type Post } from './posts';
 
 const require = createRequire(import.meta.url);
@@ -22,33 +23,22 @@ const fonts = [
   { name: 'JetBrains Mono', weight: 500, style: 'normal', data: fontFile('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff') },
 ] as any;
 
-// Keep these in sync with tokens.css (concrete hex — no CSS vars in a raster).
-const PAL = {
-  paper: '#FAF7F0',
-  paper2: '#F2ECDD',
-  ink: '#1A1714',
-  inkSoft: '#544F45',
-  cat: {
-    osint: '#1E45C9',
-    policy: '#DE3F24',
-    tutorial: '#E7A32A',
-    note: '#1A1714',
-  } as Record<Category, string>,
-};
+// Palette comes from src/lib/palette.ts — the single place the concrete hex
+// values live (a raster can't read CSS vars). Don't re-declare them here.
 
 const BAND = 430; // width of the geometry band on the right
 const W = 1200;
 const H = 630;
 
 function card(title: string, category: Category, slug: string) {
-  const cat = PAL.cat[category];
-  const svg = coverSVG(slug, { cat, ink: PAL.ink, paper2: PAL.paper2 }, BAND, H);
+  const cat = CATEGORY_HEX[category];
+  const svg = coverSVG(slug, { cat, ink: INK, paper2: PAPER_2 }, BAND, H);
   const bg = `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 
   return {
     type: 'div',
     props: {
-      style: { display: 'flex', width: `${W}px`, height: `${H}px`, background: PAL.paper, fontFamily: 'Commissioner' },
+      style: { display: 'flex', width: `${W}px`, height: `${H}px`, background: PAPER, fontFamily: 'Commissioner' },
       children: [
         {
           type: 'div',
@@ -68,8 +58,8 @@ function card(title: string, category: Category, slug: string) {
                   ],
                 },
               },
-              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Commissioner', fontWeight: 800, fontSize: '68px', lineHeight: 1.04, color: PAL.ink, letterSpacing: '-1px' }, children: title } },
-              { type: 'div', props: { style: { fontFamily: 'JetBrains Mono', fontSize: '26px', color: PAL.inkSoft }, children: 'ncxifaras.com' } },
+              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Commissioner', fontWeight: 800, fontSize: '68px', lineHeight: 1.04, color: INK, letterSpacing: '-1px' }, children: title } },
+              { type: 'div', props: { style: { fontFamily: 'JetBrains Mono', fontSize: '26px', color: INK_SOFT }, children: 'ncxifaras.com' } },
             ],
           },
         },

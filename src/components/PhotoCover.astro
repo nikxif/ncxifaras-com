@@ -1,49 +1,67 @@
 ---
 // PhotoCover.astro — real photos, duotoned into the category colour so they
-// cohere with the generated covers (D12). Uses an SVG <feColorMatrix>/gradient-
-// map filter: any source image is mapped to a two-tone ramp (paper → category
-// colour → ink), same frame + label as GeneratedCover.
+// cohere with the generated covers (D12).
+//
+// FIXED (two bugs):
+//  1. `src` is now ImageMetadata ONLY, never a raw string. The schema's
+//     image() helper resolves the frontmatter path relative to the markdown
+//     file at build time; <Image> then emits the hashed /_astro/ URL. The old
+//     raw-<img> string branch emitted the author-relative path verbatim, which
+//     the browser resolved against the PAGE url → 404 (broken cover, while the
+//     same path worked in the post body, which markdown rewrites).
+//  2. The duotone ramp used `var(--duo-r)` inside SVG *attributes*. SVG
+//     attributes aren't CSS, so var() never resolved (and those vars were
+//     never defined). Ramp values are now real numbers computed from the
+//     palette — verified rendering across all four categories.
 import { Image } from 'astro:assets';
 import { CATEGORY_LABELS } from '../lib/posts';
+import { duotoneRamp, type Category } from '../lib/palette';
 
 interface Props {
-  src: ImageMetadata | string;
+  /** Must be ImageMetadata — i.e. a `cover` field typed with image() in the schema. */
+  src: ImageMetadata;
   alt: string;
-  category: 'osint' | 'policy' | 'tutorial' | 'note';
+  category: Category;
   title?: string;
 }
 const { src, alt, category, title } = Astro.props;
 const label = CATEGORY_LABELS[category];
 
-// One filter instance per category so the duotone ramp uses the right colour.
-const filterId = `duo-${category}`;
+const [rampR, rampG, rampB] = duotoneRamp(category);
+
+// Unique per instance: several photo covers can share one index page, and
+// duplicate filter ids would make every one of them use the first filter.
+const filterId = `duo-${category}-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <figure class:list={['pcover', `cat-${category}`]}>
-  {
-    typeof src === 'string' ? (
-      <img src={src} alt={alt} class="duo-img" loading="lazy" decoding="async" />
-    ) : (
-      <Image src={src} alt={alt} class="duo-img" widths={[320, 640]} loading="lazy" />
-    )
-  }
+  <Image
+    src={src}
+    alt={alt}
+    width={720}
+    height={450}
+    class="duo-img"
+    style={`filter: url(#${filterId})`}
+    loading="lazy"
+  />
 
-  {/* The duotone filter. Kept inline so it travels with the component. */}
+  {/* Filter travels with the component. Sized 0 rather than display:none —
+      some browsers drop filter refs inside a display:none subtree. */}
   <svg class="duo-def" aria-hidden="true" focusable="false">
     <filter id={filterId} color-interpolation-filters="sRGB">
-      {/* 1. desaturate to luminance */}
+      {/* 1. luminance (Rec. 709 weights — perceptually correct, unlike a flat 0.33 split) */}
       <feColorMatrix
         type="matrix"
-        values="0.33 0.33 0.33 0 0
-                0.33 0.33 0.33 0 0
-                0.33 0.33 0.33 0 0
-                0    0    0    1 0"
+        values="0.2126 0.7152 0.0722 0 0
+                0.2126 0.7152 0.0722 0 0
+                0.2126 0.7152 0.0722 0 0
+                0      0      0      1 0"
       />
-      {/* 2. map the grayscale ramp onto shadow(ink) → mid(category) → light(paper) */}
+      {/* 2. map that greyscale ramp onto ink → category colour → paper */}
       <feComponentTransfer>
-        <feFuncR tableValues="0.10 var(--duo-r) 0.98" type="table" />
-        <feFuncG tableValues="0.09 var(--duo-g) 0.97" type="table" />
-        <feFuncB tableValues="0.08 var(--duo-b) 0.94" type="table" />
+        <feFuncR type="table" tableValues={rampR} />
+        <feFuncG type="table" tableValues={rampG} />
+        <feFuncB type="table" tableValues={rampB} />
       </feComponentTransfer>
     </filter>
   </svg>
@@ -52,7 +70,7 @@ const filterId = `duo-${category}`;
   {title && <figcaption class="pcover-title">{title}</figcaption>}
 </figure>
 
-<style define:vars={{ filterId: `url(#duo-${category})` }}>
+<style>
   .pcover {
     position: relative;
     aspect-ratio: 16 / 10;
@@ -60,19 +78,14 @@ const filterId = `duo-${category}`;
     border-radius: var(--radius);
     overflow: hidden;
     margin: 0;
-    background: var(--cat, var(--paper-2));
+    background: var(--paper-2);
   }
-
-  .cat-osint    { --cat: var(--cat-osint); }
-  .cat-policy   { --cat: var(--cat-policy); }
-  .cat-tutorial { --cat: var(--cat-tutorial); }
-  .cat-note     { --cat: var(--cat-note); }
 
   .duo-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: var(--filterId);
+    display: block;
   }
 
   .duo-def {

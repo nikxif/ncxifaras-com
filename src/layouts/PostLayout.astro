@@ -238,4 +238,41 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     margin-inline: 0;
     margin-block: var(--space-5);
   }
+
+  .prose figure {
+    margin-block: var(--space-4);
+  }
+
+  .prose figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: var(--space-2);
+    /* .prose img already carries the strong border + radius */
+  }
+
+  .prose figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--paper-2);
+    padding-left: 0.9rem;
+  }
+
+  .prose figcaption a {
+    color: var(--cobalt-deep);
+  }
+
+  .prose figcaption code {
+    font-size: 0.92em;
+  }
+
+  /* On wide screens the caption can sit tight to the image column rather than
+    stretching full width, which reads better under a large figure. */
+  @media (min-width: 70rem) {
+    .prose figcaption {
+      max-width: 46ch;
+    }
+  }
 </style>

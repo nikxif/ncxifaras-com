@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import rehypeFigureCaption from './src/plugins/rehype-figure-caption.mjs';
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,5 +19,8 @@ export default defineConfig({
   trailingSlash: 'never',
   vite: {
     ssr: { external: ['@resvg/resvg-js'] },
+  },
+  markdown: {
+    rehypePlugins: [rehypeFigureCaption],
   },
 });

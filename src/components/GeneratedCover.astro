@@ -4,10 +4,11 @@
 // generator so they can't drift). Colours are passed as CSS vars, so tuning
 // --cobalt / --vermilion / --ochre in tokens.css still flows through here.
 import { coverInnerSVG } from '../lib/cover-geometry';
+import type { Category } from '../lib/palette';
 import { CATEGORY_LABELS } from '../lib/posts';
 
 interface Props {
-  category: 'osint' | 'policy' | 'tutorial' | 'note';
+  category: Category;
   slug: string;
   title?: string;
 }
