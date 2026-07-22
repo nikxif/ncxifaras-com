@@ -4,6 +4,7 @@ description: 'A featured sample exercising the tutorial category, syntax highlig
 pubDate: 2026-07-20
 category: tutorial
 tags: ['sample', 'astro']
+draft: true
 featured: true
 ---
 

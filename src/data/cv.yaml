@@ -1,0 +1,86 @@
+# src/data/cv.yaml — the CV as data, not markup.
+# Shape mirrors what the master-CV transform (D5) will emit, so swapping to
+# generated data later is a data swap, not a page rewrite.
+#
+# Filled from cv-master.yaml (confirmed values only). Remaining [FILL]/[CONFIRM]
+# markers are genuinely-unknown items I couldn't verify — see chat.
+#
+# YAML notes: quote any value with a colon-space or a leading special char;
+# apostrophes are fine unquoted here (unlike frontmatter, these aren't parsed
+# by the same strict path, but quoting is still the safe habit).
+
+summary: >-
+  Physician and software developer in Athens. I trained in medicine and
+  computer science in parallel, and I've spent the years since working where
+  the two meet: clinical research, digital health policy, and custom
+  software for clinical work. Right now I'm focused on neurotechnology —
+  computational neuroscience and brain–computer interfaces — on my way to
+  specialising in neurology, with a long-term interest in neurorehabilitation.
+
+sections:
+  - heading: Experience
+    items:
+      - title: Clinical Expert, Health Technology Assessment Committee
+        org: Hellenic Ministry of Health
+        period: "2026–present"
+        notes:
+          - "Appraises pharmaceuticals and vaccines for national reimbursement decisions, with a focus on neurological therapies."
+
+      # Most recent clinical role. You have no current clinical practice post
+      # (MBA + neurology waiting list), so this 2022 role is the honest
+      # 'clinical' entry. Swap/relabel if you'd rather the section read
+      # differently for the web.
+      - title: Headache Clinic Traineeship & Clinical Trial Coordination
+        org: Mediterraneo Private Hospital
+        period: "2022"
+        notes:
+          - "Clinical traineeship in a specialised headache clinic; coordinated three international interventional headache trials (ICH-GCP)."
+
+      - title: Independent software development
+        org: ""
+        period: "[CONFIRM: start year]–present"
+        notes:
+          - "Enimerotique — Greek-language clinical speech-to-text service in production use; handles long-form audio. FastAPI, Google Cloud Speech-to-Text V2, containerised."
+          - "Efimerevo — constraint-based clinical shift-scheduling (legally-compliant rota generation), plus clinical data-analysis tooling. Python, Qt6, OR-Tools."
+
+  - heading: Education
+    items:
+      - title: MBA, Health Administration
+        org: National and Kapodistrian University of Athens
+        period: "2023–2026"
+        notes:
+          - Full academic scholarship.
+      - title: MD, Medicine
+        org: National and Kapodistrian University of Athens
+        period: "2014–2023"
+        notes:
+          - Completed in parallel with the BSc below.
+      - title: BSc, Computing and Information Systems
+        org: Goldsmiths, University of London
+        period: "2018–2022"
+        notes: []
+
+  - heading: Selected work
+    items:
+      - title: Enimerotique — Greek clinical transcription service
+        org: ""
+        period: "2026"
+        notes:
+          - "Production speech-to-text for clinical dictation; handles long-form audio. FastAPI, Google Cloud Speech-to-Text V2, containerised."
+      - title: EEG-based ML classifiers in schizophrenia — methodological audit
+        org: ""
+        period: "2026-2027"
+        notes:
+          - "Study design and analysis."
+      - title: Medical residency waiting-time aggregator
+        org: ""
+        period: "design & DPIA complete"
+        notes:
+          - "Architecture + full GDPR/DPIA analysis for a pseudonymising, push-only pipeline."
+
+  - heading: Languages
+    items:
+      - title: "Greek (native) · English (C2, Cambridge CPE) · German (B1)"
+        org: ""
+        period: ""
+        notes: []

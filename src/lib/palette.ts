@@ -18,7 +18,7 @@ export const PAPER_2 = '#F2ECDD';
 
 /** Mirrors --cat-* in tokens.css exactly. */
 export const CATEGORY_HEX = {
-  osint: '#1E45C9',    // --cat-osint    → --cobalt
+  osint: '#1A3AAE',    // --cat-osint    → --cobalt
   policy: '#DE3F24',   // --cat-policy   → --vermilion
   tutorial: '#E7A32A', // --cat-tutorial → --ochre
   note: INK,           // --cat-note     → --ink

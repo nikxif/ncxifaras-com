@@ -158,10 +158,6 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     counter-reset: sidenote; /* powers <Sidenote> auto-numbering */
   }
 
-  .prose > * + * {
-    margin-top: var(--space-3);
-  }
-
   /* Desktop only: make each text block the containing block for a sidenote
      authored inside it, so the note anchors to the paragraph (right edge + top)
      rather than to the inline marker. Global because these <p>/<li> come from
@@ -172,102 +168,7 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     }
   }
 
-  .prose h2,
-  .prose h3 {
-    margin-top: var(--space-5);
-  }
-
-  .prose h2 {
-    font-size: var(--text-xl);
-    border-bottom: var(--border-hair);
-    padding-bottom: var(--space-1);
-  }
-
-  .prose h3 {
-    font-size: var(--text-lg);
-  }
-
-  .prose ul,
-  .prose ol {
-    padding-left: 1.4em;
-  }
-
-  .prose li + li {
-    margin-top: var(--space-1);
-  }
-
-  .prose blockquote {
-    border-left: 3px solid var(--ochre);
-    padding-left: var(--space-3);
-    color: var(--ink-soft);
-    font-style: italic;
-  }
-
-  .prose code {
-    font-family: var(--font-mono);
-    font-size: 0.86em;
-    background: var(--paper-2);
-    padding: 0.12em 0.35em;
-    border-radius: var(--radius);
-  }
-
-  .prose pre {
-    border: var(--border-hair);
-    border-radius: var(--radius);
-    padding: var(--space-3);
-    overflow-x: auto;
-    font-size: 0.86rem;
-    line-height: 1.55;
-  }
-
-  .prose pre code {
-    background: none;
-    padding: 0;
-    font-size: inherit;
-  }
-
-  .prose img {
-    border: var(--border-strong);
-    border-radius: var(--radius);
-  }
-
-  .prose hr {
-    border: 0;
-    border-top: var(--border-strong);
-    width: 4rem;
-    margin-inline: 0;
-    margin-block: var(--space-5);
-  }
-
-  .prose figure {
-    margin-block: var(--space-4);
-  }
-
-  .prose figure img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-bottom: var(--space-2);
-    /* .prose img already carries the strong border + radius */
-  }
-
-  .prose figcaption {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    line-height: 1.5;
-    color: var(--ink-soft);
-    border-left: 3px solid var(--paper-2);
-    padding-left: 0.9rem;
-  }
-
-  .prose figcaption a {
-    color: var(--cobalt-deep);
-  }
-
-  .prose figcaption code {
-    font-size: 0.92em;
-  }
-
+ 
   /* On wide screens the caption can sit tight to the image column rather than
     stretching full width, which reads better under a large figure. */
   @media (min-width: 70rem) {

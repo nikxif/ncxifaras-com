@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeFigureCaption from './src/plugins/rehype-figure-caption.mjs';
+import yaml from '@rollup/plugin-yaml';
 
 
 // https://astro.build/config
@@ -19,6 +20,7 @@ export default defineConfig({
   // accidental duplicate-URL variants later.
   trailingSlash: 'never',
   vite: {
+    plugins: [yaml()],
     ssr: { external: ['@resvg/resvg-js'] },
   },
   markdown: {

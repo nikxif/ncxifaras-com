@@ -1,32 +1,39 @@
 ---
-// about.astro — placeholder structure; real copy is yours to write.
+// about.astro — now a thin shell. All the copy lives in
+// src/content/pages/about.md, so editing the page means editing markdown.
+//
+// Same pattern works for any other prose page (uses, now, colophon…): add a
+// .md file to src/content/pages/ and copy this file with the id changed.
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const page = await getEntry('pages', 'about');
+if (!page) {
+  // Fail loudly at build time rather than shipping an empty page.
+  throw new Error('Missing src/content/pages/about.md');
+}
+const { Content } = await render(page);
 ---
 
 <BaseLayout
-  title="About — Nick Xifaras"
-  description="Physician and software developer in Athens, Greece."
+  title={`${page.data.title} — Nick Xifaras`}
+  description={page.data.description}
 >
-  <section class="container prose-page">
-    <h1>About</h1>
-    <p class="text-lede">
-      Physician and software developer in Athens — clinical medicine, digital-health
-      policy, and the software between them.
-    </p>
-    <p>
-      [Placeholder — the longer, human version of the bio goes here. Voice-y, not
-      LinkedIn. Write it in your own words; this page is markdown-friendly if you'd
-      rather move it to a content collection later.]
-    </p>
+  <section class="container page">
+    <h1>{page.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .prose-page {
+  .page {
     max-width: var(--width-content);
     padding-block: var(--space-6);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+  }
+
+  .page h1 {
+    margin-bottom: var(--space-4);
   }
 </style>

@@ -1,54 +1,9 @@
 ---
-// cv.astro — v1: hand-written data, deliberately quiet styling (DESIGN.md).
-// The `cv` object below mirrors the shape the future master-CV transform will
-// emit (D5), so swapping to generated data later is a data swap, not a rewrite.
+// cv.astro — data lives in src/data/cv.yaml now; this file is just presentation.
+// Astro imports YAML natively, so `cv` is the parsed object. Editing the CV =
+// editing the YAML. The rendering below is unchanged from the inline version.
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const cv = {
-  summary:
-    'Physician & software developer. Clinical medicine, digital-health policy, and custom software; heading toward neuroscience, neurorehabilitation, and brain–computer interfaces.',
-  sections: [
-    {
-      heading: 'Experience',
-      items: [
-        {
-          title: '[Role]',
-          org: '[Organisation]',
-          period: '[20XX–20XX]',
-          notes: ['[Accomplishment-oriented bullet]', '[Another]'],
-        },
-      ],
-    },
-    {
-      heading: 'Education',
-      items: [
-        {
-          title: 'MD, Medicine',
-          org: 'National & Kapodistrian University of Athens',
-          period: '[years]',
-          notes: [],
-        },
-        {
-          title: 'BSc, Computing',
-          org: 'Goldsmiths, University of London',
-          period: '[years]',
-          notes: [],
-        },
-      ],
-    },
-    {
-      heading: 'Selected work',
-      items: [
-        {
-          title: '[Project or publication]',
-          org: '',
-          period: '[year]',
-          notes: ['[One-line description]'],
-        },
-      ],
-    },
-  ],
-};
+import cv from '../data/cv.yaml';
 ---
 
 <BaseLayout
@@ -70,7 +25,7 @@ const cv = {
             <article class="item">
               <div class="row">
                 <h3>{it.title}</h3>
-                <span class="text-meta">{it.period}</span>
+                {it.period && <span class="text-meta">{it.period}</span>}
               </div>
               {it.org && <p class="org">{it.org}</p>}
               {it.notes.length > 0 && (
@@ -89,7 +44,6 @@ const cv = {
 </BaseLayout>
 
 <style>
-  /* Deliberately quiet: hairlines not heavy rules, no accents beyond links */
   .cv {
     max-width: var(--width-content);
     padding-block: var(--space-6);

@@ -3,6 +3,7 @@ title: 'Hello — and what this site is'
 description: 'What lives here: opinion pieces, tutorials, OSINT write-ups, and notes from a physician who writes code.'
 pubDate: 2026-07-21
 category: note
+draft: true
 tags: ['meta']
 featured: false
 ---
