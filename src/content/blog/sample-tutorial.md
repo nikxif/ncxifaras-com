@@ -2,7 +2,7 @@
 title: 'Sample tutorial: a code block walks into a page'
 description: 'A featured sample exercising the tutorial category, syntax highlighting, and the homepage lead slot.'
 pubDate: 2026-07-20
-category: tutorial
+category: guide
 tags: ['sample', 'astro']
 draft: true
 featured: true

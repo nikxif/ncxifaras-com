@@ -2,7 +2,7 @@
 title: "Solving Bellingcat’s 'Planted Evidence': the street AI tried to hide"
 description: "How I solved Bellingcat's Planted Evidence challenge: an AI-edited Venice photo, a destroyed house number, and the medieval carving that gave up the street."
 pubDate: 2026-07-10
-category: tutorial
+category: guide
 tags: ["osint", "bellingcat challenges"]
 featured: false
 draft: false

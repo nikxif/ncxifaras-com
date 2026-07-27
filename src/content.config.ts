@@ -7,7 +7,7 @@ import { glob } from 'astro/loaders';
 
 // Category = the colour-coded set (capped ~4–5 by design, see D12).
 // Everything finer-grained is a tag.
-export const CATEGORIES = ['osint', 'policy', 'tutorial', 'note'] as const;
+export const CATEGORIES = ['project', 'guide', 'opinion', 'personal'] as const;
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
@@ -21,7 +21,7 @@ const blog = defineCollection({
     description: z.string(), // deks, <meta>, RSS
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    category: z.enum(CATEGORIES).default('note'),
+    category: z.enum(CATEGORIES).default('personal'),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false), // surfaces on homepage + /writing
     draft: z.boolean().default(false),

@@ -22,10 +22,10 @@ export async function getAllTags(): Promise<string[]> {
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {
-  osint: 'OSINT',
-  policy: 'Policy',
-  tutorial: 'Tutorial',
-  note: 'Note',
+  project: 'Project',
+  guide: 'Guide',
+  opinion: 'Opinion',
+  personal: 'Personal',
 };
 
 /** Human date, consistent everywhere. */

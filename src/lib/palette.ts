@@ -18,10 +18,10 @@ export const PAPER_2 = '#F2ECDD';
 
 /** Mirrors --cat-* in tokens.css exactly. */
 export const CATEGORY_HEX = {
-  osint: '#1A3AAE',    // --cat-osint    → --cobalt
-  policy: '#DE3F24',   // --cat-policy   → --vermilion
-  tutorial: '#E7A32A', // --cat-tutorial → --ochre
-  note: INK,           // --cat-note     → --ink
+  project: '#1A3AAE',    // --cat-project    → --project
+  guide: '#E7A32A',   // --cat-guide   → --guide
+  opinion: '#DE3F24', // --cat-opinion → --opinion
+  personal: INK,           // --cat-personal     → --personal
 } as const;
 
 /** The canonical category union. Import this; don't re-declare it. */
@@ -38,7 +38,7 @@ export const CATEGORIES = Object.keys(CATEGORY_HEX) as Category[];
  */
 const DUOTONE_MID: Record<Category, string> = {
   ...CATEGORY_HEX,
-  note: INK_SOFT,
+  personal: INK_SOFT,
 };
 
 /** '#RRGGBB' → ['0.1234','0.5678','0.9012'] normalised channels. */
