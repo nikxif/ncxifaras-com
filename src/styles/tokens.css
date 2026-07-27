@@ -34,7 +34,7 @@
   /* Commissioner replaced Archivo (which has NO Greek subset — see D9).
      All three faces ship native Greek; Alegreya even has polytonic. */
   --font-display: 'Commissioner Variable', system-ui, -apple-system, sans-serif;
-  --font-serif:   'Alegreya Variable', Georgia, 'Times New Roman', serif;
+  --font-serif:   'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
   --font-mono:    'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Menlo, monospace;
 
   /* Fluid type scale (mobile → desktop) */
