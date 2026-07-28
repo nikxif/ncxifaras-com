@@ -19,8 +19,11 @@ const fontFile = (pkgPath: string) => readFileSync(require.resolve(pkgPath));
 // weight/style typed loosely to satisfy satori's FontOptions union at runtime
 const fonts = [
   { name: 'Commissioner', weight: 700, style: 'normal', data: fontFile('@fontsource/commissioner/files/commissioner-latin-700-normal.woff') },
+  { name: 'CommissionerGreek', weight: 700, style: 'normal', data: fontFile('@fontsource/commissioner/files/commissioner-greek-700-normal.woff') },
   { name: 'Commissioner', weight: 800, style: 'normal', data: fontFile('@fontsource/commissioner/files/commissioner-latin-800-normal.woff') },
+  { name: 'CommissionerGreek', weight: 800, style: 'normal', data: fontFile('@fontsource/commissioner/files/commissioner-greek-800-normal.woff') },
   { name: 'JetBrains Mono', weight: 500, style: 'normal', data: fontFile('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff') },
+  { name: 'JetBrains Mono Greek', weight: 500, style: 'normal', data: fontFile('@fontsource/jetbrains-mono/files/jetbrains-mono-greek-500-normal.woff') },
 ] as any;
 
 // Palette comes from src/lib/palette.ts — the single place the concrete hex
@@ -38,7 +41,7 @@ function card(title: string, category: Category, slug: string) {
   return {
     type: 'div',
     props: {
-      style: { display: 'flex', width: `${W}px`, height: `${H}px`, background: PAPER, fontFamily: 'Commissioner' },
+      style: { display: 'flex', width: `${W}px`, height: `${H}px`, background: PAPER, fontFamily: 'Commissioner, CommissionerGreek' },
       children: [
         {
           type: 'div',
@@ -53,13 +56,13 @@ function card(title: string, category: Category, slug: string) {
                 props: {
                   style: { display: 'flex', flexDirection: 'column' },
                   children: [
-                    { type: 'div', props: { style: { fontFamily: 'JetBrains Mono', fontSize: '26px', color: cat, letterSpacing: '2px', textTransform: 'uppercase' }, children: CATEGORY_LABELS[category] } },
+                    { type: 'div', props: { style: { fontFamily: 'JetBrains Mono, JetBrains Mono Greek', fontSize: '26px', color: cat, letterSpacing: '2px', textTransform: 'uppercase' }, children: CATEGORY_LABELS[category] } },
                     { type: 'div', props: { style: { marginTop: '14px', width: '92px', height: '8px', background: cat } } },
                   ],
                 },
               },
-              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Commissioner', fontWeight: 800, fontSize: '68px', lineHeight: 1.04, color: INK, letterSpacing: '-1px' }, children: title } },
-              { type: 'div', props: { style: { fontFamily: 'JetBrains Mono', fontSize: '26px', color: INK_SOFT }, children: 'ncxifaras.com' } },
+              { type: 'div', props: { style: { display: 'flex', fontFamily: 'Commissioner, CommissionerGreek', fontWeight: 800, fontSize: '68px', lineHeight: 1.04, color: INK, letterSpacing: '-1px' }, children: title } },
+              { type: 'div', props: { style: { fontFamily: 'JetBrains Mono, JetBrains Mono Greek', fontSize: '26px', color: INK_SOFT }, children: 'ncxifaras.com' } },
             ],
           },
         },
