@@ -4,6 +4,7 @@
 // Prose column is --width-content; the extra room to the right is where
 // sidenotes will live in Phase 3.
 import BaseLayout from './BaseLayout.astro';
+import ShareButtons from '../components/ShareButtons.astro';
 import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
 
 interface Props {
@@ -15,12 +16,7 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
   post.data;
 ---
 
-<BaseLayout
-  title={`${title} — Nick Xifaras`}
-  {description}
-  {canonicalURL}
-  ogImage={`/og/${post.id}.png`}
->
+<BaseLayout title={`${title} — Nick Xifaras`} {description} {canonicalURL}>
   <article class="container post">
     <header class="post-head">
       <p class="meta text-meta">
@@ -41,6 +37,8 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     <div class="prose">
       <slot />
     </div>
+
+    <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
 
     {
       tags.length > 0 && (
@@ -117,10 +115,10 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     background: var(--_cat, var(--ink));
   }
 
-  .cat-project    { --_cat: var(--cat-project); }
-  .cat-guide   { --_cat: var(--cat-guide); }
-  .cat-opinion { --_cat: var(--cat-opinion); }
-  .cat-personal     { --_cat: var(--cat-personal); }
+  .cat-osint    { --_cat: var(--cat-osint); }
+  .cat-policy   { --_cat: var(--cat-policy); }
+  .cat-tutorial { --_cat: var(--cat-tutorial); }
+  .cat-note     { --_cat: var(--cat-note); }
 
   .dek {
     color: var(--ink-soft);
@@ -158,6 +156,10 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     counter-reset: sidenote; /* powers <Sidenote> auto-numbering */
   }
 
+  .prose > * + * {
+    margin-top: var(--space-3);
+  }
+
   /* Desktop only: make each text block the containing block for a sidenote
      authored inside it, so the note anchors to the paragraph (right edge + top)
      rather than to the inline marker. Global because these <p>/<li> come from
@@ -168,12 +170,70 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     }
   }
 
- 
-  /* On wide screens the caption can sit tight to the image column rather than
-    stretching full width, which reads better under a large figure. */
-  @media (min-width: 70rem) {
-    .prose figcaption {
-      max-width: 46ch;
-    }
+  .prose h2,
+  .prose h3 {
+    margin-top: var(--space-5);
+  }
+
+  .prose h2 {
+    font-size: var(--text-xl);
+    border-bottom: var(--border-hair);
+    padding-bottom: var(--space-1);
+  }
+
+  .prose h3 {
+    font-size: var(--text-lg);
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.4em;
+  }
+
+  .prose li + li {
+    margin-top: var(--space-1);
+  }
+
+  .prose blockquote {
+    border-left: 3px solid var(--ochre);
+    padding-left: var(--space-3);
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--paper-2);
+    padding: 0.12em 0.35em;
+    border-radius: var(--radius);
+  }
+
+  .prose pre {
+    border: var(--border-hair);
+    border-radius: var(--radius);
+    padding: var(--space-3);
+    overflow-x: auto;
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .prose pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  .prose img {
+    border: var(--border-strong);
+    border-radius: var(--radius);
+  }
+
+  .prose hr {
+    border: 0;
+    border-top: var(--border-strong);
+    width: 4rem;
+    margin-inline: 0;
+    margin-block: var(--space-5);
   }
 </style>

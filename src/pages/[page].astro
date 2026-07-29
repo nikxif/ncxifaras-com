@@ -1,0 +1,42 @@
+---
+// [page].astro — one shell for every prose page in the `pages` collection.
+// Replaces about.astro (delete it) and covers contact.md, privacy.md, and any
+// future .md you drop into src/content/pages/ — no new .astro file needed.
+//
+// Static routes win over dynamic ones in Astro, so /writing, /cv, /posts etc.
+// are unaffected; this only generates the ids that exist in the collection.
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({ params: { page: page.id }, props: { page } }));
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<BaseLayout
+  title={`${page.data.title} — Nick Xifaras`}
+  description={page.data.description}
+>
+  <section class="container page">
+    <h1>{page.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: var(--width-content);
+    padding-block: var(--space-6);
+  }
+
+  .page h1 {
+    margin-bottom: var(--space-4);
+  }
+</style>

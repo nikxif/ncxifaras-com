@@ -1,0 +1,143 @@
+---
+// ShareButtons.astro — sharing with zero third parties.
+//
+// No Twitter/Facebook/LinkedIn SDK buttons: those load remote scripts, track
+// the reader on page load whether or not they click, and would need CSP holes
+// punched for each. Instead:
+//   1. Native share sheet via the Web Share API (navigator.share) — on mobile
+//      this offers every app the reader actually has installed. Nothing loads.
+//   2. Copy link — the universal fallback, works everywhere.
+//   3. Mastodon — a plain link that asks for the reader's own instance, since
+//      there's no central Mastodon URL to post to. Optional; delete if noise.
+//
+// The script is an Astro component script: it gets bundled to a first-party
+// .js file, so the strict `script-src 'self'` CSP passes it untouched. No
+// inline script, no hash needed.
+interface Props {
+  title: string;
+  /** Absolute URL of the post. */
+  url: string;
+}
+const { title, url } = Astro.props;
+---
+
+<div class="share" data-share data-url={url} data-title={title}>
+  <span class="share-label text-meta">Share</span>
+
+  <button type="button" class="share-btn" data-share-native hidden>
+    Share…
+  </button>
+
+  <button type="button" class="share-btn" data-share-copy>
+    <span data-copy-idle>Copy link</span>
+    <span data-copy-done hidden>Copied ✓</span>
+  </button>
+
+  <a
+    class="share-btn"
+    data-share-mastodon
+    href={`https://mastodonshare.com/?text=${encodeURIComponent(title + ' ' + url)}`}
+    rel="noopener nofollow"
+    target="_blank"
+  >
+    Mastodon
+  </a>
+
+  <noscript>
+    <span class="text-meta">Copy the URL from your address bar to share.</span>
+  </noscript>
+</div>
+
+<script>
+  // Progressive enhancement: everything here only upgrades what already works.
+  document.querySelectorAll<HTMLElement>('[data-share]').forEach((root) => {
+    const url = root.dataset.url ?? window.location.href;
+    const title = root.dataset.title ?? document.title;
+
+    // 1. Native share sheet — only reveal the button if the browser supports it.
+    const nativeBtn = root.querySelector<HTMLButtonElement>('[data-share-native]');
+    if (nativeBtn && typeof navigator.share === 'function') {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener('click', async () => {
+        try {
+          await navigator.share({ title, url });
+        } catch {
+          /* user dismissed the sheet — not an error */
+        }
+      });
+    }
+
+    // 2. Copy link, with a clipboard fallback for older/insecure contexts.
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-share-copy]');
+    const idle = root.querySelector<HTMLElement>('[data-copy-idle]');
+    const done = root.querySelector<HTMLElement>('[data-copy-done]');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(url);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'absolute';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        if (idle && done) {
+          idle.hidden = true;
+          done.hidden = false;
+          setTimeout(() => {
+            idle.hidden = false;
+            done.hidden = true;
+          }, 2000);
+        }
+      } catch {
+        /* clipboard blocked — the URL is still in the address bar */
+      }
+    });
+  });
+</script>
+
+<style>
+  .share {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: var(--border-hair);
+  }
+
+  .share-label {
+    margin-right: var(--space-1);
+  }
+
+  .share-btn {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-soft);
+    background: none;
+    border: var(--border-hair);
+    border-radius: var(--radius);
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition:
+      color var(--transition-quick),
+      border-color var(--transition-quick);
+  }
+
+  .share-btn:hover {
+    color: var(--cobalt-deep);
+    border-color: var(--cobalt);
+  }
+
+  [data-copy-done] {
+    color: var(--cobalt-deep);
+  }
+</style>
