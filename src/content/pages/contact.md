@@ -25,6 +25,7 @@ There's no contact form here on purpose to avoid third-party data processors. Em
 ## Elsewhere
 
 - [GitHub](https://github.com/nikxif)
+- [Medium](https://medium.com/@nixifaras)
 - [Instagram](https://instagram.com/nickxifaras)
 - The site has an [RSS feed](/rss.xml) if you'd rather follow along than write.
 

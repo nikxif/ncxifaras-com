@@ -38,11 +38,9 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
       <slot />
     </div>
 
-    <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
-
-    {
-      tags.length > 0 && (
-        <footer class="post-foot">
+    <footer class="post-foot">
+      {
+        tags.length > 0 && (
           <ul class="tags">
             {tags.map((t) => (
               <li>
@@ -52,9 +50,10 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
               </li>
             ))}
           </ul>
-        </footer>
-      )
-    }
+        )
+      }
+      <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
+    </footer>
   </article>
 </BaseLayout>
 
@@ -124,10 +123,23 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     color: var(--ink-soft);
   }
 
+  /* One band of metadata after the article: a single hairline, tags on the
+     left, share controls on the right. Previously these were two sibling
+     blocks each with its own border, which read as a ladder of empty strips. */
+  /* One band of metadata after the article, under a single hairline. Tags and
+     share controls are deliberately STACKED — the prose column isn't wide
+     enough to hold both on one line, so relying on flex-wrap made the layout
+     depend on how many tags a post happened to have. Explicit column keeps
+     every post identical. Gap is paragraph-sized so the two rows read as
+     separate items rather than one crowded block. */
   .post-foot {
     margin-top: var(--space-5);
     border-top: var(--border-hair);
     padding-top: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
   }
 
   .tags {
@@ -136,6 +148,7 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
     gap: var(--space-3);
     list-style: none;
     padding: 0;
+    margin: 0;
   }
 
   .tag {
