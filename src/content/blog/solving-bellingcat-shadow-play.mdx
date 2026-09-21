@@ -5,7 +5,7 @@ pubDate: 2026-09-21
 category: guide
 tags: ["osint", "bellingcat challenges"]
 featured: false
-draft: true
+draft: false
 coverMode: photo
 cover: ../../assets/solving-bellingcat-shadow-play/shadow-play-cover.jpg
 ---
@@ -49,7 +49,7 @@ That turned a vague hunch into a specific question, so I went looking for a bett
 
 So I went orbital. I opened up [staellitemap.space](https://satellitemap.space/) and tried running the clock back to put the satellite where it was at that exact second. I have to say, while the site's interface and graphics are lovely, scrubbing back to a past timestamp is genuinely painful (or at least _I_ couldn't figure out how to do that *and* keep focused on a specific satellite). While I was waiting for the time-travel, I pulled the [two-line elements](https://en.wikipedia.org/wiki/Two-line_element_set) (TLEs) from [space-track.org](https://www.space-track.org) and used satellitemap.space's [TLE calculator](https://satellitemap.space/tle-calculator) to see where that put me. 
 
-![UMBRA-07, at its position at timestamp 2026-09-01-20-39-49](../../assets/solving-bellingcat-shadow-play/umbra-orbit.png)
+![A screenshot of UMBRA-07's orbit at the specific timestamp](../../assets/solving-bellingcat-shadow-play/umbra-orbit.png "UMBRA-07 at the time and date in the filename. Credit: satellitemap.space")
 
 However, when I got there, I got a position over a random patch of Algeria with nothing underneath it. 
 
@@ -65,15 +65,15 @@ Could it be a football (soccer) stadium? I didn't think so. Stadiums are usually
 
 That left a bullring. And a bullring meant **Spain**, which matched the feeling I had had from the street layout all along, even though the orbital analysis was pointing me at Algeria and Tunisia. Hmm.
 
-So I stopped trying to derive the location and started querying for it instead. Bellingcat's own OSM search tool lets you find places by combinations of nearby map features, so I set it to hunt for **railways** and **cliffs** within a hundred metres of each other, across Spain, Morocco, Algeria and Tunisia.
+So I stopped trying to derive the location and started querying for it instead. Bellingcat's own [OSM search tool](https://osm-search.bellingcat.com/) lets you find places by combinations of nearby map features, so I set it to hunt for **railways** and **cliffs** within a hundred metres of each other, across Spain, Morocco, Algeria and Tunisia.
 
-![Using the Bellingcat OSM tool to locate railways close to cliffs](../../assets/solving-bellingcat-shadow-play/ronda-osm-search.png)
+![Using the Bellingcat OSM tool to locate railways close to cliffs](../../assets/solving-bellingcat-shadow-play/ronda-osm-search.png "Using the Bellingcat OSM tool to locate railways close to cliffs.")
 
 That returned a handful of results. I worked through the North African ones, got to Spain, and there was _Ronda_. 
 
 The street layout matched. The railway matched. I flipped to satellite view to be certain, and there it was: the bullring, sitting right at the edge of the cliff. It is a remarkably stunning piece of townscape.
 
-![Ronda, its cliff edge and its bullring, as seen on Google Earth Pro](../../assets/solving-bellingcat-shadow-play/ronda-google-earth.jpg)
+![Ronda, its cliff edge and its bullring, as seen on Google Earth Pro](../../assets/solving-bellingcat-shadow-play/ronda-google-earth.jpg "Ronda, its cliff edge and its bullring, as seen on Google Earth Pro. Copyright: Google")
 
 The joke at my expense is that a picture of that exact bullring above that exact cliff is one of the first things you get if you search for images of cliffside towns on Google. I just had no way of knowing that before I knew what I was looking at.
 
@@ -91,7 +91,7 @@ Which meant that most probably my _mental model_ of the SAR modality was wrong, 
 
 I had been treating the image as an instantaneous snapshot, a shutter clicking, and asking where the satellite was pointing at that second. However, as I had read – in Umbra's own docs – but not yet fully internalised, that is _not_ how a spotlight collect works. The satellite **locks onto** a fixed point on the ground and keeps staring at it while it flies past, building up a synthetic aperture over the whole pass – hence the very name of the modality. The angle it is looking at sweeps continuously through the collect. At 20:39:49 the satellite was still approaching and looking well forward of itself; by 20:41:05 it had flown several hundred kilometres along its track and was looking straight out to the side at Ronda.
 
-![An illustration of a spotlight capture by a satellite. Copyright: Umbra](../../assets/solving-bellingcat-shadow-play/spotlight-capture.png)
+![An illustration of a spotlight capture by an Umbra satellite](../../assets/solving-bellingcat-shadow-play/spotlight-capture.png "How spotlight capture works. Copyright: Umbra")
 
 So the filename is almost certainly the moment the collect starts, or the moment the tasked job begins running, not the moment of some notional exposure. The geometry at that instant is the _start_ of a sweep, not the answer.
 
