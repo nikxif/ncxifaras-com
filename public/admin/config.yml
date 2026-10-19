@@ -1,0 +1,171 @@
+# public/admin/config.yml — Sveltia CMS for ncxifaras.com
+#
+# Mirrors src/content.config.ts. If you change the Zod schema, change this too,
+# or the CMS will happily write front matter the build then rejects.
+
+backend:
+  name: github
+  repo: nikxif/ncxifaras-com        # owner/repo
+  branch: main
+  # For OAuth instead of a personal access token, deploy sveltia-cms-auth to a
+  # Worker and uncomment:
+  # base_url: https://your-authenticator.workers.dev
+
+# Top-level fallback only. The blog collection overrides these with
+# entry-relative folders so images land beside the post and stay eligible for
+# Astro's image() optimisation.
+media_folder: src/assets
+public_folder: /src/assets
+
+output:
+  # ESSENTIAL. Sveltia writes "" / [] / null for optional fields left blank;
+  # Zod's .optional() only accepts a MISSING property, so without this you get
+  # "data does not match collection schema" build failures on the first post
+  # where you skip updatedDate or canonicalURL.
+  omit_empty_optional_fields: true
+
+collections:
+  # ---------------------------------------------------------------- blog ----
+  - name: blog
+    label: Posts
+    label_singular: Post
+    folder: src/content/blog
+    create: true
+    # One extension per collection — see the README on standardising on .mdx.
+    extension: mdx
+    format: yaml-frontmatter
+    # Entry-relative: src/content/blog/<slug>/index.mdx, images alongside.
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
+    slug: '{{fields.title | slugify}}'
+    summary: '{{title}}  ·  {{category}}  ·  {{pubDate | date("YYYY-MM-DD")}}'
+    sortable_fields: [pubDate, title, category]
+    view_groups:
+      - { label: Category, field: category }
+    fields:
+      - name: title
+        label: Title
+        widget: string
+        hint: Front-load the keywords. This is your search-result headline.
+
+      - name: description
+        label: Description
+        widget: text
+        hint: >-
+          150–160 characters. Used for the SERP snippet, the social card and
+          RSS. Write it for a human skimming search results.
+
+      - name: pubDate
+        label: Publish date
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true          # stops a timezone shifting the date by a day
+
+      - name: updatedDate
+        label: Updated date
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+        required: false
+        hint: Only for substantive revisions, not typos.
+
+      - name: category
+        label: Category
+        widget: select
+        default: personal
+        options:
+          - { label: 'Project — I built something', value: project }
+          - { label: 'Guide — how to do something', value: guide }
+          - { label: 'Opinion — I am arguing something', value: opinion }
+          - { label: 'Personal — I am sharing something', value: personal }
+
+      - name: tags
+        label: Tags
+        widget: list
+        required: false
+        hint: >-
+          Subject matter lives here, not in the category. Lowercase and
+          hyphenated — each one becomes a /tags/<tag> URL, so renaming later
+          breaks links.
+
+      - name: featured
+        label: Featured
+        widget: boolean
+        default: false
+        hint: Homepage lead slot and /writing. Curation signal — use sparingly.
+
+      - name: draft
+        label: Draft
+        widget: boolean
+        default: true
+        hint: Hidden in production. Deliberately defaults to true.
+
+      - name: coverMode
+        label: Cover mode
+        widget: select
+        default: generated
+        options:
+          - { label: 'Generated (Bauhaus, from slug)', value: generated }
+          - { label: 'Photo (duotoned)', value: photo }
+
+      - name: cover
+        label: Cover image
+        widget: image
+        required: false
+        hint: Only used when cover mode is Photo. Leave empty otherwise.
+
+      - name: canonicalURL
+        label: Canonical URL
+        widget: string
+        required: false
+        pattern: ['^https?://.+', 'Must be a full URL']
+        hint: >-
+          Only when the canonical copy lives elsewhere (e.g. the Bellingcat
+          piece on Medium). Leave empty for anything you wrote here first.
+
+      - name: body
+        label: Body
+        # TEXT, not markdown/richtext: the rich editor round-trips content and
+        # would mangle <Sidenote> JSX. Revisit when MDX support ships in v1.0.
+        widget: text
+        default: |
+          import Sidenote from '../../components/Sidenote.astro';
+
+  # --------------------------------------------------------------- pages ----
+  - name: pages
+    label: Pages
+    folder: src/content/pages
+    create: false               # about / contact / privacy already exist
+    extension: md
+    format: yaml-frontmatter
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text }
+      - { name: body, label: Body, widget: markdown }
+
+  # ------------------------------------------------------------------ cv ----
+  - name: data
+    label: Data
+    files:
+      - name: cv
+        label: Curriculum vitae
+        file: src/data/cv.yaml
+        fields:
+          - { name: summary, label: Summary, widget: text }
+          - name: sections
+            label: Sections
+            widget: list
+            fields:
+              - { name: heading, label: Heading, widget: string }
+              - name: items
+                label: Items
+                widget: list
+                summary: '{{title}} — {{org}}'
+                fields:
+                  - { name: title, label: Title, widget: string }
+                  - { name: org, label: Organisation, widget: string, required: false }
+                  - { name: period, label: Period, widget: string, required: false }
+                  - { name: notes, label: Notes, widget: list, required: false }
