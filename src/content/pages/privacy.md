@@ -1,9 +1,9 @@
 ---
-title: 'Privacy'
-description: 'What this site collects, what it does not, and who else is involved. Short, because there is not much to say.'
+title: Privacy
+description: What this site collects, what it does not, and who else is involved. Short, because there is not much to say.
 ---
 
-This is a personal site. It has no accounts, no comments, no ads, no tracking pixels, and no advertising or data-broker relationships. The short version: I don't know who you are, and I'd like to keep it that way.
+This is a personal site. It has no accounts -- bar one, mine --, no comments, no ads, no tracking pixels, and no advertising or data-broker relationships. The short version: I don't know who you are, and I'd like to keep it that way.
 
 The longer version, because I think people are owed specifics rather than reassurance:
 
