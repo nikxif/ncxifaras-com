@@ -4,7 +4,7 @@ Personal site + blog for Nick Xifaras (physician & software developer, Athens).
 Astro static site on Cloudflare Pages. Private repo. Single author.
 
 **Read `docs/DECISIONS.md` before changing anything architectural** — it's an ADR
-log (D1–D25) explaining *why* things are the way they are. Most odd-looking
+log (D1–D29) explaining *why* things are the way they are. Most odd-looking
 choices here are deliberate and were paid for in bugs.
 
 ---
@@ -56,7 +56,7 @@ working as intended — it names the file and field.
 ```
 src/
   content/
-    blog/<slug>/index.mdx    posts — entry-relative, images colocated
+    blog/<slug>/index.mdx    posts — one folder each, images beside it (bare filenames)
     pages/*.md               about, contact, privacy
   content.config.ts          Zod schemas — the source of truth for frontmatter
   data/cv.yaml               CV content (structured, not prose)
@@ -117,8 +117,9 @@ hand. Nothing checks they agree. Same commit, always.
 
 ### 2. Content authoring
 
-- `cover` is typed with the **`image()`** helper, not `z.string()`. Images go in
-  the post's own folder or `src/assets/` — **never `public/`**, which gets copied
+- `cover` is typed with the **`image()`** helper, not `z.string()`. Post images go in
+  the post's own folder, referenced by bare filename (what Sveltia writes) —
+  **never `public/`**, which gets copied
   verbatim with no optimisation and will fail `image()` validation.
 - Frontmatter strings use **double quotes**. Apostrophes terminate single-quoted
   YAML and produce a "bad indentation of a mapping entry" error pointing nowhere
@@ -214,13 +215,18 @@ So:
 
 ---
 
+## Root design context
+
+- `PRODUCT.md`: who the site is for, what success means, and the product constraints (Impeccable reads it).
+- `DESIGN.md`: the token spec and component rules, written from the shipped code, with `.impeccable/design.json` as its sidecar. Keep it in sync with `tokens.css` and `palette.ts`. It's the fourth place a palette change touches.
+
 ## Further reading (in `docs/`)
 
 | File | What's in it |
 |---|---|
-| `DECISIONS.md` | ADR log D1–D25. The why behind everything above. |
-| `AUTHORING.md` | Day-to-day: frontmatter reference, Medium cross-posting, SEO, pre-publish checklist. |
+| `DECISIONS.md` | ADR log D1–D29. The why behind everything above. |
+| `Authoring.md` | Day-to-day: frontmatter reference, Medium cross-posting, SEO, pre-publish checklist. |
 | `INFRASTRUCTURE.md` | DNS, email, headers, analytics runbook. |
 | `ARCHITECTURE.md` | Content model and routing. |
-| `DESIGN.md` | Palette, type, sidenotes, cover system. |
+| `DESIGN.md` | The why behind the palette, type, sidenotes and cover system. The token spec is the root `/DESIGN.md`. |
 | `ROADMAP.md` | What's done, what's deferred (Pagefind, sidenote polish). |

@@ -1,0 +1,363 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T12:53:53+00:00",
+  "title": "Design System: ncxifaras.com",
+  "extensions": {
+    "colorMeta": {
+      "cobalt": {
+        "role": "primary",
+        "displayName": "Bauhaus Cobalt",
+        "canonical": "#1A3AAE",
+        "tonalRamp": [
+          "#010035",
+          "#05007A",
+          "#132FA3",
+          "#2E54CA",
+          "#4C79F1",
+          "#7AA1FF",
+          "#B1C9FE",
+          "#E7EFFF"
+        ]
+      },
+      "cobalt-deep": {
+        "role": "primary",
+        "displayName": "Bauhaus Cobalt, deep",
+        "canonical": "#12297F",
+        "tonalRamp": [
+          "#010035",
+          "#06146B",
+          "#1D388F",
+          "#3A5AB4",
+          "#597DDA",
+          "#7BA1FF",
+          "#B1C9FE",
+          "#E7EFFF"
+        ]
+      },
+      "vermilion": {
+        "role": "secondary",
+        "displayName": "Poster Vermilion",
+        "canonical": "#DE3F24",
+        "tonalRamp": [
+          "#1E0100",
+          "#4A0600",
+          "#7C1201",
+          "#B31E00",
+          "#E14227",
+          "#FF755B",
+          "#FEB4A4",
+          "#FEE9E5"
+        ]
+      },
+      "vermilion-deep": {
+        "role": "secondary",
+        "displayName": "Poster Vermilion, deep",
+        "canonical": "#8A2413",
+        "tonalRamp": [
+          "#1E0100",
+          "#4A0600",
+          "#7C1403",
+          "#A13B29",
+          "#C85E4A",
+          "#F0816C",
+          "#FEB4A4",
+          "#FEE9E4"
+        ]
+      },
+      "ochre": {
+        "role": "tertiary",
+        "displayName": "Signal Ochre",
+        "canonical": "#E7A32A",
+        "tonalRamp": [
+          "#130900",
+          "#342101",
+          "#593B02",
+          "#825803",
+          "#AD7604",
+          "#D99610",
+          "#FEBB4E",
+          "#FFEBD1"
+        ]
+      },
+      "ochre-deep": {
+        "role": "tertiary",
+        "displayName": "Signal Ochre, deep",
+        "canonical": "#6B4B06",
+        "tonalRamp": [
+          "#120900",
+          "#332101",
+          "#583C01",
+          "#7C5B1D",
+          "#9E7C41",
+          "#C29F64",
+          "#E8C387",
+          "#FFECCE"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Chalk",
+        "canonical": "#FAF7F0",
+        "tonalRamp": [
+          "#0D0B07",
+          "#272520",
+          "#44423C",
+          "#63615B",
+          "#85827C",
+          "#A8A59E",
+          "#CCC9C2",
+          "#F1EEE7"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Chalk Panel",
+        "canonical": "#F2ECDD",
+        "tonalRamp": [
+          "#0F0B03",
+          "#292519",
+          "#464235",
+          "#666154",
+          "#878274",
+          "#AAA597",
+          "#CFC9BA",
+          "#F4EEDF"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Lamp-Black Ink",
+        "canonical": "#1A1714",
+        "tonalRamp": [
+          "#0D0B08",
+          "#282421",
+          "#45413E",
+          "#64605D",
+          "#85817E",
+          "#A8A4A0",
+          "#CCC8C4",
+          "#F2EEE9"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink, soft",
+        "canonical": "#544F45",
+        "tonalRamp": [
+          "#0F0B04",
+          "#29241B",
+          "#464138",
+          "#666156",
+          "#878277",
+          "#AAA499",
+          "#CEC8BD",
+          "#F4EEE2"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#E2DBCB",
+        "tonalRamp": [
+          "#0F0A02",
+          "#2A2418",
+          "#474134",
+          "#676153",
+          "#888273",
+          "#ABA495",
+          "#CFC9B9",
+          "#F5EEDE"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page h1s and the homepage thesis."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads and featured-card titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles and h3."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Header navigation links."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All long-form reading at ≈65ch."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Hero lede, CV summary, compact card titles' size step."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Dates, category chips, tags, wordmark, share buttons, footer links."
+      },
+      "sidenote": {
+        "displayName": "Sidenote",
+        "purpose": "Sidenote bodies and figure captions."
+      }
+    },
+    "shadows": [
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 6px color-mix(in srgb, var(--ochre) 55%, transparent)",
+        "purpose": "Ochre halo paired with the 3px ink focus outline; the only surface shadow in the system."
+      },
+      {
+        "name": "cover-title-lift",
+        "value": "0 1px 0 color-mix(in srgb, var(--paper) 60%, transparent)",
+        "purpose": "Text-shadow keeping generated-cover titles legible over geometry."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition-quick",
+        "value": "140ms ease",
+        "purpose": "Link colour, underline and border transitions. Collapsed to ~0 under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "640px",
+        "purpose": "Cards stack; nav gap tightens."
+      },
+      {
+        "name": "hero-stack",
+        "value": "820px",
+        "purpose": "Hero and homepage grid go single-column; motif hidden."
+      },
+      {
+        "name": "sidenote-margin",
+        "value": "70rem",
+        "purpose": "Sidenotes move to the margin column; below this they collapse to tap-to-expand."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky header: mono wordmark with a cobalt dot, Commissioner nav links with a cobalt rule on hover or current page.",
+      "html": "<header class=\"ds-header\"><a class=\"ds-mark\" href=\"#\">ncxifaras<span class=\"ds-dot\">.</span>com</a><nav><ul class=\"ds-nav\"><li><a class=\"ds-nav-link\" href=\"#\">About</a></li><li><a class=\"ds-nav-link\" href=\"#\">CV</a></li><li><a class=\"ds-nav-link\" aria-current=\"page\" href=\"#\">Blog</a></li><li><a class=\"ds-nav-link\" href=\"#\">Writing</a></li><li><a class=\"ds-nav-link\" href=\"#\">Contact</a></li></ul></nav></header>",
+      "css": ".ds-header{display:flex;align-items:center;justify-content:space-between;height:4rem;padding-inline:1.5rem;background:var(--paper);border-bottom:1.5px solid var(--ink);color:var(--ink)} .ds-mark{font-family:var(--font-mono);font-size:var(--text-sm);font-weight:500;letter-spacing:.02em;color:inherit;text-decoration:none} .ds-dot{color:var(--cobalt);font-weight:700} .ds-nav{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0} .ds-nav-link{font-family:var(--font-display);font-size:.94rem;font-weight:600;color:var(--ink);text-decoration:none;padding-bottom:2px;border-bottom:2px solid transparent;transition:border-color 140ms ease} .ds-nav-link:hover,.ds-nav-link[aria-current=page]{border-color:var(--cobalt)} .ds-nav-link:focus-visible,.ds-mark:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px color-mix(in srgb,var(--ochre) 55%,transparent);border-radius:2px}"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "category-chip",
+      "description": "Category identity: a colour square plus a mono label, never a filled pill.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-chip\" style=\"--_cat:var(--cobalt)\">Project</span><span class=\"ds-chip\" style=\"--_cat:var(--ochre)\">Guide</span><span class=\"ds-chip\" style=\"--_cat:var(--vermilion)\">Opinion</span><span class=\"ds-chip\" style=\"--_cat:var(--ink)\">Personal</span></div>",
+      "css": ".ds-chips{display:flex;gap:1rem;flex-wrap:wrap} .ds-chip{display:inline-flex;align-items:center;gap:.45em;font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:.02em;font-weight:500;color:var(--ink-soft)} .ds-chip::before{content:'';width:.62em;height:.62em;border-radius:1px;background:var(--_cat,var(--ink))}"
+    },
+    {
+      "name": "Share Button",
+      "kind": "button",
+      "refersTo": "share-button",
+      "description": "The only button style on visitor pages: outlined hairline, mono label, no fill.",
+      "html": "<div class=\"ds-share\"><button type=\"button\" class=\"ds-share-btn\">Share…</button><button type=\"button\" class=\"ds-share-btn\">Copy link</button><a class=\"ds-share-btn\" href=\"#\">Mastodon</a></div>",
+      "css": ".ds-share{display:flex;gap:.5rem;flex-wrap:wrap} .ds-share-btn{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:2px;padding:.3rem .6rem;cursor:pointer;text-decoration:none;display:inline-block;transition:color 140ms ease,border-color 140ms ease} .ds-share-btn:hover{color:var(--cobalt-deep);border-color:var(--cobalt)} .ds-share-btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px color-mix(in srgb,var(--ochre) 55%,transparent)}"
+    },
+    {
+      "name": "Body Link",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Prose links: inherit colour, cobalt underline at 45%, solid on hover. Never colour-only.",
+      "html": "<p class=\"ds-p\">Some problems turn out to be <a class=\"ds-link\" href=\"#\">policy problems wearing a technical costume</a>, and you only find out by pushing.</p>",
+      "css": ".ds-p{font-family:var(--font-serif);font-size:var(--text-base);line-height:1.62;color:var(--ink);font-variation-settings:'opsz' 16;max-width:46rem} .ds-link{color:inherit;text-decoration-line:underline;text-decoration-color:color-mix(in srgb,var(--cobalt) 45%,transparent);text-decoration-thickness:1.5px;text-underline-offset:.18em;transition:text-decoration-color 140ms ease,color 140ms ease} .ds-link:hover{color:var(--cobalt-deep);text-decoration-color:var(--cobalt)} .ds-link:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px color-mix(in srgb,var(--ochre) 55%,transparent);border-radius:2px}"
+    },
+    {
+      "name": "Sidenote",
+      "kind": "custom",
+      "refersTo": "sidenote-body",
+      "description": "The signature device: cobalt-deep superscript marker, mono body behind an ochre rule. Shown here in its desktop margin form.",
+      "html": "<div class=\"ds-sn-wrap\"><p class=\"ds-sn-p\">The main claim sits here,<sup class=\"ds-sn-marker\">1</sup> and the sentence carries on without the aside cluttering it.</p><aside class=\"ds-sn-body\">The aside that would otherwise clutter the sentence: a caveat, a citation, a technical tangent.</aside></div>",
+      "css": ".ds-sn-wrap{display:grid;grid-template-columns:minmax(0,1fr) 16rem;gap:2rem;align-items:start} .ds-sn-p{font-family:var(--font-serif);font-size:var(--text-base);line-height:1.62;color:var(--ink);margin:0} .ds-sn-marker{font-family:var(--font-mono);font-size:.72em;line-height:0;color:var(--cobalt-deep);padding-inline:.12em;cursor:pointer} .ds-sn-marker:hover{color:var(--cobalt);background:color-mix(in srgb,var(--ochre) 22%,transparent)} .ds-sn-body{font-family:var(--font-mono);font-size:var(--text-sm);line-height:1.5;color:var(--ink-soft);border-left:3px solid var(--ochre);padding-left:.9rem}"
+    },
+    {
+      "name": "Post Card (compact)",
+      "kind": "card",
+      "refersTo": "",
+      "description": "Archive row: 16:10 ink-framed cover beside chip, date, title and a two-line dek. Flat, no shadow.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-cover\"><span class=\"ds-cover-label\">Guide</span><svg viewBox=\"0 0 160 100\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"160\" height=\"100\" fill=\"var(--paper-2)\"/><circle cx=\"110\" cy=\"46\" r=\"34\" fill=\"var(--ochre)\"/><rect x=\"28\" y=\"18\" width=\"12\" height=\"70\" fill=\"var(--ink)\"/><rect x=\"52\" y=\"62\" width=\"26\" height=\"26\" fill=\"var(--ochre)\"/></svg></div><div class=\"ds-card-body\"><div class=\"ds-meta\"><span class=\"ds-chip\" style=\"--_cat:var(--ochre)\">Guide</span><span>21 Sept 2026</span></div><h3 class=\"ds-title\"><a href=\"#\">Solving Bellingcat’s ‘Shadow Play’</a></h3><p class=\"ds-dek\">A synthetic aperture radar image, a satellite in the wrong place, and the circular building that almost gave it away.</p></div></article>",
+      "css": ".ds-card{display:grid;grid-template-columns:12rem 1fr;gap:1.5rem;align-items:center} .ds-cover{position:relative;aspect-ratio:16/10;border:1.5px solid var(--ink);border-radius:2px;overflow:hidden} .ds-cover svg{display:block;width:100%;height:100%} .ds-cover-label{position:absolute;top:.5rem;left:.5rem;background:color-mix(in srgb,var(--paper) 78%,transparent);color:var(--ink);padding:.2rem .45rem;border-radius:2px;font-family:var(--font-mono);font-size:var(--text-xs);font-weight:500} .ds-card-body{display:flex;flex-direction:column;gap:.5rem} .ds-meta{display:flex;gap:1rem;align-items:center;font-family:var(--font-mono);font-size:var(--text-xs);color:var(--ink-soft);letter-spacing:.02em} .ds-chip{display:inline-flex;align-items:center;gap:.45em;font-weight:500} .ds-chip::before{content:'';width:.62em;height:.62em;border-radius:1px;background:var(--_cat)} .ds-title{font-family:var(--font-display);font-weight:700;font-size:var(--text-lg);line-height:1.2;letter-spacing:-.01em;margin:0} .ds-title a{color:var(--ink);text-decoration:none;transition:color 140ms ease} .ds-title a:hover{color:var(--cobalt-deep)} .ds-title a:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px color-mix(in srgb,var(--ochre) 55%,transparent)} .ds-dek{font-family:var(--font-serif);font-size:.95rem;line-height:1.5;color:var(--ink-soft);margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}"
+    },
+    {
+      "name": "Section Head",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Bold Commissioner heading on a 1.5px ink rule with a mono count and a cobalt-deep 'more' link.",
+      "html": "<div class=\"ds-sec\"><h2 class=\"ds-sec-h\">Writing</h2><span class=\"ds-sec-count\">4 pieces</span><a class=\"ds-sec-more\" href=\"#\">all posts →</a></div>",
+      "css": ".ds-sec{display:flex;align-items:baseline;gap:1rem;border-bottom:1.5px solid var(--ink);padding-bottom:.5rem} .ds-sec-h{font-family:var(--font-display);font-weight:800;font-size:var(--text-2xl);line-height:1.2;letter-spacing:-.01em;margin:0;color:var(--ink)} .ds-sec-count{font-family:var(--font-mono);font-size:var(--text-xs);color:var(--ink-soft)} .ds-sec-more{margin-left:auto;font-family:var(--font-display);font-weight:600;font-size:.9rem;color:var(--cobalt-deep);text-decoration:none;border-bottom:2px solid transparent;transition:border-color 140ms ease} .ds-sec-more:hover{border-color:var(--cobalt)} .ds-sec-more:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px color-mix(in srgb,var(--ochre) 55%,transparent)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Annotated Poster",
+    "overview": "**Creative North Star: \"The Annotated Poster\"**\n\nThe site reads as a printed object: a Bauhaus poster on warm chalk paper, with flat fields of cobalt, vermilion and ochre, solid ink rules, near-square corners, and a geometric motif that recurs from the homepage hero to every post cover and OG card. Over that sits a scholar's annotation layer. Margin notes, mono metadata and captions in a typewriter face carry the caveats, sources and asides a physician-engineer writes in. The poster supplies the colour and the confidence. The annotations supply the voice.\n\nColour is spent where it carries meaning: category identity, the cover compositions, the hero motif, link and focus details. Everything else is quiet and typographic. Components barely exist as objects. Mono labels, hairlines and 1.5px ink rules do the structural work, so prose and covers lead. Spacing is generous on purpose. The site is airy, never terminal-dense, and readable by people who aren't developers.\n\nConfirmed rejections: the cream + high-contrast serif + terracotta \"AI design\" default (the cobalt lead is the escape from it), terminal or broadsheet density, loud filled category pills, and going quieter overall. Review said the system could take slightly *more* colour, never less.",
+    "keyCharacteristics": [
+      "Warm chalk ground, warm near-black ink, three Bauhaus primaries with cobalt dominant.",
+      "Three faces, three jobs: grotesque display, serif reading, mono annotation. All Greek-capable.",
+      "Flat. Depth comes from ink rules and colour fields, not shadows.",
+      "Near-square 2px corners: a printed object, not an app card.",
+      "Sidenotes are the single signature device. Boldness is spent there and in the covers."
+    ],
+    "rules": [
+      {
+        "name": "The Colour-Is-Category Rule",
+        "body": "Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, and as the dominant field of its cover. It never appears as a filled pill. Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.",
+        "section": "colors"
+      },
+      {
+        "name": "The Deep-for-Small Rule",
+        "body": "Accent-coloured text below large sizes uses the `-deep` variant. Paper-coloured text never sits on a vermilion fill at small sizes (4.05:1 fails AA).",
+        "section": "colors"
+      },
+      {
+        "name": "The Three-Places Rule",
+        "body": "A palette change touches `tokens.css`, `palette.ts`, and this file. Photo covers and OG cards can't read CSS vars and will drift otherwise.",
+        "section": "colors"
+      },
+      {
+        "name": "The Greek-or-Nothing Rule",
+        "body": "Every face must ship a verified Greek subset, checked in font metadata and not in marketing copy. In OG rendering, Latin and Greek register under distinct family names (`Commissioner` / `CommissionerGreek`) with a fallback list. A face without Greek is out, however good it looks.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mono-Means-Annotation Rule",
+        "body": "JetBrains Mono marks the annotation layer (metadata, notes, captions, labels) and code. It never sets headings or running prose.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ink-Rule Rule",
+        "body": "Separation is a line, not a lift. Strong structure gets `1.5px solid ink`, and quiet structure gets a `1px` hairline. Never add a drop shadow to a card, cover or panel.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do route every colour through a token, and update `tokens.css`, `palette.ts` and this file together.",
+      "Do use the `-deep` accent for any small accent-coloured text (The Deep-for-Small Rule).",
+      "Do separate with ink rules (1.5px) or hairlines (1px) at a 2px radius (The Ink-Rule Rule).",
+      "Do keep mono for the annotation layer (metadata, notes, captions, labels) and code.",
+      "Do author sidenotes inline, inside a paragraph, so they have something to anchor to.",
+      "Do give every post a cover. `generated` is the default, and photos go through the duotone so they stay siblings.",
+      "Do keep generous spacing (`space-5`/`space-6` between sections). Airy is the brief."
+    ],
+    "donts": [
+      "Don't drift toward cream + high-contrast serif + terracotta. Cobalt leads.",
+      "Don't make the site quieter overall. If anything it can take a little more colour.",
+      "Don't use filled, loud category pills. Category is a small square plus a label, and the cover carries the colour.",
+      "Don't add drop shadows, rounded app cards or radii above 2px.",
+      "Don't introduce a typeface without a verified Greek subset.",
+      "Don't set paper-coloured small text on vermilion.",
+      "Don't pack the layout to terminal or broadsheet density. Non-developers read this site."
+    ]
+  }
+}

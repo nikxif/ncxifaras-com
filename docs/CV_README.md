@@ -1,5 +1,7 @@
 # CV as YAML data
 
+> **Historical:** drop-in notes from the build, kept for context. Where they disagree with the code, `ARCHITECTURE.md` or `DECISIONS.md`, those win. Notably, the body serif is now Source Serif 4 (D25), the categories are project/guide/opinion/personal (D24), and posts live in `<slug>/index.mdx` folders (D20).
+
 Keeps the structured shape (so the master-CV transform still has a target — D5)
 while making the data pleasant to edit. YAML in, same page out.
 

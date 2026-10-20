@@ -18,10 +18,10 @@ export const PAPER_2 = '#F2ECDD';
 
 /** Mirrors --cat-* in tokens.css exactly. */
 export const CATEGORY_HEX = {
-  project: '#1A3AAE',    // --cat-project    → --project
-  guide: '#E7A32A',   // --cat-guide   → --guide
-  opinion: '#DE3F24', // --cat-opinion → --opinion
-  personal: INK,           // --cat-personal     → --personal
+  project: '#1A3AAE',    // --cat-project  → --cobalt
+  guide: '#E7A32A',   // --cat-guide    → --ochre
+  opinion: '#DE3F24', // --cat-opinion  → --vermilion
+  personal: INK,           // --cat-personal → --ink
 } as const;
 
 /** The canonical category union. Import this; don't re-declare it. */

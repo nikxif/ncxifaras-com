@@ -8,17 +8,23 @@ bottom before every publish; the rest is reference.
 ## 1. Where posts live
 
 ```
-src/content/blog/<slug>.md      ← normal post
-src/content/blog/<slug>.mdx     ← post that uses <Sidenote> (or any component)
+src/content/blog/<slug>/index.mdx   ← one folder per post (what Sveltia writes)
+src/content/blog/<slug>/cover.jpg   ← its images sit beside it
 ```
 
-**The filename is the URL.** `my-post.md` → `https://ncxifaras.com/posts/my-post`.
+**The folder name is the URL.** `my-post/index.mdx` → `https://ncxifaras.com/posts/my-post`.
+A few old flat files (`<slug>.md`) still load, because the loader globs both, but new posts go in a folder.
+
+Images are referenced by **bare filename** (`cover.jpg`, `figure.png`), which is
+exactly what Sveltia writes, so hand-written and CMS-written posts look the same.
+Imports count from the post's folder, so `src/` is **three** levels up
+(`../../../components/Sidenote.astro`). The old flat files used `../../`.
 Pick the slug deliberately: short, hyphenated, keyword-bearing, no dates. Renaming
 it later changes the URL and breaks inbound links (you'd need a redirect rule),
 so get it right the first time.
 
-Use `.md` by default. Use `.mdx` **only** when the post needs sidenotes or another
-component — `.md` can't import components.
+`index.mdx` is the norm, so sidenotes are always available. Plain `.md` works too,
+but it can't import components.
 
 ---
 
@@ -29,19 +35,23 @@ typo or missing required field **fails the build** instead of shipping broken.
 
 ```yaml
 ---
-title: 'Front-loaded, keyword-first, under ~60 chars'
-description: 'One or two sentences. Used for the SERP snippet, OG/social preview, and RSS. ~150–160 chars.'
+title: "Front-loaded, keyword-first, under ~60 chars"
+description: "One or two sentences. Used for the SERP snippet, OG/social preview, and RSS. ~150–160 chars."
 pubDate: 2026-07-22
 updatedDate: 2026-08-01        # optional — shows "updated" + helps SEO on revisions
-category: tutorial             # one of: osint | policy | tutorial | note
-tags: ['greek-health', 'fastapi']
+category: guide                # one of: project | guide | opinion | personal
+tags: ["greek-health", "fastapi"]
 featured: false                # true → homepage lead slot + /writing
 draft: false                   # true → hidden in production, visible in dev
 coverMode: generated           # generated (default) | photo
-cover: ../../assets/foo.jpg    # only when coverMode: photo
-canonicalURL: 'https://...'    # RARELY needed — see §5
+cover: "cover.jpg"            # only when coverMode: photo — a file in the post's folder
+canonicalURL: "https://..."    # RARELY needed — see §5
 ---
 ```
+
+**Use double quotes for strings.** An apostrophe inside single quotes ends the
+YAML string and produces "bad indentation of a mapping entry", an error that
+points nowhere useful.
 
 | Field | Required | Notes |
 |---|---|---|
@@ -49,18 +59,27 @@ canonicalURL: 'https://...'    # RARELY needed — see §5
 | `description` | ✅ | Meta description + OG + RSS. Write it for a human skimming a search result. |
 | `pubDate` | ✅ | Drives ordering (newest first) and the displayed date. |
 | `updatedDate` | — | Shows "updated" on the post. |
-| `category` | — (defaults to `note`) | One of the four enum values, or the build fails. Colour-coded. |
+| `category` | — (defaults to `personal`) | One of the four enum values, or the build fails. Colour-coded. |
 | `tags` | — | Finer-grained than category; each becomes `/tags/<tag>`. |
 | `featured` | — | Surfaces on the homepage lead + `/writing`. Don't feature everything — it's a curation signal. |
 | `draft` | — | `true` keeps it out of production builds, RSS, and sitemap. |
 | `coverMode` | — (defaults to `generated`) | See §4. |
-| `cover` | only if `photo` | Path to the image. |
+| `cover` | only if `photo` | Path to the image, relative to the post file. Validated by `image()`: a wrong path fails the build. |
 | `canonicalURL` | — | Leave unset for your own original posts (see §5). |
 
-**Categories are capped at four by design** (osint / policy / tutorial / note),
-because each owns a colour. If you're tempted to add a fifth, it's probably a
-tag, not a category. Adding a real new category means touching the enum, the
-colour tokens, and the label map — tell me and I'll wire it properly.
+**Categories are capped at four by design**, because each owns a colour. They
+describe what *kind* of post it is. The subject goes in tags.
+
+| category | colour | for |
+|---|---|---|
+| `project` | cobalt | I built something |
+| `guide` | ochre | how to do something (incl. OSINT challenge solves) |
+| `opinion` | vermilion | an argument or stance (incl. policy) |
+| `personal` | ink | notes, meta, everything else |
+
+If you're tempted to add a fifth, it's probably a tag, not a category. A real new
+category touches six places (enum, labels, palette hex, token, `.cat-*` CSS,
+Sveltia options); see `CLAUDE.md`.
 
 ---
 
@@ -71,10 +90,10 @@ the marker should appear:
 
 ```mdx
 ---
-title: '...'
+title: "..."
 # ...frontmatter...
 ---
-import Sidenote from '../../components/Sidenote.astro';
+import Sidenote from '../../../components/Sidenote.astro';
 
 The main claim sits here,<Sidenote>the aside that would otherwise clutter the sentence</Sidenote> and the sentence carries on.
 
@@ -96,13 +115,20 @@ You can force a custom marker<Sidenote label="†">like this dagger, instead of 
 **Default (`generated`): do nothing.** Each post gets a deterministic geometric
 cover seeded from its slug, in its category colour. Same slug → same cover, always.
 
-**Photo cover:** set `coverMode: photo` and `cover: ../../assets/yourimage.jpg`
-(put the file in `src/assets/` so it gets optimized). The image is duotoned into
-the category colour to match the generated ones.
+**Photo cover:** set `coverMode: photo` and `cover: "yourimage.jpg"`, with the file
+in the post's folder. **Never `public/`.** Files
+there skip optimisation and fail `image()` validation. The image is duotoned into
+the category colour (ink → category → paper) to match the generated covers. The
+treatment has been validated on real photos.
 
-⚠️ The photo treatment is **not yet validated against real images** — the duotone
-ramp is a first pass. When you try your first real photo cover, expect to tune it
-(ping me). Until then, `generated` is the safe default for everything.
+**Inline images with captions:** the markdown *title* becomes a visible caption,
+while alt text stays alt text:
+
+```md
+![What a screen reader should hear](figure.png "Visible caption. Credit: [Name](https://…)")
+```
+
+This only applies when the image is alone in its paragraph.
 
 ---
 
@@ -171,15 +197,17 @@ URLs). What's left is the writing:
   `https://ncxifaras.com/sitemap-index.xml`. Do it once; it auto-updates thereafter.
 - **`updatedDate` signals freshness** on substantive revisions — use it when a post
   materially changes, not for typos.
-- **No per-post OG image yet.** Social shares currently use a text/summary card
-  unless the post has a photo cover. Auto-generated OG images are a known future
-  enhancement; flag it if link previews start mattering.
+- **OG images are automatic.** Each post gets `/og/<slug>.png` at build time,
+  using the same geometry as its generated cover. Other pages use
+  `public/og-default.png`. Platforms cache these aggressively, so a retitled post
+  may show the old card for a while.
 
 ---
 
 ## 7. Publishing = git push
 
-There's no CMS and no publish button. The flow is:
+The repo is the source of truth. You can edit in **Sveltia at `/admin`**, which
+commits to the same repo, or by hand. Either way, publishing is a push to `main`:
 
 ```bash
 git add .
@@ -203,18 +231,19 @@ npm run dev      # drafts visible here; the live site hides them
 
 Run through this before every `git push`:
 
-- [ ] **Slug** (filename) is final, short, keyworded — you won't want to rename it.
-- [ ] **`title` + `description`** are written for search results, not placeholders.
-- [ ] **`category`** is one of the four valid values.
+- [ ] **Slug** (folder name) is final, short, keyworded — you won't want to rename it.
+- [ ] **`title` + `description`** are written for search results, not placeholders, in double quotes.
+- [ ] **`category`** is one of `project` / `guide` / `opinion` / `personal`.
 - [ ] **`pubDate`** is correct.
 - [ ] **`draft: false`** (or the field is gone) — otherwise it won't appear in prod.
-- [ ] File is **`.mdx`** if it uses sidenotes; sidenotes are **inline**, in paragraphs.
-- [ ] **Images are self-hosted** in `src/assets/` or `public/` — external/hotlinked
-      images are blocked by the strict CSP (`img-src 'self'`). Same goes for
+- [ ] Sidenotes are **inline**, inside paragraphs; the import path is `../../../components/Sidenote.astro`.
+- [ ] **Images are self-hosted** in the post's own folder, **never
+      `public/`**. External/hotlinked images are blocked by the strict CSP (`img-src 'self'`). Same goes for
       embeds (YouTube, tweets, gists): they'll be **blocked** unless we add CSP
       rules for them — tell me before relying on an embed.
 - [ ] Internal links have **no trailing slash** (`/posts/foo`, not `/posts/foo/`).
 - [ ] Ran `npm run dev` and eyeballed the post, its cover, and any sidenotes.
+- [ ] Ran `npm run build` green. A red build doesn't deploy; the live site silently stays on the last good version.
 - [ ] After deploy: the post URL loads, it's in `/rss.xml`, and (a day later) in
       Search Console.
 - [ ] If cross-posting: site version is **live first**, then use Medium **Import**

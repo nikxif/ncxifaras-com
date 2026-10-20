@@ -1,5 +1,7 @@
 # Phase 4 — polish & quality floor
 
+> **Historical:** drop-in notes from the build, kept for context. Where they disagree with the code, `ARCHITECTURE.md` or `DECISIONS.md`, those win. Notably, the body serif is now Source Serif 4 (D25), the categories are project/guide/opinion/personal (D24), and posts live in `<slug>/index.mdx` folders (D20).
+
 Four things: **auto-generated OG images** (the big one — closes the "shared links
 are bare text cards" gap from the authoring guide), **`robots.txt`**, an
 **accessibility fix**, and notes for the **performance** pass.

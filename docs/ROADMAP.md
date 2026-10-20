@@ -1,5 +1,7 @@
 # Roadmap
 
+> **Status (Oct 2026):** Phases 0–4 are built and the site is live. The phase plan below is kept as the original plan. Still deferred: Pagefind search, sidenote collision nudging (D15), the CV transform (D5), Greek i18n, `/uses` or `/now`, and syndication beyond Medium.
+
 Phased build plan. Legend: **[you]** = Nick acts (accounts, domains, running commands, writing), **[claude]** = I can generate the code/config for you to drop in, **[both]** = we iterate together.
 
 Status of the stack: Astro · Cloudflare Pages · GitHub · GoatCounter · English v1 (Greek-ready). See `ARCHITECTURE.md`, `DESIGN.md`, `DECISIONS.md`. Operational detail (DNS, email, deploy, troubleshooting) lives in `INFRASTRUCTURE.md`.
@@ -17,16 +19,16 @@ A chunk of infra got front-loaded during setup, out of phase order — that's fi
 - ✅ `_headers` (security headers + caching) in `public/`.
 
 Still open on infra (small):
-- ⬜ **GoatCounter account** — create it, then replace `YOURCODE` (×2) in `public/_headers` and add the tracking snippet.
+- ✅ **GoatCounter** — site `nikxif`, CSP updated, prod-only `<Analytics/>` component.
 - ⬜ **`www → apex` 301 redirect** (Rules → Redirect Rules) if not already added.
-- ⬜ **Canonical** — will be handled automatically once `site: 'https://ncxifaras.com'` is set in `astro.config.mjs` (Phase 1).
+- ✅ **Canonical** — `site: 'https://ncxifaras.com'` is set; `BaseLayout` emits `<link rel="canonical">`.
 
 ---
 
 ## Build-time decisions (confirmed)
 
 1. **Base template** — ✅ the official Astro blog starter (neutral base, restyled wholesale). *Not* AstroPaper (would mean un-styling an opinionated theme).
-2. **Font loading** — ✅ self-host via `@fontsource-variable` (Commissioner, Alegreya, JetBrains Mono — all with *verified* Greek subsets; Archivo was dropped for lacking Greek, see D9). Not the Google Fonts CDN (perf + GDPR).
+2. **Font loading** — ✅ self-host via `@fontsource-variable` (Commissioner, Source Serif 4, JetBrains Mono — all with *verified* Greek subsets; Archivo was dropped for lacking Greek (D9), and Alegreya was later swapped for Source Serif 4 (D25)). Not the Google Fonts CDN (perf + GDPR).
 3. **Sidenote authoring** — ✅ an MDX `<Sidenote>` component (margin on desktop, inline/expandable on mobile).
 4. **Domain** — ✅ `ncxifaras.com` (already registered; DNS to live on Cloudflare).
 
@@ -47,7 +49,7 @@ Still open on infra (small):
 ## Phase 2 — Content model + core pages
 - **[claude]** Content collections + Zod schemas for `blog/` and `pages/` (fields per `ARCHITECTURE.md`).
 - **[claude]** Routes: `/` (landing), `/posts` (paginated index), `/posts/[slug]`, `/tags/[tag]`, `/writing` (featured filter), `/about`, `/cv` (hand-written v1).
-- **[claude]** Markdown/MDX rendering: Shiki code highlighting (for tutorials), typographic defaults for the Alegreya body, heading anchors.
+- **[claude]** Markdown/MDX rendering: Shiki code highlighting (for tutorials), typographic defaults for the serif body (now Source Serif 4, D25), heading anchors.
 - **[claude]** `rss.xml` and `sitemap.xml`.
 - **[you]** Drop in 1–2 real posts to test the pipeline end-to-end.
 
@@ -74,7 +76,7 @@ Still open on infra (small):
 ## Phase 6 — Post-launch / v2
 - **CV transform** — build the `cv-master.yaml → site data` step once the master stabilises (D5).
 - **Cross-posting rhythm** — settle the publish-here-then-import-to-Medium workflow (D4).
-- **Design tuning** — lock the cobalt shade; finalise the photo-cover treatment against real photos.
+- ✅ **Design tuning** — cobalt locked at `#1A3AAE`; photo-cover duotone validated on real photos; generated-cover style approved.
 - **Maybe-laters** — Pagefind search; Greek i18n (fonts already ready); a `/uses` or `/now` page; RSS-to-Mastodon or similar syndication.
 
 ---

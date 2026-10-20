@@ -1,5 +1,7 @@
 # Phase 3 — fixes
 
+> **Historical:** drop-in notes from the build, kept for context. Where they disagree with the code, `ARCHITECTURE.md` or `DECISIONS.md`, those win. Notably, the body serif is now Source Serif 4 (D25), the categories are project/guide/opinion/personal (D24), and posts live in `<slug>/index.mdx` folders (D20).
+
 Three fixes from your review. All are drop-in replacements over the Phase 3 files.
 
 ## Files

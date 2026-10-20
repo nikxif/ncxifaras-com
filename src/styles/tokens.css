@@ -13,8 +13,8 @@
   --line:     #E2DBCB;   /* hairlines */
 
   /* ---- Palette · accents (Bauhaus trio) -------------------------------- */
-  /* The exact cobalt is an OPEN item — tune freely, everything references
-     the token. Darker/lighter candidates to try live in DESIGN.md. */
+  /* Cobalt is locked at #1A3AAE. Everything references the token, so a
+     retune is one line here plus its mirror in src/lib/palette.ts. */
   --cobalt:    #1A3AAE;  /* dominant accent */
   --vermilion: #DE3F24;  /* secondary pop */
   --ochre:     #E7A32A;  /* tertiary pop */
@@ -32,7 +32,8 @@
 
   /* ---- Typography ------------------------------------------------------ */
   /* Commissioner replaced Archivo (which has NO Greek subset — see D9).
-     All three faces ship native Greek; Alegreya even has polytonic. */
+     Source Serif 4 replaced Alegreya for long-form readability (D25).
+     All three faces ship native Greek. */
   --font-display: 'Commissioner Variable', system-ui, -apple-system, sans-serif;
   --font-serif:   'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
   --font-mono:    'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Menlo, monospace;
@@ -65,7 +66,7 @@
   --space-7: 6rem;
 
   /* ---- Layout ---------------------------------------------------------- */
-  --width-content: 46rem;    /* comfortable prose measure (~65ch Alegreya) */
+  --width-content: 46rem;    /* comfortable prose measure (~65ch body serif) */
   --width-wide:    70rem;    /* index grids, hero                          */
   --width-sidenote: 16rem;   /* the margin column (Phase 3)                */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);

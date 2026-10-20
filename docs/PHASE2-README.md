@@ -1,5 +1,7 @@
 # Phase 2 — install & wiring
 
+> **Historical:** drop-in notes from the build, kept for context. Where they disagree with the code, `ARCHITECTURE.md` or `DECISIONS.md`, those win. Notably, the body serif is now Source Serif 4 (D25), the categories are project/guide/opinion/personal (D24), and posts live in `<slug>/index.mdx` folders (D20).
+
 ## 1. Drop in the files
 
 ```
