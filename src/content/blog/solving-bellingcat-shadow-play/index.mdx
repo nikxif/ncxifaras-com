@@ -15,7 +15,7 @@ I'm a doctor and computer scientist, and solving Bellingcat Open Source Challeng
 
 The challenge gives you a grainy greyscale image of a town and asks you to locate it. Turns out, the road to that revelation isn't that straightforward (to me, at least).
 
-# The challenge
+## The challenge
 
 The challenge was created by [Jake Godin of Bellingcat](https://www.bellingcat.com/author/jakegodin/) and the description itself reads:
 
@@ -25,7 +25,7 @@ The challenge was created by [Jake Godin of Bellingcat](https://www.bellingcat.c
 
 ![The challenge photo depicting a synthetic aperture radar image of a town](shadow-play-cover.jpg "The challenge’s photo. Credit: Bellingcat")
 
-# Learning to read the image at all
+## Learning to read the image at all
 
 Before this I had seen [synthetic aperture radar](https://en.wikipedia.org/wiki/Synthetic-aperture_radar) (SAR) maybe three times, all of it Venus or impressive volcano flanks. So the first half hour went on reading about how it works, which I found fascinating. Even though the experience brought back memories of the horror of deciphering CT scans for the first time during med school, it was ultimately essential reading – much like radiology, one might say.
 
@@ -35,7 +35,7 @@ Armed with that, the big dark wedge in the image was obviously a shadow thrown b
 
 What I _could_ read were the **rail lines** running into the town and the station sitting in the middle of it, and a **street layout** that felt European to me, or possibly a town of colonial origin, which from above often look much the same. And one circular ring-shaped building that I could not place at all.
 
-# The dead ends
+## The dead ends
 
 I decided to work backwards from the provider. It was obvious from my initial reading and a few Google searches that purely open SAR data does not usually come at resolution this fine; so this had to be commercial imagery, and there are only a handful of those.
 
@@ -57,7 +57,7 @@ Of course, then I realised something I had never thought about: satellites like 
 
 I wasn't really in the mood for more calculations, so even though I avoid using either AI or reverse image searches for these challenges, I handed the orbital data to Claude and had it work out where on the ground the satellite could plausibly have been pointing. It came back with an _annulus_, a ring of possible ground positions a few hundred kilometres out from the track, and a shortlist that sat firmly in North Africa. That _would_ track, since the region does have more than a few towns that can have layouts vaguely like this – French colonial towns, basically – but the list was ultimately wrong. As I only understood the real reason for that at the end, I will come back to it later as a genuinely good lesson. For now, I only had my instinct telling me the list wasn't where the answer would be found, so I didn't dig deeper into it.
 
-# The break
+## The break
 
 I went back to the picture and to the one thing I had never explained: the **circular building**.
 
@@ -77,11 +77,11 @@ The street layout matched. The railway matched. I flipped to satellite view to b
 
 The joke at my expense is that a picture of that exact bullring above that exact cliff is one of the first things you get if you search for images of cliffside towns on Google. I just had no way of knowing that before I knew what I was looking at.
 
-# The answer
+## The answer
 
 **Ronda**, in Málaga province, Andalusia.
 
-# The part where the satellite maths sent me to the wrong continent
+## The part where the satellite maths sent me to the wrong continent
 
 I assumed the timestamp must be wrong. Off by a few minutes, or in some local time zone rather than UTC, because otherwise the geometry pointed at Algeria and the answer was in Spain. But I couldn't let it go, so I had Claude check whether UMBRA-07 could have seen Ronda _at all_ that day, by propagating the orbit across the full twenty-four hours and looking for moments when the satellite was in a position to image the town.
 
@@ -99,13 +99,13 @@ Now, that is very interesting as a realization on its own. It also – kind of �
 
 That said, the most important "lesson" has to do with the methodology itself: never rely on any tool blindly, even when what it returns sounds convincing at the surface.<Sidenote>This is one more good reason to avoid AI tools in these challenges, too; they're hard enough without wrong leads</Sidenote> Everything on the shortlist Claude gave me scored well _precisely_ because it was being scored against the wrong second; Claude wasn't exactly wrong, but it wasn't correct either.
 
-# A note on Umbra's public data, for anyone following the same path
+## A note on Umbra's public data, for anyone following the same path
 
 Checked while writing this up, since the dead end above is worth documenting properly rather than leaving as "I couldn't find it."
 
 Umbra's open data catalogue on S3 stops well short of this image's date. The STAC tree only contains directories for 2023, 2024 and 2025, and the 2025 catalogue lists months up to August. Ask it for anything later and you get a `NoSuchKey`. So the tracker was right, and the gap is real.
 
-# Why I like writing these up
+## Why I like writing these up
 
 Three things I'm personally taking away from this one:
 

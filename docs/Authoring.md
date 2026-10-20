@@ -241,6 +241,7 @@ Run through this before every `git push`:
       `public/`**. External/hotlinked images are blocked by the strict CSP (`img-src 'self'`). Same goes for
       embeds (YouTube, tweets, gists): they'll be **blocked** unless we add CSP
       rules for them — tell me before relying on an embed.
+- [ ] Section headings start at **`##`**. The title is already the page's only `h1`, and a `#` in the body renders at full display size.
 - [ ] Internal links have **no trailing slash** (`/posts/foo`, not `/posts/foo/`).
 - [ ] Ran `npm run dev` and eyeballed the post, its cover, and any sidenotes.
 - [ ] Ran `npm run build` green. A red build doesn't deploy; the live site silently stays on the last good version.
