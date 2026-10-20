@@ -174,3 +174,8 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## D31 — No cover on post pages
 **Decision:** covers appear only as thumbnails on cards and in the OG image. The post page itself has none.
 **Why:** three placements were tried and rejected in Oct 2026: full-width above the title, full-width below the dek, and small in the margin beside the title. On a reading page the title and prose lead, and the poster belongs to the index and the shared card.
+
+## D32 — Responsive markdown images
+**Decision:** `image.layout: 'constrained'` in `astro.config.mjs`, so markdown images get a `srcset`. A local rehype plugin (`rehype-image-sizes.mjs`) sets their `sizes` to the prose column: `(min-width: 51rem) 46rem, calc(100vw - 2.5rem)`. Cover components opt out with `layout="none"`, since they size themselves.
+**Why:** post figures shipped at their full source width (952–1919px) to every screen. Shadow Play's five figures fall from about 1.1MB to about 0.4MB on phones and 1× laptops. Astro's default `sizes` assumes the image's intrinsic width, which would still fetch about 1668px files for a 736px column. Like D21, the plugin never touches `src`: it runs before Astro's `rehypeImages`, which carries the node's properties into the image options.
+**Keep in step:** the `sizes` string mirrors `--width-content` plus the max gutter. Change the measure and you change this too.

@@ -80,6 +80,7 @@ src/
     og/[id].png.ts           one OG image per post
   plugins/
     rehype-figure-caption.mjs
+    rehype-image-sizes.mjs   correct `sizes` for markdown images (D32)
   styles/
     tokens.css               design tokens  ⚠ sync seam
     global.css               base + .prose typography

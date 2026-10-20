@@ -11,6 +11,13 @@ import '@fontsource-variable/jetbrains-mono';
 // slants the roman. Fetched only on pages that actually set mono italic.
 import '@fontsource-variable/jetbrains-mono/wght-italic.css';
 
+// Preload the two faces every first screen sets (Commissioner: wordmark, nav,
+// h1; Source Serif: body), latin subset only. Without this the browser only
+// discovers them after parsing the CSS. ?url resolves to the same hashed
+// /_astro/ file the @font-face rules point at, so nothing downloads twice.
+import displayFontURL from '@fontsource-variable/commissioner/files/commissioner-latin-wght-normal.woff2?url';
+import bodyFontURL from '@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2?url';
+
 import '../styles/tokens.css';
 import '../styles/global.css';
 
@@ -64,6 +71,9 @@ const ogImageURL = new URL(ogImage ?? '/og-default.png', Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <link rel="preload" href={displayFontURL} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFontURL} as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
