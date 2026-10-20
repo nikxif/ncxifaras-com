@@ -22,9 +22,9 @@
 //
 // Accessibility, by mode:
 //   - Narrow (<70rem): a real disclosure. The checkbox is focusable and named
-//     by its label ("Sidenote [1]", or "Σημείωση [1]" on a Greek page — the
-//     word comes from CSS :lang(), so no prop plumbing), the focus ring is
-//     drawn on the visible marker, and an open note keeps its marker tinted.
+//     by its label ("Sidenote [1]": the word is CSS-generated, visually
+//     hidden), the focus ring is drawn on the visible marker, and an open
+//     note keeps its marker tinted.
 //   - Margin (≥70rem): the note is always on screen, so the checkbox is
 //     display:none — out of the tab order and the accessibility tree — and a
 //     screen reader reads "Sidenote 1" then the note, inline, in order.
@@ -80,9 +80,6 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
   }
   .sn-name::before {
     content: 'Sidenote ';
-  }
-  .sn-name:lang(el)::before {
-    content: 'Σημείωση ';
   }
 
   .sn-body {

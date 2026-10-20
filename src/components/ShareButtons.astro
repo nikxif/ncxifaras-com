@@ -13,27 +13,22 @@
 // The script is an Astro component script: it gets bundled to a first-party
 // .js file, so the strict `script-src 'self'` CSP passes it untouched. No
 // inline script, no hash needed.
-import { UI, type Lang } from '../lib/i18n';
-
 interface Props {
   title: string;
   /** Absolute URL of the post. */
   url: string;
-  /** The post's language, so a Greek post's controls are in Greek. */
-  lang?: Lang;
 }
-const { title, url, lang = 'en' } = Astro.props;
-const t = UI[lang];
+const { title, url } = Astro.props;
 ---
 
 <div class="share" data-share data-url={url} data-title={title}>
   <button type="button" class="share-btn" data-share-native hidden>
-    {t.share}
+    Share…
   </button>
 
   <button type="button" class="share-btn" data-share-copy>
-    <span data-copy-idle>{t.copyLink}</span>
-    <span data-copy-done hidden>{t.copied}</span>
+    <span data-copy-idle>Copy link</span>
+    <span data-copy-done hidden>Copied ✓</span>
   </button>
   {/* The visual swap above happens inside a button, which screen readers
       don't re-announce; this polite live region says it once. */}
@@ -50,7 +45,7 @@ const t = UI[lang];
   </a>
 
   <noscript>
-    <span class="text-meta">{t.noscriptShare}</span>
+    <span class="text-meta">Copy the URL from your address bar to share.</span>
   </noscript>
 </div>
 

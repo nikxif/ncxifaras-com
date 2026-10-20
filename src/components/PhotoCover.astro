@@ -23,8 +23,12 @@ interface Props {
   alt: string;
   category: Category;
   title?: string;
+  showLabel?: boolean;
+  /** Above-the-fold lead image (post page): eager, high priority, and a
+      srcset sized to the text column instead of the 720px card rendition. */
+  lead?: boolean;
 }
-const { src, alt, category, title } = Astro.props;
+const { src, alt, category, title, showLabel = true, lead = false } = Astro.props;
 const label = CATEGORY_LABELS[category];
 
 const [rampR, rampG, rampB] = duotoneRamp(category);
@@ -35,15 +39,32 @@ const filterId = `duo-${category}-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
 <figure class:list={['pcover', `cat-${category}`]}>
-  <Image
-    src={src}
-    alt={alt}
-    width={720}
-    height={450}
-    class="duo-img"
-    style={`filter: url(#${filterId})`}
-    loading="lazy"
-  />
+  {
+    lead ? (
+      <Image
+        src={src}
+        alt={alt}
+        width={1472}
+        height={920}
+        widths={[480, 736, 1104, 1472]}
+        sizes="(min-width: 50rem) 46rem, calc(100vw - 2.5rem)"
+        class="duo-img"
+        style={`filter: url(#${filterId})`}
+        loading="eager"
+        fetchpriority="high"
+      />
+    ) : (
+      <Image
+        src={src}
+        alt={alt}
+        width={720}
+        height={450}
+        class="duo-img"
+        style={`filter: url(#${filterId})`}
+        loading="lazy"
+      />
+    )
+  }
 
   {/* Filter travels with the component. Sized 0 rather than display:none —
       some browsers drop filter refs inside a display:none subtree. */}
@@ -66,7 +87,7 @@ const filterId = `duo-${category}-${Math.random().toString(36).slice(2, 9)}`;
     </filter>
   </svg>
 
-  <span class="pcover-label text-meta">{label}</span>
+  {showLabel && <span class="pcover-label text-meta">{label}</span>}
   {title && <figcaption class="pcover-title">{title}</figcaption>}
 </figure>
 

@@ -23,8 +23,8 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     category: z.enum(CATEGORIES).default('personal'),
-    // Language of the post itself. Drives <html lang>, the date locale and the
-    // post's own chrome (chip, share controls). Site nav stays English.
+    // Language the post is written in. Sets <html lang> and og:locale only;
+    // the interface stays English on every post (D30).
     lang: z.enum(LANGS).default('en'),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false), // surfaces on homepage + /writing

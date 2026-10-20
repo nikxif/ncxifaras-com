@@ -1,12 +1,12 @@
 ---
-// PostLayout.astro — renders a single post. Replaces the starter's
-// BlogPost.astro (which can now be deleted along with BaseHead).
-// Prose column is --width-content; the extra room to the right is where
-// sidenotes will live in Phase 3.
+// PostLayout.astro — renders a single post.
+// Prose column is --width-content; at ≥70rem the room to its right is the
+// sidenote margin. The post's cover leads the page, so a post page carries
+// the same poster as its card and its OG image.
 import BaseLayout from './BaseLayout.astro';
+import Cover from '../components/Cover.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { formatDate, type Post } from '../lib/posts';
-import { UI } from '../lib/i18n';
+import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
@@ -15,7 +15,9 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, pubDate, updatedDate, category, tags, canonicalURL, lang } =
   post.data;
-const t = UI[lang];
+// The post's own chrome (chip, date, share) is English even on a Greek post
+// (D30); mark it so a Greek screen-reader voice switches for it.
+const chromeLang = lang === 'en' ? undefined : 'en';
 ---
 
 <BaseLayout
@@ -29,14 +31,17 @@ const t = UI[lang];
   modified={updatedDate}
 >
   <article class="container post">
+    <div class="post-cover">
+      <Cover {post} page />
+    </div>
     <header class="post-head">
-      <p class="meta text-meta">
-        <span class:list={['chip', `cat-${category}`]}>{t.category[category]}</span>
-        <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
+      <p class="meta text-meta" lang={chromeLang}>
+        <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         {
           updatedDate && (
             <span>
-              · {t.updated} <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, lang)}</time>
+              · updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
             </span>
           )
         }
@@ -49,7 +54,7 @@ const t = UI[lang];
       <slot />
     </div>
 
-    <footer class="post-foot">
+    <footer class="post-foot" lang={chromeLang}>
       {
         tags.length > 0 && (
           <ul class="tags">
@@ -63,7 +68,7 @@ const t = UI[lang];
           </ul>
         )
       }
-      <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} {lang} />
+      <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
     </footer>
   </article>
 </BaseLayout>
@@ -74,21 +79,24 @@ const t = UI[lang];
     padding-block: var(--space-6) var(--space-5);
   }
 
-  /* On wide screens (only once there's real room), widen the article to fit
-     the text column + a right-hand margin column, and centre the whole thing.
-     The text itself (header, prose, footer) stays capped at --width-content on
-     the left; sidenotes are positioned into the reserved right-hand space by
-     Sidenote.astro. Breakpoint = content(46) + gap(2) + note(16) + page
-     margins ≈ 70rem, so notes never get clipped. */
+  /* The poster that leads the page: the post's own cover at the text column's
+     width. The chip directly below names the category, so the cover drops
+     its overlay label here (Cover's `page` mode). */
+  .post-cover {
+    margin-bottom: var(--space-5);
+  }
+
   /* At ≥70rem the article takes the full container, so its left edge sits on
      the same line as the header wordmark and the footer; the text stays
-     capped at --width-content and the sidenote column follows it. (Centring a
-     narrower 64rem box put the text ~3rem off that line.) */
+     capped at --width-content and the sidenote column (content + 2rem gap +
+     16rem, ≈70rem with page margins, so notes never clip) follows it.
+     Centring a narrower 64rem box put the text ~3rem off that line. */
   @media (min-width: 70rem) {
     .post {
       max-width: var(--width-wide);
     }
 
+    .post-cover,
     .post-head,
     .post-foot,
     .prose {

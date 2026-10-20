@@ -9,16 +9,26 @@ interface Props {
   post: Post;
   /** Render the title onto the cover (feature slots). */
   withTitle?: boolean;
+  /** The post page's lead cover: no overlay label (the chip sits right below),
+      decorative to screen readers (the h1 follows), loaded first. */
+  page?: boolean;
 }
-const { post, withTitle = false } = Astro.props;
+const { post, withTitle = false, page = false } = Astro.props;
 const { category, cover, coverMode, title } = post.data;
 const titleProp = withTitle ? title : undefined;
 ---
 
 {
   coverMode === 'photo' && cover ? (
-    <PhotoCover src={cover} alt={`Cover image for ${title}`} {category} title={titleProp} />
+    <PhotoCover
+      src={cover}
+      alt={page ? '' : `Cover image for ${title}`}
+      {category}
+      title={titleProp}
+      showLabel={!page}
+      lead={page}
+    />
   ) : (
-    <GeneratedCover {category} slug={post.id} title={titleProp} />
+    <GeneratedCover {category} slug={post.id} title={titleProp} showLabel={!page} />
   )
 }

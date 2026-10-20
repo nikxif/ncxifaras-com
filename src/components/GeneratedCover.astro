@@ -11,8 +11,9 @@ interface Props {
   category: Category;
   slug: string;
   title?: string;
+  showLabel?: boolean;
 }
-const { category, slug, title } = Astro.props;
+const { category, slug, title, showLabel = true } = Astro.props;
 
 const inner = coverInnerSVG(slug, {
   cat: `var(--cat-${category})`,
@@ -32,7 +33,7 @@ const label = CATEGORY_LABELS[category];
     <Fragment set:html={inner} />
   </svg>
 
-  <span class="gcover-label text-meta">{label}</span>
+  {showLabel && <span class="gcover-label text-meta">{label}</span>}
   {title && <span class="gcover-title">{title}</span>}
 </div>
 

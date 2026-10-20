@@ -91,7 +91,7 @@ collections:
           - { label: 'Ελληνικά', value: el }
         hint: >-
           The language the post is written in. Sets the page language for
-          screen readers and switches the date, category and share labels.
+          screen readers and search engines; the interface stays English.
 
       - name: tags
         label: Tags

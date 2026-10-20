@@ -166,3 +166,7 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## D29 — `/admin` CSP: remove first, then set
 **Decision:** under `/admin` and `/admin/*`, `! Content-Security-Policy` removes the global policy before a relaxed one is set. That policy allows `api.github.com`, `cdn.jsdelivr.net` (Sveltia's hardcoded icon fonts) and `unpkg.com` (lazy-loaded chunks).
 **Why:** Cloudflare `_headers` *combines* duplicate headers. Two CSPs means the browser enforces their intersection, so a looser sub-path rule can never widen the global one. Visitor-facing pages stay first-party only, so `privacy.md` still holds. See `INFRASTRUCTURE.md` for the verification step.
+
+## D30 — Per-post language sets the page language, not the interface
+**Decision:** a post can declare `lang: el` (default `en`). That sets `<html lang>` and `og:locale` only. The interface stays English on every post: the category chip, date, share controls, sidenote names and site chrome. On a Greek page these English parts carry `lang="en"`.
+**Why:** screen readers need the page language to pick a voice, and search engines use it. A Greek interface that appeared only on some posts was tried and rejected (Oct 2026). It read as a bug rather than a feature, and the site's Greek readers understand "Project" or "Share" natively. Full bilingual UI and routing is still D6's deferred item.
