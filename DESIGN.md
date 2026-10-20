@@ -194,7 +194,7 @@ and a mono for the clinician's notes and metadata. Commissioner's Greek is
 native, the work of a Greek type designer, not a bolted-on subset.
 
 ### Hierarchy
-- **Display** (800, fluid 2.4rem → 4.25rem, line-height 1.05, -0.015em): page `h1`s and the homepage thesis. `text-wrap: balance`.
+- **Display** (800, fluid 2.4rem → 4.25rem, line-height 1.05, -0.015em): page `h1`s and the homepage thesis. `text-wrap: balance`. A post's own title drops to Headline size at ≤640px so it doesn't take five heavy lines on a phone.
 - **Headline** (800, fluid 1.9rem → 2.6rem, 1.2): section heads (`SectionHead`, sitting on a 1.5px ink rule) and featured-card titles. In prose, `h2` drops to Title size with a hairline underneath.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
 - **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, about 80 characters per line). That's deliberately longer than the textbook 65ch: a 40rem measure was tried and read as compacted. `text-wrap: pretty`.
@@ -223,7 +223,7 @@ is deliberate.
 - **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
 - **Post page:** header, body and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with tags and share, then a full-width "Read next" section with one compact card (still an open item; there's deliberately no author bio line, D33).
-- **Header:** sticky, 4rem tall, paper background with a 1.5px ink rule beneath.
+- **Header:** sticky above 640px (static on phones), 4rem tall, paper background with a 1.5px ink rule beneath.
 - **`/cv`** is intentionally quieter: content width, hairline-ruled sections, no colour beyond ink.
 
 ## Elevation & Depth
@@ -257,7 +257,7 @@ rules and type do the work, and the covers and prose lead.
 ### Navigation
 - **Style:** Commissioner 600 at 0.94rem, ink, no underline. A 2px bottom border appears in cobalt on hover and on the current page (`aria-current`).
 - **Wordmark:** `ncxifaras.com` in Commissioner 800 at 1.15rem, with the dot in cobalt. It's the same mark in the header and footer: the site opens and signs off with one poster-weight gesture.
-- **Mobile:** same row, tighter gap (`space-3`) at ≤640px.
+- **Mobile:** same row, tighter gap (`space-3`) at ≤640px. The header stops being sticky there: on a phone the bar is often two rows, and pinning it over the text cost a sixth of the screen.
 
 ### Category chip
 - **Style:** a mono label in ink-soft, weight 500, led by a 0.62em square (1px radius) in the category colour. No fill, no border.

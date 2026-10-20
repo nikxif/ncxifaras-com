@@ -111,6 +111,14 @@ const isActive = (item: (typeof nav)[number]) =>
     nav ul {
       gap: var(--space-3);
     }
+
+    /* On a phone the bar is often two rows (~6rem), a sixth of the screen
+       pinned over the text for the whole read. Let it scroll away; the
+       wordmark and nav are back at the top, and the browser's own chrome
+       already gives a way up. global.css drops scroll-padding to match. */
+    .site-header {
+      position: static;
+    }
   }
 
   /* Touch: grow the hit area to ~44px without moving the text or the

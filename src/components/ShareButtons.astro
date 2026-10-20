@@ -126,6 +126,15 @@ const { title, url } = Astro.props;
     border-color: var(--cobalt);
   }
 
+  @media (pointer: coarse) {
+    .share-btn {
+      min-height: 2.75rem;
+      padding-inline: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
   [data-copy-done] {
     color: var(--cobalt-deep);
   }

@@ -168,9 +168,10 @@ a:hover {
   border: 0;
 }
 
+/* Header isn't sticky on phones (Header.astro), so only breathing room. */
 @media (max-width: 640px) {
   html {
-    scroll-padding-top: 7rem;
+    scroll-padding-top: 1rem;
   }
 }
 

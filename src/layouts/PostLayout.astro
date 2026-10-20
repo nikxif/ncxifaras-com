@@ -187,6 +187,15 @@ const next =
     color: var(--ink-soft);
   }
 
+  /* On a phone the fluid h1 floor (2.4rem) wrapped long titles to five or six
+     heavy lines before the first paragraph. Cap it at the Headline step for post titles only; the
+     homepage hero keeps the full scale. */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: var(--text-2xl);
+    }
+  }
+
   /* One band of metadata after the article, under a single hairline. Tags and
      share controls are deliberately STACKED — the prose column isn't wide
      enough to hold both on one line, so relying on flex-wrap made the layout
@@ -220,6 +229,20 @@ const next =
 
   .tag:hover {
     color: var(--cobalt-deep);
+  }
+
+  /* Touch: grow tags to a ~44px target. The share buttons get the same in
+     ShareButtons.astro. */
+  @media (pointer: coarse) {
+    .tags {
+      gap: 0 var(--space-3);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
   }
 </style>
 
