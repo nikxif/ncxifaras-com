@@ -263,7 +263,7 @@ rules and type do the work, and the covers and prose lead.
 - **Style:** a mono label in ink-soft, weight 500, led by a 0.62em square (1px radius) in the category colour. No fill, no border.
 
 ### Category bar
-- **Style:** a flat 4rem × 0.4rem bar in the category colour, square-cornered, at the very top of a post's header (above the chip row), matching the width of the prose's 4rem ink rule. Decorative (`aria-hidden`): the chip carries the category as text, so the bar is exempt from the 3:1 non-text rule, and ochre (~2:1 on paper) is used as-is. Posts only.
+- **Style:** a flat 0.4rem rule in the category colour, set directly under the chip and the date as an underline that ends with the date (the chip + date group's bottom border, so its length follows the text). The gap above it is 0.62em, the size of the chip's colour square. Square-cornered, no fill. Decorative: the chip carries the category as text, so the rule is exempt from the 3:1 non-text rule, and ochre (~2:1 on paper) is used as-is. Posts only.
 
 ### Post cards
 - **Default:** stacked, with the cover above meta, title and dek.

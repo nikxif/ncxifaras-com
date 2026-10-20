@@ -325,7 +325,7 @@
     "rules": [
       {
         "name": "The Colour-Is-Category Rule",
-        "body": "Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, as a short bar (4rem × 0.4rem) above a post's title, and as the dominant field of its cover. It never appears as a filled pill, and never colours text (ochre and vermilion fail contrast at title size). Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.",
+        "body": "Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, as a 0.4rem rule underlining a post's chip and date, and as the dominant field of its cover. It never appears as a filled pill, and never colours text (ochre and vermilion fail contrast at title size). Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.",
         "section": "colors"
       },
       {
