@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T15:20:38+00:00",
+  "generatedAt": "2026-10-20T17:20:56+00:00",
   "title": "Design System: ncxifaras.com",
   "extensions": {
     "colorMeta": {
@@ -325,7 +325,7 @@
     "rules": [
       {
         "name": "The Colour-Is-Category Rule",
-        "body": "Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, and as the dominant field of its cover. It never appears as a filled pill. Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.",
+        "body": "Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, as a short bar (4rem × 0.4rem) above a post's title, and as the dominant field of its cover. It never appears as a filled pill, and never colours text (ochre and vermilion fail contrast at title size). Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.",
         "section": "colors"
       },
       {

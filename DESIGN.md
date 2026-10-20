@@ -176,7 +176,7 @@ A warm paper-and-ink ground carrying three saturated primaries, each of which en
 - **Hairline** (#E2DBCB): thin dividers: prose h2 underline, post footer, code-block borders, share-button outlines, and the 3px left rule on figure captions.
 
 ### Named Rules
-**The Colour-Is-Category Rule.** Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, and as the dominant field of its cover. It never appears as a filled pill. Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.
+**The Colour-Is-Category Rule.** Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, as a short bar (4rem × 0.4rem) above a post's title, and as the dominant field of its cover. It never appears as a filled pill, and never colours text (ochre and vermilion fail contrast at title size). Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.
 
 **The Deep-for-Small Rule.** Accent-coloured text below large sizes uses the `-deep` variant. Paper-coloured text never sits on a vermilion fill at small sizes (4.05:1 fails AA).
 
@@ -261,6 +261,9 @@ rules and type do the work, and the covers and prose lead.
 
 ### Category chip
 - **Style:** a mono label in ink-soft, weight 500, led by a 0.62em square (1px radius) in the category colour. No fill, no border.
+
+### Category bar
+- **Style:** a flat 4rem × 0.4rem bar in the category colour, square-cornered, at the very top of a post's header (above the chip row), matching the width of the prose's 4rem ink rule. Decorative (`aria-hidden`): the chip carries the category as text, so the bar is exempt from the 3:1 non-text rule, and ochre (~2:1 on paper) is used as-is. Posts only.
 
 ### Post cards
 - **Default:** stacked, with the cover above meta, title and dek.

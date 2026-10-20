@@ -45,6 +45,7 @@ const next =
 >
   <article class="container post">
     <header class="post-head">
+      <span class:list={['cat-bar', `cat-${category}`]} aria-hidden="true"></span>
       <p class="meta text-meta" lang={chromeLang}>
         <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
@@ -137,6 +138,20 @@ const next =
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+  }
+
+  /* The post's one spend of colour in the header: a short, thick bar in its
+     category colour, the same vocabulary as the homepage's bar and the 4rem
+     ink rule in the prose. Colour as a line, never a pill or a fill
+     (Colour-Is-Category, Ink-Rule). Decorative — the chip beside the date
+     carries the category as text — so it's hidden from assistive tech and
+     exempt from the 3:1 non-text rule (ochre is ~2:1 on paper, by design). */
+  .cat-bar {
+    display: block;
+    width: 4rem;
+    height: 0.4rem;
+    margin-bottom: var(--space-2);
+    background: var(--_cat, var(--ink));
   }
 
   .meta {
