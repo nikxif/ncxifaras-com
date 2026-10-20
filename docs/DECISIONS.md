@@ -5,10 +5,7 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## Open items (not yet settled)
 
 - **Resume transform** — `/cv` renders from hand-maintained `src/data/cv.yaml` (D23); the `cv-master.yaml → site` transform is still v2 (see D5).
-- **The post ending reads like a publishing platform** — two parts of the post ending (added in the Oct 2026 post-page pass, `PostLayout.astro`) feel like Medium or a non-personal site, which this site isn't. Flagged by the author; not yet changed.
-  - **"Read next":** a full-width section head ("Read next · all writing →") over a thumbnail card is the recommended-reading pattern of a publication. Not decided: a quieter plain-text link in the site's own voice, or no forward link at all.
-  - **The byline:** a third-person bio line ("Nick Xifaras is a doctor who writes code…") under the last paragraph is the author-box pattern of a publication. Not decided: first person, or drop it, given that /about is one nav click away and the header already carries the name.
-  - Until decided, both stay as they are. Whatever replaces them should come from the site's own grammar (mono annotation, ink rules, sidenote-like asides) and not from a blog template.
+- **"Read next" at the end of a post reads like a publishing platform** — a full-width section head ("Read next · all writing →") over a thumbnail card is the recommended-reading pattern of a publication, which this personal site isn't. Flagged by the author (and independently by the Oct 2026 critique); kept for now. Not decided: a quieter plain-text link in the site's own voice, or no forward link at all. Whatever replaces it should come from the site's own grammar (mono annotation, ink rules, sidenote-like asides), not from a blog template. Also open: on a Greek post it currently points at an English one.
 
 ### Settled since first written
 - **Cobalt shade** — locked at `#1A3AAE` (was `#1E45C9` in the first palette draft). Still a token; still mirrored in `palette.ts`.
@@ -183,3 +180,7 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 **Decision:** `image.layout: 'constrained'` in `astro.config.mjs`, so markdown images get a `srcset`. A local rehype plugin (`rehype-image-sizes.mjs`) sets their `sizes` to the prose column: `(min-width: 51rem) 46rem, calc(100vw - 2.5rem)`. Cover components opt out with `layout="none"`, since they size themselves.
 **Why:** post figures shipped at their full source width (952–1919px) to every screen. Shadow Play's five figures fall from about 1.1MB to about 0.4MB on phones and 1× laptops. Astro's default `sizes` assumes the image's intrinsic width, which would still fetch about 1668px files for a 736px column. Like D21, the plugin never touches `src`: it runs before Astro's `rehypeImages`, which carries the node's properties into the image options.
 **Keep in step:** the `sizes` string mirrors `--width-content` plus the max gutter. Change the measure and you change this too.
+
+## D33 — No author bio line at the end of a post
+**Decision:** the post ends with tags and share (then "Read next", still an open item). There is no author box or byline.
+**Why:** a third-person bio under the last paragraph ("Nick Xifaras is a doctor who writes code…") is the author-box pattern of a publishing platform, and it repeated the homepage tagline word for word. This is a personal site: the name is already in the header on every page and /about is one nav click away. It was added in the Oct 2026 post-page pass and removed by the author the same day.

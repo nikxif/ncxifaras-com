@@ -199,7 +199,7 @@ native, the work of a Greek type designer, not a bolted-on subset.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
 - **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, about 80 characters per line). That's deliberately longer than the textbook 65ch: a 40rem measure was tried and read as compacted. `text-wrap: pretty`.
 - **Lede** (400, fluid 1.25rem → 1.38rem, 1.5): hero lede and the CV summary.
-- **Body small** (400, 1rem, 1.5): serif secondary text: card deks, the post byline, CV organisations and bullets.
+- **Body small** (400, 1rem, 1.5): serif secondary text: card deks, CV organisations and bullets.
 - **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
 - **Sidenote** (400, 0.89rem, 1.5): sidenote bodies and figure captions.
 - **Cover title** (700, 1.05rem, 1.1): the optional title set onto a cover in feature slots. It's fixed rather than fluid because the cover itself scales.
@@ -222,7 +222,7 @@ is deliberate.
 
 - **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
-- **Post page:** header, body, byline and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with a byline, then tags and share, then a full-width "Read next" section with one compact card.
+- **Post page:** header, body and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with tags and share, then a full-width "Read next" section with one compact card (still an open item; there's deliberately no author bio line, D33).
 - **Header:** sticky, 4rem tall, paper background with a 1.5px ink rule beneath.
 - **`/cv`** is intentionally quieter: content width, hairline-ruled sections, no colour beyond ink.
 

@@ -64,12 +64,6 @@ const next =
       <slot />
     </div>
 
-    {/* The signature: who wrote this, in the homepage's own words. */}
-    <p class="byline" lang={chromeLang}>
-      <a href="/about">Nick Xifaras</a> is a doctor who writes code, working across clinical
-      medicine, digital-health policy, and the messy seams between them.
-    </p>
-
     <footer class="post-foot" lang={chromeLang}>
       {
         tags.length > 0 && (
@@ -124,7 +118,6 @@ const next =
 
     .post-head,
     .post-foot,
-    .byline,
     .prose {
       max-width: var(--width-content);
     }
@@ -175,28 +168,6 @@ const next =
 
   .dek {
     color: var(--ink-soft);
-  }
-
-  /* The signature sits tight under the last paragraph, opened by the same
-     short ink rule the prose uses for <hr> — the article's own closing mark. */
-  .byline {
-    margin-top: var(--space-5);
-    color: var(--ink-soft);
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-
-  .byline::before {
-    content: '';
-    display: block;
-    width: 4rem;
-    border-top: var(--border-strong);
-    margin-bottom: var(--space-3);
-  }
-
-  .byline a {
-    color: var(--ink);
-    font-weight: var(--weight-medium);
   }
 
   /* One band of metadata after the article, under a single hairline. Tags and
