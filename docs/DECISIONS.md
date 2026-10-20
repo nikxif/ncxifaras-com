@@ -5,6 +5,10 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## Open items (not yet settled)
 
 - **Resume transform** — `/cv` renders from hand-maintained `src/data/cv.yaml` (D23); the `cv-master.yaml → site` transform is still v2 (see D5).
+- **The post ending reads like a publishing platform** — two parts of the post ending (added in the Oct 2026 post-page pass, `PostLayout.astro`) feel like Medium or a non-personal site, which this site isn't. Flagged by the author; not yet changed.
+  - **"Read next":** a full-width section head ("Read next · all writing →") over a thumbnail card is the recommended-reading pattern of a publication. Not decided: a quieter plain-text link in the site's own voice, or no forward link at all.
+  - **The byline:** a third-person bio line ("Nick Xifaras is a doctor who writes code…") under the last paragraph is the author-box pattern of a publication. Not decided: first person, or drop it, given that /about is one nav click away and the header already carries the name.
+  - Until decided, both stay as they are. Whatever replaces them should come from the site's own grammar (mono annotation, ink rules, sidenote-like asides) and not from a blog template.
 
 ### Settled since first written
 - **Cobalt shade** — locked at `#1A3AAE` (was `#1E45C9` in the first palette draft). Still a token; still mirrored in `palette.ts`.
