@@ -69,10 +69,13 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
      the left; sidenotes are positioned into the reserved right-hand space by
      Sidenote.astro. Breakpoint = content(46) + gap(2) + note(16) + page
      margins ≈ 70rem, so notes never get clipped. */
+  /* At ≥70rem the article takes the full container, so its left edge sits on
+     the same line as the header wordmark and the footer; the text stays
+     capped at --width-content and the sidenote column follows it. (Centring a
+     narrower 64rem box put the text ~3rem off that line.) */
   @media (min-width: 70rem) {
     .post {
-      max-width: calc(var(--width-content) + 2rem + var(--width-sidenote));
-      margin-inline: auto;
+      max-width: var(--width-wide);
     }
 
     .post-head,

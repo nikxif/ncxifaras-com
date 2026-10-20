@@ -53,7 +53,7 @@ Each renders through `src/pages/[page].astro`.
 | `/sitemap-index.xml` | `@astrojs/sitemap` | — |
 | `/admin` | `public/admin/` | Sveltia CMS, with its own relaxed CSP (D28, D29) |
 
-Nav order: About · CV · Blog (`/posts`) · Writing · Contact.
+Nav order: About · CV · Writing (`/posts`, also current on `/posts/*`, `/tags/*`, `/writing`) · Contact. The curated `/writing` view (D3) is no longer a nav item while nothing published is featured.
 
 URLs never have a trailing slash (`trailingSlash: 'never'`). Canonical URLs are
 built from `site` in `astro.config.mjs` unless a post sets `canonicalURL`, which

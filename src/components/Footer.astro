@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container row">
     <div class="fmark">
-      ncxifaras.com
+      <span>ncxifaras<span class="dot">.</span>com</span>
       <span class="text-meta">© {year} · Nick Xifaras</span>
     </div>
     <div class="navs">
@@ -69,13 +69,25 @@ const year = new Date().getFullYear();
     gap: var(--space-3);
   }
 
+  /* Same mono wordmark as the header, so the site signs off in the voice it
+     opened with. */
   .fmark {
-    font-family: var(--font-display);
-    font-weight: var(--weight-display);
-    font-size: 1.15rem;
+    font-family: var(--font-mono);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
+  }
+
+  .fmark .dot {
+    color: var(--cobalt);
+    font-weight: 700;
+  }
+
+  .fmark .text-meta {
+    font-weight: var(--weight-body);
   }
 
   .navs {

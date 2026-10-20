@@ -1,18 +1,19 @@
 ---
-// Header.astro — Phase 2 revision: "Writing" now points at the curated
-// /writing view (per ARCHITECTURE routes); /posts is the full archive,
-// reachable from /writing and the homepage's "all posts →".
+// Header.astro — four items, because five didn't fit a phone and "Blog" vs
+// "Writing" was a distinction no reader could explain. "Writing" is the full
+// archive; the curated /writing view (D3) stays reachable but is no longer
+// a nav item while nothing published is featured.
 const nav = [
   { href: '/about', label: 'About' },
-  { href: '/cv', label: 'CV'},
-  { href: '/posts', label: 'Blog' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/contact', label: 'Contact' }
+  { href: '/cv', label: 'CV' },
+  { href: '/posts', label: 'Writing', also: ['/writing', '/tags'] },
+  { href: '/contact', label: 'Contact' },
 ];
 
 const { pathname } = Astro.url;
-const isActive = (href: string) =>
-  pathname === href || (href !== '/' && pathname.startsWith(href + '/'));
+const under = (href: string) => pathname === href || pathname.startsWith(href + '/');
+const isActive = (item: (typeof nav)[number]) =>
+  under(item.href) || (item.also ?? []).some(under);
 ---
 
 <header class="site-header">
@@ -28,7 +29,7 @@ const isActive = (href: string) =>
               <a
                 href={item.href}
                 class="link-plain nav-link"
-                aria-current={isActive(item.href) ? 'page' : undefined}
+                aria-current={isActive(item) ? 'page' : undefined}
               >
                 {item.label}
               </a>
@@ -49,11 +50,18 @@ const isActive = (href: string) =>
     border-bottom: var(--border-strong);
   }
 
+  /* Wraps instead of overflowing: on the narrowest phones the nav drops under
+     the wordmark rather than colliding with it (it used to clip "Contact").
+     min-height keeps the single-row bar at its familiar 4rem. */
   .bar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    height: 4rem;
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    min-height: 4rem;
+    padding-block: var(--space-3);
   }
 
   .mark {
@@ -76,6 +84,7 @@ const isActive = (href: string) =>
   }
 
   .nav-link {
+    position: relative;
     font-family: var(--font-display);
     font-size: 0.94rem;
     font-weight: 600;
@@ -93,6 +102,16 @@ const isActive = (href: string) =>
   @media (max-width: 640px) {
     nav ul {
       gap: var(--space-3);
+    }
+  }
+
+  /* Touch: grow the hit area to ~44px without moving the text or the
+     underline — an invisible box around each link. */
+  @media (pointer: coarse) {
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      inset: -0.6rem -0.4rem;
     }
   }
 </style>
