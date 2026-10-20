@@ -3,7 +3,7 @@
 // text right) for list pages like /posts and /tags, so archive covers aren't
 // full-width. `featured` stays the big side-by-side; default stacks.
 import Cover from './Cover.astro';
-import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
+import { CATEGORY_LABELS, formatDate, typeset, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
@@ -12,7 +12,9 @@ interface Props {
 }
 
 const { post, featured = false, compact = false } = Astro.props;
-const { title, description, pubDate, category } = post.data;
+const { pubDate, category } = post.data;
+const title = typeset(post.data.title);
+const description = typeset(post.data.description);
 const href = `/posts/${post.id}`;
 ---
 

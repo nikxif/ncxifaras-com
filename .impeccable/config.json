@@ -1,0 +1,44 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles/global.css"
+        ],
+        "createdAt": "2026-10-20T14:18:53.241Z",
+        "reason": "agent decision per DESIGN.md: the 3px left rule on sidenotes, blockquotes and captions is the documented annotation grammar (Components > Sidenote > Kin), not a card side-tab"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/components/Sidenote.astro"
+        ],
+        "createdAt": "2026-10-20T14:18:53.263Z",
+        "reason": "agent decision per DESIGN.md: the 3px left rule on sidenotes, blockquotes and captions is the documented annotation grammar (Components > Sidenote > Kin), not a card side-tab"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "commissioner",
+        "files": [
+          "src/lib/og.ts"
+        ],
+        "createdAt": "2026-10-20T15:15:44.567Z",
+        "reason": "agent decision per D17/D26: og.ts registers the DESIGN.md faces under their static-package family names for satori"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "jetbrains mono",
+        "files": [
+          "src/lib/og.ts"
+        ],
+        "createdAt": "2026-10-20T15:15:44.590Z",
+        "reason": "agent decision per D17/D26: same face as DESIGN.md's JetBrains Mono Variable, static package for satori"
+      }
+    ]
+  }
+}

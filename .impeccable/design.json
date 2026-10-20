@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-20T12:53:53+00:00",
+  "generatedAt": "2026-10-20T15:20:38+00:00",
   "title": "Design System: ncxifaras.com",
   "extensions": {
     "colorMeta": {
@@ -332,7 +332,12 @@
       },
       {
         "name": "The Mono-Means-Annotation Rule",
-        "body": "JetBrains Mono marks the annotation layer (metadata, notes, captions, labels) and code. It never sets headings or running prose.",
+        "body": "JetBrains Mono marks the annotation layer (metadata, notes, captions, labels) and code. It never sets headings or running prose. Its real italic is loaded, so emphasis inside a note is never a slanted roman.",
+        "section": "typography"
+      },
+      {
+        "name": "The Curly-Quotes Rule",
+        "body": "Titles and deks pass through `typeset()` (`src/lib/posts.ts`) wherever they render: page, card, `<title>`, OG card. Frontmatter skips smartypants and a CMS textbox types straight quotes, so this is never left to the author.",
         "section": "typography"
       },
       {

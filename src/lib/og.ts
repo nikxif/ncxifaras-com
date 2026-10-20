@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { coverSVG } from './cover-geometry';
 import { CATEGORY_HEX, INK, INK_SOFT, PAPER, PAPER_2, type Category } from './palette';
-import { CATEGORY_LABELS, type Post } from './posts';
+import { CATEGORY_LABELS, typeset, type Post } from './posts';
 
 const require = createRequire(import.meta.url);
 const fontFile = (pkgPath: string) => readFileSync(require.resolve(pkgPath));
@@ -75,6 +75,6 @@ function card(title: string, category: Category, slug: string) {
 /** Render a post's OG card to PNG bytes. */
 export async function renderOG(post: Post): Promise<Buffer> {
   const { title, category } = post.data;
-  const svg = await satori(card(title, category, post.id) as any, { width: W, height: H, fonts });
+  const svg = await satori(card(typeset(title), category, post.id) as any, { width: W, height: H, fonts });
   return new Resvg(svg, { fitTo: { mode: 'width', value: W } }).render().asPng();
 }

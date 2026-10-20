@@ -160,10 +160,10 @@ A warm paper-and-ink ground carrying three saturated primaries, each of which en
 
 ### Neutral
 - **Warm Chalk** (#FAF7F0): the page ground, sticky header, and photo-cover highlight.
-- **Chalk Panel** (#F2ECDD): generated-cover ground, inline code background, caption rules, photo-cover fallback.
+- **Chalk Panel** (#F2ECDD): generated-cover ground, inline code background, photo-cover fallback.
 - **Lamp-Black Ink** (#1A1714): primary text, all strong rules (1.5px), the category colour for `personal`, and photo-cover shadows. 16.7:1 on paper.
 - **Ink, soft** (#544F45): secondary text such as deks, metadata, sidenote bodies, tags and captions (7.6:1).
-- **Hairline** (#E2DBCB): thin dividers: prose h2 underline, post footer, code-block borders, share-button outlines.
+- **Hairline** (#E2DBCB): thin dividers: prose h2 underline, post footer, code-block borders, share-button outlines, and the 3px left rule on figure captions.
 
 ### Named Rules
 **The Colour-Is-Category Rule.** Each primary owns one category: project = cobalt, guide = ochre, opinion = vermilion, personal = ink. A category shows up as a 0.62em colour square beside a mono label, and as the dominant field of its cover. It never appears as a filled pill. Four categories is the cap because there are only so many colours. Anything finer is an uncoloured tag.
@@ -187,7 +187,7 @@ native, the work of a Greek type designer, not a bolted-on subset.
 - **Display** (800, fluid 2.4rem → 4.25rem, line-height 1.05, -0.015em): page `h1`s and the homepage thesis. `text-wrap: balance`.
 - **Headline** (800, fluid 1.9rem → 2.6rem, 1.2): section heads (`SectionHead`, sitting on a 1.5px ink rule) and featured-card titles. In prose, `h2` drops to Title size with a hairline underneath.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
-- **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, ≈65ch). `text-wrap: pretty`.
+- **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-prose` (40rem, 68–72 characters per line, counted on a rendered post). `text-wrap: pretty`.
 - **Lede** (400, fluid 1.25rem → 1.38rem, 1.5): hero lede and the CV summary.
 - **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
 - **Sidenote** (400, 0.89rem, 1.5): sidenote bodies and figure captions.
@@ -195,20 +195,23 @@ native, the work of a Greek type designer, not a bolted-on subset.
 ### Named Rules
 **The Greek-or-Nothing Rule.** Every face must ship a verified Greek subset, checked in font metadata and not in marketing copy. In OG rendering, Latin and Greek register under distinct family names (`Commissioner` / `CommissionerGreek`) with a fallback list. A face without Greek is out, however good it looks.
 
-**The Mono-Means-Annotation Rule.** JetBrains Mono marks the annotation layer (metadata, notes, captions, labels) and code. It never sets headings or running prose.
+**The Mono-Means-Annotation Rule.** JetBrains Mono marks the annotation layer (metadata, notes, captions, labels) and code. It never sets headings or running prose. Its real italic is loaded, so emphasis inside a note is never a slanted roman.
+
+**The Curly-Quotes Rule.** Titles and deks pass through `typeset()` (`src/lib/posts.ts`) wherever they render: page, card, `<title>`, OG card. Frontmatter skips smartypants and a CMS textbox types straight quotes, so this is never left to the author.
 
 ## Layout
 
-A single centred column system with two widths: `--width-wide` (70rem) for
-the homepage, index grids and header, and `--width-content` (46rem) for prose,
-`/about` and `/cv`. The page gutter is fluid (`clamp(1.25rem, 4vw, 2.5rem)`).
+A single centred column system with three widths: `--width-wide` (70rem) for
+the homepage, index grids and header; `--width-content` (46rem) for list
+columns (archive, tags, `/writing`) and post headlines; and `--width-prose`
+(40rem), the reading measure, for post text, `/about` and `/cv`. The page gutter is fluid (`clamp(1.25rem, 4vw, 2.5rem)`).
 Spacing follows a seven-step rhythm (0.25 → 6rem). Section breathing room is
 `space-5`/`space-6`, and the footer sits `space-7` below content. The airiness
 is deliberate.
 
 - **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
-- **Post page ≥70rem:** the article widens to content + 2rem gap + a 16rem sidenote column and centres. The text stays at 46rem on the left, and every paragraph becomes the positioning context for its notes. Below 70rem it's a single column.
+- **Post page:** the headline takes 46rem, and the dek, body, byline and post footer take the 40rem measure; both share one left edge. At ≥70rem the article spans the full container, so that edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with a byline, then tags and share, then a full-width "Read next" section with one compact card.
 - **Header:** sticky, 4rem tall, paper background with a 1.5px ink rule beneath.
 - **`/cv`** is intentionally quieter: content width, hairline-ruled sections, no colour beyond ink.
 
@@ -276,7 +279,7 @@ rules and type do the work, and the covers and prose lead.
 - **Body:** mono 0.89rem in ink-soft, with a 3px ochre left rule and 0.9rem padding.
 - **≥70rem:** always visible in a 16rem margin column, 2rem off the text, top-aligned to its paragraph.
 - **<70rem:** collapses to an underlined `[n]` marker that expands inline on tap, driven by a hidden checkbox. No JS.
-- **Kin:** blockquotes (italic, ink-soft, 3px ochre rule) and figure captions (mono, ink-soft, 3px chalk-panel rule) share the same left-rule annotation grammar.
+- **Kin:** blockquotes (italic, ink-soft, 3px ochre rule) and figure captions (mono, ink-soft, 3px hairline rule) share the same left-rule annotation grammar.
 
 ## Do's and Don'ts
 

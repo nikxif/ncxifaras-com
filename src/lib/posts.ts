@@ -29,6 +29,21 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   personal: 'Personal',
 };
 
+/**
+ * Curly quotes for frontmatter strings (titles, deks). Markdown bodies get
+ * this from smartypants; frontmatter never passes through it, and a CMS
+ * textbox types straight quotes — hence "Bellingcat’s 'Shadow Play'".
+ * A quote after start/space/bracket/dash opens; every other one closes, which
+ * also makes apostrophes right. Known miss: a leading elision ('90s) opens.
+ */
+export function typeset(s: string): string {
+  return s
+    .replace(/(^|[\s([{—–-])'/g, '$1‘')
+    .replace(/'/g, '’')
+    .replace(/(^|[\s([{—–-])"/g, '$1“')
+    .replace(/"/g, '”');
+}
+
 /** Human date, consistent everywhere (English on every post, D30). */
 export function formatDate(d: Date): string {
   return d.toLocaleDateString('en-GB', {

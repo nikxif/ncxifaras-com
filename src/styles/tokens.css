@@ -66,7 +66,10 @@
   --space-7: 6rem;
 
   /* ---- Layout ---------------------------------------------------------- */
-  --width-content: 46rem;    /* comfortable prose measure (~65ch body serif) */
+  --width-content: 46rem;    /* list/index columns (archive, tags, /writing) */
+  /* The reading measure: posts, the pages collection, /cv. 46rem ran ~80
+     characters per line in the ~19px serif; this lands near 65–70. */
+  --width-prose:   40rem;
   --width-wide:    70rem;    /* index grids, hero                          */
   --width-sidenote: 16rem;   /* the margin column (Phase 3)                */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);

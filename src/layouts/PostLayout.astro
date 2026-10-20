@@ -7,15 +7,16 @@ import BaseLayout from './BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { CATEGORY_LABELS, formatDate, getPublishedPosts, type Post } from '../lib/posts';
+import { CATEGORY_LABELS, formatDate, getPublishedPosts, typeset, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, category, tags, canonicalURL, lang } =
-  post.data;
+const { pubDate, updatedDate, category, tags, canonicalURL, lang } = post.data;
+const title = typeset(post.data.title);
+const description = typeset(post.data.description);
 // The post's own chrome (chip, date, share) is English even on a Greek post
 // (D30); mark it so a Greek screen-reader voice switches for it.
 const chromeLang = lang === 'en' ? undefined : 'en';
@@ -97,9 +98,19 @@ const next =
 </BaseLayout>
 
 <style>
+  /* Two measures: the headline gets the wider --width-content (a display
+     title in a 40rem column orphans its last words), the reading text gets
+     --width-prose (~65–70 characters per line). Both start on one left edge. */
   .post {
     max-width: var(--width-content);
     padding-block: var(--space-6) var(--space-5);
+  }
+
+  .dek,
+  .prose,
+  .byline,
+  .post-foot {
+    max-width: var(--width-prose);
   }
 
   /* After the article: one forward path, set apart by a full section break
@@ -112,18 +123,15 @@ const next =
 
   /* At ≥70rem the article takes the full container, so its left edge sits on
      the same line as the header wordmark and the footer; the text stays
-     capped at --width-content and the sidenote column (content + 2rem gap +
-     16rem, ≈70rem with page margins, so notes never clip) follows it.
-     Centring a narrower 64rem box put the text ~3rem off that line. */
+     capped at --width-prose and the sidenote column (prose + 2rem gap +
+     16rem) follows it. The 70rem breakpoint predates the narrower measure
+     and still holds (it was sized for 46rem text), so notes never clip. */
   @media (min-width: 70rem) {
     .post {
       max-width: var(--width-wide);
     }
 
-    .post-head,
-    .post-foot,
-    .byline,
-    .prose {
+    .post-head {
       max-width: var(--width-content);
     }
 

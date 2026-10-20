@@ -289,7 +289,9 @@ a:hover {
   font-size: var(--text-sm);
   line-height: 1.5;
   color: var(--ink-soft);
-  border-left: 3px solid var(--paper-2);
+  /* Same left-rule grammar as sidenotes and blockquotes, in the neutral
+     hairline: paper-2 on paper was all but invisible. */
+  border-left: 3px solid var(--line);
   padding-left: 0.9rem;
 }
  
