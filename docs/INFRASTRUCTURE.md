@@ -98,6 +98,43 @@ Both mean the edge can't reach the Pages backend — almost always a custom-doma
 ### A resource is blocked in the browser console (CSP)
 - The CSP in `public/_headers` is deliberately strict. Add the specific host (or a script hash) for the thing being blocked; don't loosen to `'unsafe-inline'` on scripts.
 
+## _headers: duplicate headers COMBINE, they don't override
+
+Cloudflare Pages joins repeated headers with a comma, and a request matching several URL patterns inherits all of their headers. For most headers that's harmless. For CSP it is not: two Content-Security-Policy headers mean two policies enforced simultaneously, and the browser applies the intersection.
+
+A looser rule on a sub-path therefore cannot widen a stricter global one. Adding connect-src https://api.github.com under /admin/* while /* says connect-src 'self' changes nothing — the request is still blocked, and the console quotes the global directive, which makes it look like the edit never deployed.
+
+Fix: remove before setting, using Cloudflare's ! syntax under the more specific rule:
+
+/admin
+  ! Content-Security-Policy
+  Content-Security-Policy: <the relaxed policy>
+
+/admin/*
+  ! Content-Security-Policy
+  Content-Security-Policy: <the relaxed policy>
+
+Both paths — /admin/* does not match a bare /admin.
+
+Verify, don't assume: in devtools → Network → the document request, there must be exactly one content-security-policy response header. A comma in the middle of it means the removal didn't take.
+
+Fallback if it doesn't: Cloudflare dashboard → Rules → Transform Rules → Modify Response Header → Set Content-Security-Policy, expression starts_with(http.request.uri.path, "/admin"). Set replaces outright.
+
+Symptom to recognise: a fetch blocked by CSP surfaces in app code as a generic NetworkError when attempting to fetch resource with no mention of CSP. The actual cause appears as a separate console line naming the directive. Always read the second line.
+
+## Sveltia CMS: standing CDN exceptions on /admin
+
+The admin page is the one place the site is not purely first-party. Two exceptions, both unavoidable:
+
+cdn.jsdelivr.net (font-src) — Sveltia's @font-face rules hardcode jsDelivr for Material Symbols, Source Sans 3 and Noto Mono. Self-hosting the bundle does not bring the fonts along; no font files ship in the npm package. Blocking it renders the UI as literal ligature names (edit, add, search) instead of icons.
+unpkg.com (script-src, connect-src) — the standalone dist/sveltia-cms.js is a loader that lazy-fetches chunks and locale files from unpkg.com/@sveltia/cms@<version>/dist/chunks/…. Only the npm/ entry point ships chunks locally.
+
+Plus api.github.com (connect-src) for the backend, and blob: / data: in img-src, media-src, frame-src, manifest-src for the media library. style-src needs 'unsafe-inline'; script-src does not need unsafe-eval or inline scripts.
+
+Scope: /admin only. Visitor-facing pages remain first-party, so the claims in privacy.md still hold. Worth re-reading that page if this ever changes.
+
+Maintenance: the bundle is copied from node_modules/@sveltia/cms/dist/ into public/admin/. Re-copy it after upgrading the package, or you'll be running an old CMS against a current config.
+
 ## Gotchas / do-not-do
 
 - Don't proxy MX records (mail hostnames must be DNS-only).
