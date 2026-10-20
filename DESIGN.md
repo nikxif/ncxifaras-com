@@ -222,7 +222,7 @@ is deliberate.
 
 - **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
-- **Post page:** header, body and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with tags and share, then a full-width "Read next" section with one compact card (still an open item; there's deliberately no author bio line, D33).
+- **Post page:** header, body and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with tags and share, then a full-width "Read next" section (heading at the article's own h2 size over a hairline, one compact card; still an open item; there's deliberately no author bio line, D33).
 - **Header:** sticky above 640px (static on phones), 4rem tall, paper background with a 1.5px ink rule beneath.
 - **`/cv`** is intentionally quieter: content width, hairline-ruled sections, no colour beyond ink.
 
@@ -261,6 +261,10 @@ rules and type do the work, and the covers and prose lead.
 
 ### Category chip
 - **Style:** a mono label in ink-soft, weight 500, led by a 0.62em square (1px radius) in the category colour. No fill, no border.
+
+### Contents and reading time
+- **Reading time:** `· 10 min read` in the meta line, after the date, only from 4 minutes up (~225 wpm over the prose). A one-screen post doesn't need it.
+- **Contents:** a native `<details>` under the dek, only on posts with four or more h2s. Closed by default (a mono `Contents / 8` row between two hairlines); open, a plain list of Commissioner 600 links to the section ids. No numbers, no box, no JS. On touch each row is 44px.
 
 ### Category bar
 - **Style:** a flat 0.4rem rule in the category colour, set directly under the chip and the date as an underline that ends with the date (the chip + date group's bottom border, so its length follows the text). The gap above it is 0.62em, the size of the chip's colour square. Square-cornered, no fill. Decorative: the chip carries the category as text, so the rule is exempt from the 3:1 non-text rule, and ochre (~2:1 on paper) is used as-is. Posts only.

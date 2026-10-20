@@ -1,18 +1,21 @@
 ---
 // SectionHead.astro — the bold, obvious section heading (DESIGN.md: headings
 // should never be easy to miss). Strong rule underneath, optional mono count
-// and an "all →" link on the right.
+// and an "all →" link on the right. `quiet` is the step down for an ending
+// (a post's "Read next"): the article's own h2 size and a hairline, so the
+// author's last paragraph stays the end of the page.
 interface Props {
   title: string;
+  quiet?: boolean;
   count?: string | number;
   moreHref?: string;
   moreLabel?: string;
 }
 
-const { title, count, moreHref, moreLabel = 'all →' } = Astro.props;
+const { title, quiet = false, count, moreHref, moreLabel = 'all →' } = Astro.props;
 ---
 
-<div class="sec-head">
+<div class:list={['sec-head', { quiet }]}>
   <h2>{title}</h2>
   {count !== undefined && <span class="text-meta">/ {count}</span>}
   {
@@ -36,6 +39,15 @@ const { title, count, moreHref, moreLabel = 'all →' } = Astro.props;
 
   h2 {
     font-size: var(--text-2xl);
+  }
+
+  .quiet {
+    border-bottom: var(--border-hair);
+    margin-bottom: var(--space-4);
+  }
+
+  .quiet h2 {
+    font-size: var(--text-xl);
   }
 
   .more {
