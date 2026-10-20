@@ -187,7 +187,7 @@ native, the work of a Greek type designer, not a bolted-on subset.
 - **Display** (800, fluid 2.4rem → 4.25rem, line-height 1.05, -0.015em): page `h1`s and the homepage thesis. `text-wrap: balance`.
 - **Headline** (800, fluid 1.9rem → 2.6rem, 1.2): section heads (`SectionHead`, sitting on a 1.5px ink rule) and featured-card titles. In prose, `h2` drops to Title size with a hairline underneath.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
-- **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-prose` (40rem, 68–72 characters per line, counted on a rendered post). `text-wrap: pretty`.
+- **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, about 80 characters per line). That's deliberately longer than the textbook 65ch: a 40rem measure was tried and read as compacted. `text-wrap: pretty`.
 - **Lede** (400, fluid 1.25rem → 1.38rem, 1.5): hero lede and the CV summary.
 - **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
 - **Sidenote** (400, 0.89rem, 1.5): sidenote bodies and figure captions.
@@ -201,17 +201,16 @@ native, the work of a Greek type designer, not a bolted-on subset.
 
 ## Layout
 
-A single centred column system with three widths: `--width-wide` (70rem) for
-the homepage, index grids and header; `--width-content` (46rem) for list
-columns (archive, tags, `/writing`) and post headlines; and `--width-prose`
-(40rem), the reading measure, for post text, `/about` and `/cv`. The page gutter is fluid (`clamp(1.25rem, 4vw, 2.5rem)`).
+A single centred column system with two widths: `--width-wide` (70rem) for
+the homepage, index grids and header, and `--width-content` (46rem) for prose,
+lists, `/about` and `/cv`. The page gutter is fluid (`clamp(1.25rem, 4vw, 2.5rem)`).
 Spacing follows a seven-step rhythm (0.25 → 6rem). Section breathing room is
 `space-5`/`space-6`, and the footer sits `space-7` below content. The airiness
 is deliberate.
 
 - **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
-- **Post page:** the headline takes 46rem, and the dek, body, byline and post footer take the 40rem measure; both share one left edge. At ≥70rem the article spans the full container, so that edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with a byline, then tags and share, then a full-width "Read next" section with one compact card.
+- **Post page:** header, body, byline and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with a byline, then tags and share, then a full-width "Read next" section with one compact card.
 - **Header:** sticky, 4rem tall, paper background with a 1.5px ink rule beneath.
 - **`/cv`** is intentionally quieter: content width, hairline-ruled sections, no colour beyond ink.
 
