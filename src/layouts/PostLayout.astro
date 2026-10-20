@@ -7,19 +7,33 @@ import BaseLayout from './BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import SectionHead from '../components/SectionHead.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { CATEGORY_LABELS, formatDate, getPublishedPosts, typeset, type Post } from '../lib/posts';
+import type { MarkdownHeading } from 'astro';
+import {
+  CATEGORY_LABELS,
+  formatDate,
+  getPublishedPosts,
+  readingMinutes,
+  typeset,
+  type Post,
+} from '../lib/posts';
 
 interface Props {
   post: Post;
+  headings?: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
+const { post, headings = [] } = Astro.props;
 const { pubDate, updatedDate, category, tags, canonicalURL, lang } = post.data;
 const title = typeset(post.data.title);
 const description = typeset(post.data.description);
 // The post's own chrome (chip, date, share) is English even on a Greek post
 // (D30); mark it so a Greek screen-reader voice switches for it.
 const chromeLang = lang === 'en' ? undefined : 'en';
+
+// Length and a way around, for the long guides. A one-screen post needs
+// neither: the reading time shows from 4 minutes, the contents from 4 sections.
+const minutes = readingMinutes(post.body);
+const sections = headings.filter((h) => h.depth === 2);
 
 // One forward path at the end, picked at build time: the nearest older post
 // in the same category, else the nearest newer one, else the newest other
@@ -50,6 +64,7 @@ const next =
           <span class="chip">{CATEGORY_LABELS[category]}</span>
           <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         </span>
+        {minutes >= 4 && <span>· {minutes} min read</span>}
         {
           updatedDate && (
             <span>
@@ -60,6 +75,24 @@ const next =
       </p>
       <h1>{title}</h1>
       <p class="text-lede dek">{description}</p>
+      {
+        sections.length >= 4 && (
+          <details class="toc" lang={chromeLang}>
+            <summary>
+              Contents <span class="toc-count">/ {sections.length}</span>
+            </summary>
+            <ul>
+              {sections.map((h) => (
+                <li>
+                  <a href={`#${h.slug}`} class="link-plain" lang={chromeLang && lang}>
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
     </header>
 
     <div class="prose">
@@ -185,6 +218,59 @@ const next =
 
   .dek {
     color: var(--ink-soft);
+  }
+
+  /* Contents for long guides: a native disclosure, closed by default so the
+     first screen stays the title and the first paragraph. Hairlines, not a
+     box: the same quiet furniture as the post footer. No numbers; the order is
+     the page's own. */
+  .toc {
+    border-block: var(--border-hair);
+    padding-block: var(--space-2);
+  }
+
+  .toc summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-soft);
+    padding-block: var(--space-1);
+  }
+
+  .toc summary::marker {
+    color: var(--cobalt-deep);
+  }
+
+  .toc-count {
+    margin-left: 0.4em;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 var(--space-1);
+  }
+
+  .toc li a {
+    display: block;
+    padding-block: 0.3rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.94rem;
+    line-height: 1.35;
+  }
+
+  .toc li a:hover {
+    color: var(--cobalt-deep);
+  }
+
+  @media (pointer: coarse) {
+    .toc summary,
+    .toc li a {
+      display: flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
   }
 
   /* On a phone the fluid h1 floor (2.4rem) wrapped long titles to five or six
