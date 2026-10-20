@@ -5,27 +5,38 @@
 // sidenotes will live in Phase 3.
 import BaseLayout from './BaseLayout.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
+import { formatDate, type Post } from '../lib/posts';
+import { UI } from '../lib/i18n';
 
 interface Props {
   post: Post;
 }
 
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, category, tags, canonicalURL } =
+const { title, description, pubDate, updatedDate, category, tags, canonicalURL, lang } =
   post.data;
+const t = UI[lang];
 ---
 
-<BaseLayout title={`${title} — Nick Xifaras`} {description} {canonicalURL}>
+<BaseLayout
+  title={`${title} — Nick Xifaras`}
+  {description}
+  {canonicalURL}
+  {lang}
+  ogType="article"
+  ogImage={`/og/${post.id}.png`}
+  published={pubDate}
+  modified={updatedDate}
+>
   <article class="container post">
     <header class="post-head">
       <p class="meta text-meta">
-        <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
-        <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        <span class:list={['chip', `cat-${category}`]}>{t.category[category]}</span>
+        <time datetime={pubDate.toISOString()}>{formatDate(pubDate, lang)}</time>
         {
           updatedDate && (
             <span>
-              · updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+              · {t.updated} <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate, lang)}</time>
             </span>
           )
         }
@@ -42,17 +53,17 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL }
       {
         tags.length > 0 && (
           <ul class="tags">
-            {tags.map((t) => (
+            {tags.map((tag) => (
               <li>
-                <a href={`/tags/${t}`} class="link-plain tag">
-                  #{t}
+                <a href={`/tags/${encodeURIComponent(tag)}`} class="link-plain tag">
+                  #{tag}
                 </a>
               </li>
             ))}
           </ul>
         )
       }
-      <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
+      <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} {lang} />
     </footer>
   </article>
 </BaseLayout>

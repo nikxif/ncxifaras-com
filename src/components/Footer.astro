@@ -1,5 +1,5 @@
 ---
-// Footer.astro — mirrors the header's language: strong rule, mono links.
+// Footer.astro — mirrors the header: strong rule, same wordmark, mono links.
 // Split into two groups: site pages (internal) and elsewhere (external),
 // so /contact and /privacy don't read as social profiles.
 const pages = [
@@ -14,10 +14,16 @@ const elsewhere = [
   { href: 'mailto:info@ncxifaras.com', label: 'Email' },
 ];
 
+interface Props {
+  /** Set to 'en' by BaseLayout on non-English pages; the footer is English. */
+  lang?: string;
+}
+const { lang } = Astro.props;
+
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
+<footer class="site-footer" lang={lang}>
   <div class="container row">
     <div class="fmark">
       <span>ncxifaras<span class="dot">.</span>com</span>

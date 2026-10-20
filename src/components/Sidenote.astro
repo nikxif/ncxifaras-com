@@ -20,8 +20,18 @@
 // Mobile: no room for a margin, so the body collapses behind a [n] marker and
 // expands inline on tap (pure-CSS checkbox — CSP-safe, no inline script).
 //
+// Accessibility, by mode:
+//   - Narrow (<70rem): a real disclosure. The checkbox is focusable and named
+//     by its label ("Sidenote [1]", or "Σημείωση [1]" on a Greek page — the
+//     word comes from CSS :lang(), so no prop plumbing), the focus ring is
+//     drawn on the visible marker, and an open note keeps its marker tinted.
+//   - Margin (≥70rem): the note is always on screen, so the checkbox is
+//     display:none — out of the tab order and the accessibility tree — and a
+//     screen reader reads "Sidenote 1" then the note, inline, in order.
+//
 // Numbering: a single counter-increment on the wrapper (labelled notes still
 // increment, so a custom label like † doesn't desync the following numbers).
+// The body repeats its number, so a margin note can be matched to its marker.
 
 interface Props {
   /** Optional custom marker (e.g. "†") instead of the running number. */
@@ -32,9 +42,9 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
 ---
 
 <span class="sidenote-wrap">
-  <input type="checkbox" id={id} class="sn-toggle" aria-hidden="true" />
-  <label for={id} class="sn-marker" data-label={label} aria-hidden="true"></label>
-  <small class="sn-body" role="note"><slot /></small>
+  <input type="checkbox" id={id} class="sn-toggle" />
+  <label for={id} class="sn-marker" data-label={label}><span class="sn-name"></span></label>
+  <small class="sn-body" role="note" data-label={label}><slot /></small>
 </span>
 
 <style>
@@ -49,8 +59,8 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
     line-height: 0;
     vertical-align: super;
     color: var(--cobalt-deep);
-    cursor: pointer;
     padding-inline: 0.12em;
+    border-radius: var(--radius);
   }
   .sn-marker::after {
     content: counter(sidenote);
@@ -58,9 +68,21 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
   .sn-marker[data-label]::after {
     content: attr(data-label);
   }
-  .sn-marker:hover {
-    color: var(--cobalt);
-    background: color-mix(in srgb, var(--ochre) 22%, transparent);
+
+  /* The accessible name's word — read, never shown. */
+  .sn-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .sn-name::before {
+    content: 'Sidenote ';
+  }
+  .sn-name:lang(el)::before {
+    content: 'Σημείωση ';
   }
 
   .sn-body {
@@ -71,17 +93,25 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
     border-left: 3px solid var(--ochre);
     padding-left: 0.9rem;
   }
+  .sn-body::before {
+    content: counter(sidenote) '\00a0\00a0';
+    color: var(--cobalt-deep);
+    font-weight: var(--weight-medium);
+  }
+  .sn-body[data-label]::before {
+    content: attr(data-label) '\00a0\00a0';
+  }
   .sn-body :global(a) {
     color: var(--cobalt-deep);
   }
 
-  /* Visually-hidden checkbox (drives the mobile toggle only). */
+  /* Visually hidden but focusable (narrow mode); the ring goes on the marker. */
   .sn-toggle {
     position: absolute;
     width: 1px;
     height: 1px;
     overflow: hidden;
-    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
   }
 
@@ -92,6 +122,9 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
     .sidenote-wrap {
       position: static; /* ensure the paragraph, not this span, is the CB */
     }
+    .sn-toggle {
+      display: none; /* nothing to toggle: drop the tab stop */
+    }
     .sn-body {
       position: absolute;
       left: 100%;              /* → paragraph right edge (same for every note) */
@@ -100,21 +133,41 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
       width: var(--width-sidenote);
       display: block;
     }
-    /* marker stays as a quiet superscript number in the text */
+    /* marker stays a quiet superscript number: not a control here, so no
+       pointer and no hover wash */
   }
 
   /* ---- MOBILE / NARROW (<70rem): collapse behind the [n] marker ---------- */
   @media (max-width: 69.999rem) {
     .sn-marker {
+      position: relative;
+      cursor: pointer;
       text-decoration: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 0.2em;
+    }
+    /* Invisible hit area around the tiny marker. Kept under a full line-height
+       so a tap on the neighbouring line doesn't open the note. */
+    .sn-marker::before {
+      content: '';
+      position: absolute;
+      inset: -0.8em -0.5em;
     }
     .sn-marker::after {
       content: '[' counter(sidenote) ']';
     }
     .sn-marker[data-label]::after {
       content: '[' attr(data-label) ']';
+    }
+    .sn-marker:hover,
+    .sn-toggle:checked + .sn-marker {
+      color: var(--cobalt);
+      background: color-mix(in srgb, var(--ochre) 22%, transparent);
+    }
+    .sn-toggle:focus-visible + .sn-marker {
+      outline: 3px solid var(--ink);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--ochre) 55%, transparent);
     }
     .sn-body {
       display: none;

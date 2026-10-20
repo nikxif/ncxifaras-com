@@ -10,13 +10,19 @@ const nav = [
   { href: '/contact', label: 'Contact' },
 ];
 
+interface Props {
+  /** Set to 'en' by BaseLayout on non-English pages; the nav is English. */
+  lang?: string;
+}
+const { lang } = Astro.props;
+
 const { pathname } = Astro.url;
 const under = (href: string) => pathname === href || pathname.startsWith(href + '/');
 const isActive = (item: (typeof nav)[number]) =>
   under(item.href) || (item.also ?? []).some(under);
 ---
 
-<header class="site-header">
+<header class="site-header" lang={lang}>
   <div class="container bar">
     <a href="/" class="mark link-plain" aria-label="Home">
       ncxifaras<span class="dot">.</span>com

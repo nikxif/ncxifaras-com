@@ -4,6 +4,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod'; // v6+ canonical import (not astro:content)
 import { glob } from 'astro/loaders';
+import { LANGS } from './lib/i18n';
 
 // Category = the colour-coded set (capped ~4–5 by design, see D12).
 // Everything finer-grained is a tag.
@@ -22,6 +23,9 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     category: z.enum(CATEGORIES).default('personal'),
+    // Language of the post itself. Drives <html lang>, the date locale and the
+    // post's own chrome (chip, share controls). Site nav stays English.
+    lang: z.enum(LANGS).default('en'),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false), // surfaces on homepage + /writing
     draft: z.boolean().default(false),

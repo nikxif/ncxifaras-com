@@ -31,7 +31,7 @@ const tags = await getAllTags();
         <nav class="tagcloud" aria-label="Tags">
           <span class="text-meta">tags:</span>
           {tags.map((t) => (
-            <a href={`/tags/${t}`} class="link-plain text-meta tag">
+            <a href={`/tags/${encodeURIComponent(t)}`} class="link-plain text-meta tag">
               #{t}
             </a>
           ))}

@@ -102,7 +102,9 @@ covers and OG cards drift from the site.
 **Categories** touch 6 places. Current set: `project` · `guide` · `opinion` ·
 `personal`.
 1. `src/content.config.ts` — the enum (schema validation)
-2. `src/lib/posts.ts` — `CATEGORY_LABELS`
+2. `src/lib/i18n.ts` — `UI.en.category` and `UI.el.category` (the labels, per
+   language; `CATEGORY_LABELS` in `posts.ts` re-exports the English ones). A
+   missing key here is a type error, so the build catches it.
 3. `src/lib/palette.ts` — `CATEGORY_HEX` (+ `DUOTONE_MID` if the colour is very
    dark or very light)
 4. `src/styles/tokens.css` — `--cat-<name>`

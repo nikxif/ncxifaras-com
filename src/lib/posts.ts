@@ -1,5 +1,6 @@
 // src/lib/posts.ts — one place for "which posts, in what order".
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { LOCALE, UI, type Lang } from './i18n';
 
 export type Post = CollectionEntry<'blog'>;
 
@@ -21,16 +22,12 @@ export async function getAllTags(): Promise<string[]> {
   return [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 }
 
-export const CATEGORY_LABELS: Record<string, string> = {
-  project: 'Project',
-  guide: 'Guide',
-  opinion: 'Opinion',
-  personal: 'Personal',
-};
+/** English labels — the site chrome's. Per-language labels live in i18n.ts. */
+export const CATEGORY_LABELS = UI.en.category;
 
-/** Human date, consistent everywhere. */
-export function formatDate(d: Date): string {
-  return d.toLocaleDateString('en-GB', {
+/** Human date, consistent everywhere; a Greek post gets Greek month names. */
+export function formatDate(d: Date, lang: Lang = 'en'): string {
+  return d.toLocaleDateString(LOCALE[lang].intl, {
     year: 'numeric',
     month: 'short',
     day: '2-digit',

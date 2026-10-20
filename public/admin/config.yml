@@ -82,6 +82,17 @@ collections:
           - { label: 'Opinion — I am arguing something', value: opinion }
           - { label: 'Personal — I am sharing something', value: personal }
 
+      - name: lang
+        label: Language
+        widget: select
+        default: en
+        options:
+          - { label: 'English', value: en }
+          - { label: 'Ελληνικά', value: el }
+        hint: >-
+          The language the post is written in. Sets the page language for
+          screen readers and switches the date, category and share labels.
+
       - name: tags
         label: Tags
         widget: list
