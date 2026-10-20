@@ -136,12 +136,14 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
 
   /* ---- MOBILE / NARROW (<70rem): collapse behind the [n] marker ---------- */
   @media (max-width: 69.999rem) {
+    /* A highlighter wash at rest, so the marker reads as something to tap
+       (the underline alone read as a footnote number). It's the same ochre as
+       ::selection and the note's own rule. Opening deepens it. */
     .sn-marker {
       position: relative;
       cursor: pointer;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 0.2em;
+      padding-inline: 0.3em;
+      background: color-mix(in srgb, var(--ochre) 30%, transparent);
     }
     /* Invisible hit area around the tiny marker. Kept under a full line-height
        so a tap on the neighbouring line doesn't open the note. */
@@ -149,6 +151,13 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
       content: '';
       position: absolute;
       inset: -0.8em -0.5em;
+    }
+    /* Touch: widen the hit area to ~44px across. Height stays under a line so
+       a tap on the neighbouring line doesn't open the note. */
+    @media (pointer: coarse) {
+      .sn-marker::before {
+        inset: -0.8em -1.2em;
+      }
     }
     .sn-marker::after {
       content: '[' counter(sidenote) ']';
@@ -158,8 +167,8 @@ const id = 'sn-' + Math.random().toString(36).slice(2, 9);
     }
     .sn-marker:hover,
     .sn-toggle:checked + .sn-marker {
-      color: var(--cobalt);
-      background: color-mix(in srgb, var(--ochre) 22%, transparent);
+      color: var(--cobalt-deep);
+      background: color-mix(in srgb, var(--ochre) 60%, transparent);
     }
     .sn-toggle:focus-visible + .sn-marker {
       outline: 3px solid var(--ink);

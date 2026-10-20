@@ -292,7 +292,7 @@ rules and type do the work, and the covers and prose lead.
 - **Marker:** a mono superscript in cobalt-deep, auto-numbered by a CSS counter (or a custom `label` such as `†`). On hover it gets an ochre wash at 22%.
 - **Body:** mono 0.89rem in ink-soft, with a 3px ochre left rule and 0.9rem padding.
 - **≥70rem:** always visible in a 16rem margin column, 2rem off the text, top-aligned to its paragraph.
-- **<70rem:** collapses to an underlined `[n]` marker that expands inline on tap, driven by a hidden checkbox. No JS.
+- **<70rem:** collapses to a `[n]` marker on a soft ochre highlighter wash (deeper when open or hovered) that expands the note inline on tap, driven by a hidden checkbox. No JS. On touch the hit area widens to ~44px across and stays under one line tall.
 - **Kin:** blockquotes (italic, ink-soft, 3px ochre rule) and figure captions (mono, ink-soft, 3px hairline rule) share the same left-rule annotation grammar.
 
 ## Do's and Don'ts
