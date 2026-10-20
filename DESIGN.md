@@ -47,6 +47,11 @@ typography:
     fontSize: "clamp(1.25rem, 1.15rem + 0.5vw, 1.38rem)"
     fontWeight: 400
     lineHeight: 1.5
+  body-small:
+    fontFamily: "'Source Serif 4 Variable', Georgia, 'Times New Roman', serif"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.5
   label:
     fontFamily: "'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Menlo, monospace"
     fontSize: "0.79rem"
@@ -57,6 +62,11 @@ typography:
     fontSize: "0.89rem"
     fontWeight: 400
     lineHeight: 1.5
+  cover-title:
+    fontFamily: "'Commissioner Variable', system-ui, -apple-system, sans-serif"
+    fontSize: "1.05rem"
+    fontWeight: 700
+    lineHeight: 1.1
 rounded:
   swatch: "1px"
   sm: "2px"
@@ -189,8 +199,10 @@ native, the work of a Greek type designer, not a bolted-on subset.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
 - **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, about 80 characters per line). That's deliberately longer than the textbook 65ch: a 40rem measure was tried and read as compacted. `text-wrap: pretty`.
 - **Lede** (400, fluid 1.25rem → 1.38rem, 1.5): hero lede and the CV summary.
+- **Body small** (400, 1rem, 1.5): serif secondary text: card deks, the post byline, CV organisations and bullets.
 - **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
 - **Sidenote** (400, 0.89rem, 1.5): sidenote bodies and figure captions.
+- **Cover title** (700, 1.05rem, 1.1): the optional title set onto a cover in feature slots. It's fixed rather than fluid because the cover itself scales.
 
 ### Named Rules
 **The Greek-or-Nothing Rule.** Every face must ship a verified Greek subset, checked in font metadata and not in marketing copy. In OG rendering, Latin and Greek register under distinct family names (`Commissioner` / `CommissionerGreek`) with a fallback list. A face without Greek is out, however good it looks.

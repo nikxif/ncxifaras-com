@@ -28,6 +28,9 @@ import { OG_LOCALE, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
+  /** Title for shared-link cards, when it should differ from <title> (posts
+      drop the " — Nick Xifaras" suffix: the card already shows the domain). */
+  ogTitle?: string;
   description: string;
   ogImage?: string;
   canonicalURL?: string;
@@ -42,6 +45,7 @@ interface Props {
 
 const {
   title,
+  ogTitle = title,
   description,
   ogImage,
   canonicalURL,
@@ -88,7 +92,7 @@ const ogImageURL = new URL(ogImage ?? '/og-default.png', Astro.site).href;
     <meta property="og:locale" content={OG_LOCALE[lang]} />
     {published && <meta property="article:published_time" content={published.toISOString()} />}
     {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageURL} />

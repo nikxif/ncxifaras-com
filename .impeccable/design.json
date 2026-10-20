@@ -195,6 +195,10 @@
         "displayName": "Lede",
         "purpose": "Hero lede, CV summary, compact card titles' size step."
       },
+      "body-small": {
+        "displayName": "Body small",
+        "purpose": "Serif secondary text: card deks, post byline, CV details."
+      },
       "label": {
         "displayName": "Label",
         "purpose": "Dates, category chips, tags, share buttons, footer links."
@@ -202,6 +206,10 @@
       "sidenote": {
         "displayName": "Sidenote",
         "purpose": "Sidenote bodies and figure captions."
+      },
+      "cover-title": {
+        "displayName": "Cover title",
+        "purpose": "Title set onto a cover in feature slots; fixed size, the cover scales."
       }
     },
     "shadows": [
@@ -214,6 +222,11 @@
         "name": "cover-title-lift",
         "value": "0 1px 0 color-mix(in srgb, var(--paper) 60%, transparent)",
         "purpose": "Text-shadow keeping generated-cover titles legible over geometry."
+      },
+      {
+        "name": "photo-cover-title",
+        "value": "0 1px 3px color-mix(in srgb, var(--ink) 50%, transparent)",
+        "purpose": "Keeps paper-coloured titles legible over duotoned photo covers."
       }
     ],
     "motion": [
