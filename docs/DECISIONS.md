@@ -170,3 +170,7 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## D30 — Per-post language sets the page language, not the interface
 **Decision:** a post can declare `lang: el` (default `en`). That sets `<html lang>` and `og:locale` only. The interface stays English on every post: the category chip, date, share controls, sidenote names and site chrome. On a Greek page these English parts carry `lang="en"`.
 **Why:** screen readers need the page language to pick a voice, and search engines use it. A Greek interface that appeared only on some posts was tried and rejected (Oct 2026). It read as a bug rather than a feature, and the site's Greek readers understand "Project" or "Share" natively. Full bilingual UI and routing is still D6's deferred item.
+
+## D31 — No cover on post pages
+**Decision:** covers appear only as thumbnails on cards and in the OG image. The post page itself has none.
+**Why:** three placements were tried and rejected in Oct 2026: full-width above the title, full-width below the dek, and small in the margin beside the title. On a reading page the title and prose lead, and the poster belongs to the index and the shared card.
