@@ -1,10 +1,9 @@
 ---
 // PostLayout.astro — renders a single post.
 // Prose column is --width-content; at ≥70rem the room to its right is the
-// sidenote margin. The post's cover leads the page, so a post page carries
-// the same poster as its card and its OG image.
+// sidenote margin. No cover here: covers belong to cards and the OG image,
+// and every on-page placement tried (above, below, in the margin) was worse.
 import BaseLayout from './BaseLayout.astro';
-import Cover from '../components/Cover.astro';
 import ShareButtons from '../components/ShareButtons.astro';
 import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
 
@@ -32,9 +31,6 @@ const chromeLang = lang === 'en' ? undefined : 'en';
 >
   <article class="container post">
     <header class="post-head">
-      <div class="post-cover">
-        <Cover {post} page />
-      </div>
       <p class="meta text-meta" lang={chromeLang}>
         <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
@@ -79,16 +75,6 @@ const chromeLang = lang === 'en' ? undefined : 'en';
     padding-block: var(--space-6) var(--space-5);
   }
 
-  /* The post's own cover, small, in the margin column beside the title —
-     placed exactly like a sidenote (absolute against the header, left: 100%
-     + the 2rem gutter), so the header and the notes share one margin. Only
-     where that margin exists: below 70rem there's no column, so no cover
-     (its image is lazy, so a hidden one isn't fetched). The chip already
-     names the category, so the cover drops its overlay label (`page` mode). */
-  .post-cover {
-    display: none;
-  }
-
   /* At ≥70rem the article takes the full container, so its left edge sits on
      the same line as the header wordmark and the footer; the text stays
      capped at --width-content and the sidenote column (content + 2rem gap +
@@ -103,19 +89,6 @@ const chromeLang = lang === 'en' ? undefined : 'en';
     .post-foot,
     .prose {
       max-width: var(--width-content);
-    }
-
-    .post-head {
-      position: relative;
-    }
-
-    .post-cover {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 100%;
-      margin-left: 2rem;
-      width: var(--width-sidenote);
     }
     /* NB: the paragraph positioning-context rule lives in the is:global block
        below — markdown-generated <p> elements don't carry this component's
