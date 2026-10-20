@@ -24,11 +24,12 @@ interface Props {
   category: Category;
   title?: string;
   showLabel?: boolean;
-  /** Above-the-fold lead image (post page): eager, high priority, and a
-      srcset sized to the text column instead of the 720px card rendition. */
-  lead?: boolean;
+  /** The post page's margin cover (16rem wide): a srcset sized for that,
+      not the 720px card rendition. Stays lazy — it's hidden below 70rem,
+      and a lazy image that's never displayed is never fetched. */
+  side?: boolean;
 }
-const { src, alt, category, title, showLabel = true, lead = false } = Astro.props;
+const { src, alt, category, title, showLabel = true, side = false } = Astro.props;
 const label = CATEGORY_LABELS[category];
 
 const [rampR, rampG, rampB] = duotoneRamp(category);
@@ -40,18 +41,17 @@ const filterId = `duo-${category}-${Math.random().toString(36).slice(2, 9)}`;
 
 <figure class:list={['pcover', `cat-${category}`]}>
   {
-    lead ? (
+    side ? (
       <Image
         src={src}
         alt={alt}
-        width={1472}
-        height={920}
-        widths={[480, 736, 1104, 1472]}
-        sizes="(min-width: 50rem) 46rem, calc(100vw - 2.5rem)"
+        width={512}
+        height={320}
+        widths={[256, 512]}
+        sizes="16rem"
         class="duo-img"
         style={`filter: url(#${filterId})`}
-        loading="eager"
-        fetchpriority="high"
+        loading="lazy"
       />
     ) : (
       <Image
