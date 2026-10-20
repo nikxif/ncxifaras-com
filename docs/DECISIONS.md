@@ -184,3 +184,8 @@ A running log of what we chose, why, and what we rejected. Newest context wins i
 ## D33 — No author bio line at the end of a post
 **Decision:** the post ends with tags and share (then "Read next", still an open item). There is no author box or byline.
 **Why:** a third-person bio under the last paragraph ("Nick Xifaras is a doctor who writes code…") is the author-box pattern of a publishing platform, and it repeated the homepage tagline word for word. This is a personal site: the name is already in the header on every page and /about is one nav click away. It was added in the Oct 2026 post-page pass and removed by the author the same day.
+
+## D34 — The header is sticky only above 640px
+**Decision:** at ≤640px the header scrolls away with the page (`position: static`), and `scroll-padding-top` drops to 1rem. Above 640px it stays sticky.
+**Why:** on a phone the bar wraps to two rows (about 6rem), so a sticky header pinned a sixth of the screen over the text for a whole 20-screen guide. The wordmark and nav are back at the top of the page, and the browser's own chrome gives a way up. A post's own title also drops to Headline size at that width, so it doesn't take five or six heavy lines before the first paragraph.
+**Keep in step:** the 640px breakpoint is the same one Header.astro uses for the tighter nav gap. If the bar ever fits on one row again on phones, revisit.

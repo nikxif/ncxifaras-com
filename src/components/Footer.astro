@@ -126,4 +126,18 @@ const year = new Date().getFullYear();
       align-items: flex-start;
     }
   }
+
+  /* Touch: ~44px targets, with the row gap absorbed into them so the footer
+     doesn't grow much. */
+  @media (pointer: coarse) {
+    .navs {
+      gap: 0;
+    }
+
+    .flink {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
+  }
 </style>
