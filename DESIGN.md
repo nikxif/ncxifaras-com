@@ -189,7 +189,7 @@ native, the work of a Greek type designer, not a bolted-on subset.
 - **Title** (700, fluid 1.5rem → 1.9rem, 1.2): card titles and `h3`. Compact archive rows use the Lede size.
 - **Body** (400, fluid ≈18–19px, 1.62, `opsz` 16): all long-form reading, measured at `--width-content` (46rem, ≈65ch). `text-wrap: pretty`.
 - **Lede** (400, fluid 1.25rem → 1.38rem, 1.5): hero lede and the CV summary.
-- **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, the wordmark, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
+- **Label** (400–500, 0.79rem, +0.02em): dates, category chips, tags, share buttons and footer links. Lowercase in the hero eyebrow, never uppercase on-site (the OG card is the only exception).
 - **Sidenote** (400, 0.89rem, 1.5): sidenote bodies and figure captions.
 
 ### Named Rules
@@ -242,7 +242,7 @@ rules and type do the work, and the covers and prose lead.
 
 ### Navigation
 - **Style:** Commissioner 600 at 0.94rem, ink, no underline. A 2px bottom border appears in cobalt on hover and on the current page (`aria-current`).
-- **Wordmark:** `ncxifaras.com` in mono 500, with the dot in bold cobalt.
+- **Wordmark:** `ncxifaras.com` in Commissioner 800 at 1.15rem, with the dot in cobalt. It's the same mark in the header and footer: the site opens and signs off with one poster-weight gesture.
 - **Mobile:** same row, tighter gap (`space-3`) at ≤640px.
 
 ### Category chip

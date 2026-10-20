@@ -69,13 +69,13 @@ const year = new Date().getFullYear();
     gap: var(--space-3);
   }
 
-  /* Same mono wordmark as the header, so the site signs off in the voice it
-     opened with. */
+  /* Same Commissioner 800 wordmark as the header. The copyright line under it
+     resets to body weight, or it inherits the 800. */
   .fmark {
-    font-family: var(--font-mono);
-    font-weight: var(--weight-medium);
-    font-size: var(--text-sm);
-    letter-spacing: 0.02em;
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
