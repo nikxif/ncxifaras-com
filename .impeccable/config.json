@@ -38,6 +38,11 @@
         ],
         "createdAt": "2026-10-20T15:15:44.590Z",
         "reason": "agent decision per D17/D26: same face as DESIGN.md's JetBrains Mono Variable, static package for satori"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "26px",
+        "createdAt": "2026-10-20T19:21:35.939Z"
       }
     ]
   }
