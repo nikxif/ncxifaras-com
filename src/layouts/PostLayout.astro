@@ -31,9 +31,6 @@ const chromeLang = lang === 'en' ? undefined : 'en';
   modified={updatedDate}
 >
   <article class="container post">
-    <div class="post-cover">
-      <Cover {post} page />
-    </div>
     <header class="post-head">
       <p class="meta text-meta" lang={chromeLang}>
         <span class:list={['chip', `cat-${category}`]}>{CATEGORY_LABELS[category]}</span>
@@ -49,6 +46,10 @@ const chromeLang = lang === 'en' ? undefined : 'en';
       <h1>{title}</h1>
       <p class="text-lede dek">{description}</p>
     </header>
+
+    <div class="post-cover">
+      <Cover {post} page />
+    </div>
 
     <div class="prose">
       <slot />
@@ -79,8 +80,9 @@ const chromeLang = lang === 'en' ? undefined : 'en';
     padding-block: var(--space-6) var(--space-5);
   }
 
-  /* The poster that leads the page: the post's own cover at the text column's
-     width. The chip directly below names the category, so the cover drops
+  /* The post's own cover, at the text column's width, between the header and
+     the first paragraph: the title gets the first viewport, the poster
+     follows. The chip above already names the category, so the cover drops
      its overlay label here (Cover's `page` mode). */
   .post-cover {
     margin-bottom: var(--space-5);
