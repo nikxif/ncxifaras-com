@@ -4,8 +4,10 @@
 // sidenote margin. No cover here: covers belong to cards and the OG image,
 // and every on-page placement tried (above, below, in the margin) was worse.
 import BaseLayout from './BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import SectionHead from '../components/SectionHead.astro';
 import ShareButtons from '../components/ShareButtons.astro';
-import { CATEGORY_LABELS, formatDate, type Post } from '../lib/posts';
+import { CATEGORY_LABELS, formatDate, getPublishedPosts, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
@@ -17,6 +19,16 @@ const { title, description, pubDate, updatedDate, category, tags, canonicalURL, 
 // The post's own chrome (chip, date, share) is English even on a Greek post
 // (D30); mark it so a Greek screen-reader voice switches for it.
 const chromeLang = lang === 'en' ? undefined : 'en';
+
+// One forward path at the end, picked at build time: the nearest older post
+// in the same category, else the nearest newer one, else the newest other
+// post. (Posts are newest-first.)
+const others = (await getPublishedPosts()).filter((p) => p.id !== post.id);
+const sameCat = others.filter((p) => p.data.category === category);
+const next =
+  sameCat.find((p) => p.data.pubDate < pubDate) ??
+  sameCat.findLast((p) => p.data.pubDate >= pubDate) ??
+  others[0];
 ---
 
 <BaseLayout
@@ -50,6 +62,12 @@ const chromeLang = lang === 'en' ? undefined : 'en';
       <slot />
     </div>
 
+    {/* The signature: who wrote this, in the homepage's own words. */}
+    <p class="byline" lang={chromeLang}>
+      <a href="/about">Nick Xifaras</a> is a doctor who writes code, working across clinical
+      medicine, digital-health policy, and the messy seams between them.
+    </p>
+
     <footer class="post-foot" lang={chromeLang}>
       {
         tags.length > 0 && (
@@ -67,12 +85,29 @@ const chromeLang = lang === 'en' ? undefined : 'en';
       <ShareButtons title={title} url={new URL(Astro.url.pathname, Astro.site).href} />
     </footer>
   </article>
+
+  {
+    next && (
+      <section class="container post-next" lang={chromeLang}>
+        <SectionHead title="Read next" moreHref="/posts" moreLabel="all writing →" />
+        <PostCard post={next} compact />
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
   .post {
     max-width: var(--width-content);
     padding-block: var(--space-6) var(--space-5);
+  }
+
+  /* After the article: one forward path, set apart by a full section break
+     (same SectionHead as the homepage's "Writing"). Declared before the
+     ≥70rem block so the wide-screen alignment below can override it. */
+  .post-next {
+    max-width: var(--width-content);
+    padding-block: var(--space-4) var(--space-5);
   }
 
   /* At ≥70rem the article takes the full container, so its left edge sits on
@@ -87,8 +122,15 @@ const chromeLang = lang === 'en' ? undefined : 'en';
 
     .post-head,
     .post-foot,
+    .byline,
     .prose {
       max-width: var(--width-content);
+    }
+
+    /* Full container width on purpose: the section break spans the page like
+       the homepage's, signalling the article is over and the site resumes. */
+    .post-next {
+      max-width: var(--width-wide);
     }
     /* NB: the paragraph positioning-context rule lives in the is:global block
        below — markdown-generated <p> elements don't carry this component's
@@ -133,9 +175,28 @@ const chromeLang = lang === 'en' ? undefined : 'en';
     color: var(--ink-soft);
   }
 
-  /* One band of metadata after the article: a single hairline, tags on the
-     left, share controls on the right. Previously these were two sibling
-     blocks each with its own border, which read as a ladder of empty strips. */
+  /* The signature sits tight under the last paragraph, opened by the same
+     short ink rule the prose uses for <hr> — the article's own closing mark. */
+  .byline {
+    margin-top: var(--space-5);
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .byline::before {
+    content: '';
+    display: block;
+    width: 4rem;
+    border-top: var(--border-strong);
+    margin-bottom: var(--space-3);
+  }
+
+  .byline a {
+    color: var(--ink);
+    font-weight: var(--weight-medium);
+  }
+
   /* One band of metadata after the article, under a single hairline. Tags and
      share controls are deliberately STACKED — the prose column isn't wide
      enough to hold both on one line, so relying on flex-wrap made the layout
