@@ -4,7 +4,7 @@ Personal site + blog for Nick Xifaras (physician & software developer, Athens).
 Astro static site on Cloudflare Pages. Private repo. Single author.
 
 **Read `docs/DECISIONS.md` before changing anything architectural** — it's an ADR
-log (D1–D35) explaining *why* things are the way they are. Most odd-looking
+log (D1–D36) explaining *why* things are the way they are. Most odd-looking
 choices here are deliberate and were paid for in bugs.
 
 ---
@@ -226,7 +226,7 @@ So:
 
 | File | What's in it |
 |---|---|
-| `DECISIONS.md` | ADR log D1–D35. The why behind everything above. |
+| `DECISIONS.md` | ADR log D1–D36. The why behind everything above. |
 | `Authoring.md` | Day-to-day: frontmatter reference, Medium cross-posting, SEO, pre-publish checklist. |
 | `INFRASTRUCTURE.md` | DNS, email, headers, analytics runbook. |
 | `ARCHITECTURE.md` | Content model and routing. |

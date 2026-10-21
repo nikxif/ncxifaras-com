@@ -131,6 +131,33 @@ const href = `/posts/${post.id}`;
     overflow: hidden;
   }
 
+  /* Wide screens: give the lead a decisively bigger cover than its siblings
+     (22rem vs a ~20rem grid cell read as the same size). */
+  @media (min-width: 62rem) {
+    .featured {
+      grid-template-columns: 26rem 1fr;
+    }
+  }
+
+  /* 641–820px the homepage grid is one column; a stacked default card there
+     is a ~780px-wide cover that outweighs the lead. Set it as a row instead,
+     like the archive's compact cards, and stack the lead above them: beside a
+     22rem cover its text column is ~16rem wide and runs to seven title lines.
+     Keep the 820 cut in step with index.astro's grid. */
+  @media (min-width: 641px) and (max-width: 820px) {
+    .featured {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .card:not(.featured):not(.compact) {
+      display: grid;
+      grid-template-columns: 12rem 1fr;
+      gap: var(--space-4);
+      align-items: center;
+    }
+  }
+
   @media (max-width: 640px) {
     .featured,
     .compact {

@@ -21,7 +21,7 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     <div>
       <p class="eyebrow">physician / software developer · athens</p>
       <h1>
-        I build the tools<br />clinical work <br /><span class="last-line">keeps breaking.</span>
+        I build the tools<br />clinical work<br /><span class="last-line">keeps breaking.</span>
       </h1>
       <p class="text-lede lede">
         A doctor who writes code, working across clinical medicine, digital-health
@@ -31,6 +31,10 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
         Lately I'm moving toward neuroscience, neurorehabilitation, and
         brain–computer interfaces — where the clinical and the computational stop
         being separate jobs.
+      </p>
+      <p class="proof text-meta">
+        Clinical expert, HTA Committee, Hellenic Ministry of Health (2026–present), with a
+        focus on neurological therapies. <a href="/about">About</a> · <a href="/cv">CV</a>
       </p>
     </div>
     <div class="motif" aria-hidden="true">
@@ -44,7 +48,7 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
   {
     posts.length > 0 && (
       <section class="container writing">
-        <SectionHead title="Writing" count={`${posts.length} pieces`} moreHref="/posts" moreLabel="all posts →" />
+        <SectionHead title="Writing" count={`${posts.length} ${posts.length === 1 ? 'piece' : 'pieces'}`} moreHref="/posts" moreLabel="all posts →" />
         <div class="feature">
           <PostCard post={lead} featured />
         </div>
@@ -55,6 +59,12 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
             ))}
           </div>
         )}
+        <p class="closing">
+          <span class="text-meta">More about me</span>
+          <a href="/about" class="link-plain">About</a>
+          <a href="/cv" class="link-plain">CV</a>
+          <a href="/contact" class="link-plain">Contact</a>
+        </p>
       </section>
     )
   }
@@ -81,10 +91,6 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     margin-bottom: var(--space-4);
   }
 
-  .amp {
-    color: var(--vermilion);
-  }
-
   .last-line {
     color: var(--vermilion);
   }
@@ -94,54 +100,78 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     margin-bottom: var(--space-3);
   }
 
+  /* The second beat of the thesis (the pivot is the site's first success
+     measure), so full ink, not the muted secondary tone. */
   .pivot {
-    color: var(--ink-soft);
     max-width: 46ch;
   }
 
-  /* Geometric motif — same visual vocabulary as the generated covers */
+  /* The pivot's evidence, set as an annotation under it: one real, checkable
+     fact from cv.yaml and the two pages that back it up. */
+  .proof {
+    max-width: 46ch;
+    margin-top: var(--space-3);
+    color: var(--ink-soft);
+  }
+
+  /* Geometric motif — same visual vocabulary as the generated covers. All
+     sizes run off --u, so the wide screens can scale it up to hold the right
+     column instead of leaving a blank strip beside the text. */
   .motif {
+    --u: 1rem;
+    --ring-border: 6px;
     position: relative;
-    height: 15rem;
+    height: calc(15 * var(--u));
     margin-top: var(--space-2);
   }
 
   .motif .disc {
     position: absolute;
-    width: 7.4rem;
-    height: 7.4rem;
+    width: calc(7.4 * var(--u));
+    height: calc(7.4 * var(--u));
     border-radius: 50%;
     background: var(--cobalt);
     top: 0;
-    right: 1.2rem;
+    right: calc(1.2 * var(--u));
   }
 
   .motif .barv {
     position: absolute;
-    width: 2.1rem;
-    height: 12rem;
+    width: calc(2.1 * var(--u));
+    height: calc(12 * var(--u));
     background: var(--vermilion);
-    top: 1.6rem;
-    right: 6rem;
+    top: calc(1.6 * var(--u));
+    right: calc(6 * var(--u));
   }
 
   .motif .ring {
     position: absolute;
-    width: 3.7rem;
-    height: 3.7rem;
-    border: 6px solid var(--ink);
+    width: calc(3.7 * var(--u));
+    height: calc(3.7 * var(--u));
+    border: var(--ring-border) solid var(--ink);
     border-radius: 50%;
-    bottom: 1.6rem;
-    right: 9.4rem;
+    bottom: calc(1.6 * var(--u));
+    right: calc(9.4 * var(--u));
   }
 
   .motif .sq {
     position: absolute;
-    width: 4.4rem;
-    height: 4.4rem;
+    width: calc(4.4 * var(--u));
+    height: calc(4.4 * var(--u));
     background: var(--ochre);
-    bottom: 0.5rem;
+    bottom: calc(0.5 * var(--u));
     right: 0;
+  }
+
+  @media (min-width: 1100px) {
+    .hero {
+      grid-template-columns: 1fr 25rem;
+    }
+
+    .motif {
+      --u: 1.6rem;
+      --ring-border: 9px;
+    }
   }
 
   .writing {
@@ -158,13 +188,86 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     gap: var(--space-5);
   }
 
+  /* The page ends on a way onward, not on the last card. Mono lead-in and
+     plain links under a hairline: no buttons (none anywhere on the site). */
+  .closing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: var(--border-hair);
+  }
+
+  .closing a {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.94rem;
+    color: var(--cobalt-deep);
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-quick);
+  }
+
+  .closing a:hover {
+    border-color: var(--cobalt);
+  }
+
+  /* Touch: stretch the hit area to ~44px without moving the text. */
+  @media (pointer: coarse) {
+    .closing a::before {
+      content: '';
+      position: absolute;
+      inset: -0.8rem -0.5rem;
+    }
+  }
+
+  /* The cards' own side-by-side switch (PostCard) covers 641–820px; below that
+     they stack. Keep the 820 cut in step with PostCard's rule. */
   @media (max-width: 820px) {
     .hero {
       grid-template-columns: 1fr;
+      gap: var(--space-4);
     }
 
+    /* The motif stays on phones as a small strip of the same four shapes
+       under the text, so the poster identity isn't lost with the wide layout. */
     .motif {
-      display: none;
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-3);
+      height: 3rem;
+      margin-top: 0;
+    }
+
+    .motif .disc,
+    .motif .barv,
+    .motif .ring,
+    .motif .sq {
+      position: static;
+      flex: none;
+    }
+
+    .motif .disc {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .motif .barv {
+      width: 0.9rem;
+      height: 3rem;
+    }
+
+    .motif .ring {
+      width: 2.1rem;
+      height: 2.1rem;
+      border-width: 4px;
+    }
+
+    .motif .sq {
+      width: 1.9rem;
+      height: 1.9rem;
     }
 
     .grid {

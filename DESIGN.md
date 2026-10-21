@@ -220,7 +220,7 @@ Spacing follows a seven-step rhythm (0.25 → 6rem). Section breathing room is
 `space-5`/`space-6`, and the footer sits `space-7` below content. The airiness
 is deliberate.
 
-- **Homepage:** a hero grid (`1fr 16rem`) with the thesis on the left and the geometric motif (disc, bar, ring, square) on the right. Below it come the featured card (22rem cover beside text) and a three-column grid of recent posts. At ≤820px everything stacks and the motif is hidden.
+- **Homepage:** a hero grid with the thesis on the left (the pivot in full ink, then one mono line with the HTA Committee role and About / CV links) and the geometric motif (disc, bar, ring, square) on the right: `1fr 16rem`, scaled up to a 25rem column from 1100px. Below it come the featured card (cover beside text, 26rem from 62rem up) and a three-column grid of recent posts, then a hairline and a quiet "More about me: About · CV · Contact" row. At 641–820px the lead stacks and the other cards are rows with a 12rem cover; at ≤820px the hero is one column and the motif becomes a small horizontal strip of the same four shapes under the text.
 - **Archive (`/posts`, `/tags`):** compact rows with a 12rem cover beside text and the dek clamped to two lines, 12 per page. At ≤640px they stack.
 - **Post page:** header, body and post footer share the 46rem column. At ≥70rem the article spans the full container, so its left edge sits under the header wordmark. Every paragraph is the positioning context for its notes, which sit in a 16rem column 2rem off the text. Below 70rem it's a single column. No cover on the page (D31). The page ends with tags and share, then a full-width "Read next" section (heading at the article's own h2 size over a hairline, one compact card; still an open item; there's deliberately no author bio line, D33).
 - **Header:** sticky above 640px (static on phones), 4rem tall, paper background with a 1.5px ink rule beneath.
@@ -270,7 +270,7 @@ rules and type do the work, and the covers and prose lead.
 
 ### Post cards
 - **Default:** stacked, with the cover above meta, title and dek.
-- **Featured:** a 22rem cover beside the text, the title at Headline size, the dek in full ink.
+- **Featured:** a 22rem cover (26rem from 62rem up) beside the text, the title at Headline size, the dek in full ink.
 - **Compact:** a 12rem cover beside the text, the dek clamped to two lines.
 - **Hover:** the title shifts to cobalt-deep. The cover link is `tabindex=-1` so keyboard users hit the title once.
 
