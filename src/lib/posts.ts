@@ -52,17 +52,3 @@ export function formatDate(d: Date): string {
     day: '2-digit',
   });
 }
-
-/**
- * Whole minutes to read a post body (~225 wpm). Counts the prose only: the
- * MDX imports, JSX tags, image syntax and link targets would inflate it.
- * Same rough count works for Greek, which spaces words the same way.
- */
-export function readingMinutes(body: string | undefined): number {
-  const text = (body ?? '')
-    .replace(/^import .*$/gm, ' ')
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
-    .replace(/\]\([^)]*\)/g, ']')
-    .replace(/<[^>]+>/g, ' ');
-  return Math.max(1, Math.round((text.match(/\S+/g) ?? []).length / 225));
-}

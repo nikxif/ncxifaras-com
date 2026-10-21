@@ -262,9 +262,8 @@ rules and type do the work, and the covers and prose lead.
 ### Category chip
 - **Style:** a mono label in ink-soft, weight 500, led by a 0.62em square (1px radius) in the category colour. No fill, no border.
 
-### Contents and reading time
-- **Reading time:** `· 10 min read` in the meta line, after the date, only from 4 minutes up (~225 wpm over the prose). A one-screen post doesn't need it.
-- **Contents:** a native `<details>` under the dek, only on posts with four or more h2s. Closed by default (a mono `Contents / 8` row between two hairlines); open, a plain list of Commissioner 600 links to the section ids. No numbers, no box, no JS. On touch each row is 44px.
+### Contents
+- **Style:** a native `<details>` under the dek, only on posts with four or more h2s. Closed by default (a mono `Contents / 8` row between two hairlines); open, a plain list of Commissioner 600 links to the section ids. No numbers, no box, no JS. On touch each row is 44px.
 
 ### Category bar
 - **Style:** a flat 0.4rem rule in the category colour, set directly under the chip and the date as an underline that ends with the date (the chip + date group's bottom border, so its length follows the text). The gap above it is 0.62em, the size of the chip's colour square. Square-cornered, no fill. Decorative: the chip carries the category as text, so the rule is exempt from the 3:1 non-text rule, and ochre (~2:1 on paper) is used as-is. Posts only.

@@ -12,7 +12,6 @@ import {
   CATEGORY_LABELS,
   formatDate,
   getPublishedPosts,
-  readingMinutes,
   typeset,
   type Post,
 } from '../lib/posts';
@@ -30,9 +29,8 @@ const description = typeset(post.data.description);
 // (D30); mark it so a Greek screen-reader voice switches for it.
 const chromeLang = lang === 'en' ? undefined : 'en';
 
-// Length and a way around, for the long guides. A one-screen post needs
-// neither: the reading time shows from 4 minutes, the contents from 4 sections.
-const minutes = readingMinutes(post.body);
+// A way around the long guides: the contents show from 4 sections up. A
+// one-screen post doesn't need them.
 const sections = headings.filter((h) => h.depth === 2);
 
 // One forward path at the end, picked at build time: the nearest older post
@@ -64,7 +62,6 @@ const next =
           <span class="chip">{CATEGORY_LABELS[category]}</span>
           <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         </span>
-        {minutes >= 4 && <span>· {minutes} min read</span>}
         {
           updatedDate && (
             <span>
@@ -120,7 +117,7 @@ const next =
   {
     next && (
       <section class="container post-next" lang={chromeLang}>
-        <SectionHead title="Read next" quiet moreHref="/posts" moreLabel="all writing →" />
+        <SectionHead title="Read next" quiet moreHref="/posts" moreLabel="all posts →" />
         <PostCard post={next} compact />
       </section>
     )
