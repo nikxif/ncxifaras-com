@@ -96,13 +96,15 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
 
   /* The second beat of the thesis (the pivot is the site's first success
      measure), so full ink, not the muted secondary tone. The second paragraph
-     is its evidence: one real fact from cv.yaml. */
+     is its evidence, one real fact from cv.yaml, back in the muted
+     secondary tone so it reads as support for the pivot, not a third beat. */
   .pivot {
     max-width: 46ch;
   }
 
   .pivot + .pivot {
     margin-top: var(--space-3);
+    color: var(--ink-soft);
   }
 
   /* Geometric motif — same visual vocabulary as the generated covers. All
