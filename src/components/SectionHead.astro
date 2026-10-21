@@ -51,6 +51,7 @@ const { title, quiet = false, count, moreHref, moreLabel = 'all →' } = Astro.p
   }
 
   .more {
+    position: relative;
     margin-left: auto;
     font-family: var(--font-display);
     font-weight: 600;
@@ -62,5 +63,14 @@ const { title, quiet = false, count, moreHref, moreLabel = 'all →' } = Astro.p
 
   .more:hover {
     border-color: var(--cobalt);
+  }
+
+  /* Touch: stretch the hit area to ~44px without moving the text. */
+  @media (pointer: coarse) {
+    .more::before {
+      content: '';
+      position: absolute;
+      inset: -0.8rem -0.5rem;
+    }
   }
 </style>
