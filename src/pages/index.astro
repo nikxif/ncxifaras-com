@@ -28,13 +28,13 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
         policy, and the messy seams between them.
       </p>
       <p class="pivot">
-        Lately I'm moving toward neuroscience, neurorehabilitation, and
+        Lately I’m moving toward neuroscience, neurorehabilitation, and
         brain–computer interfaces — where the clinical and the computational stop
         being separate jobs.
       </p>
-      <p class="proof text-meta">
-        Clinical expert, HTA Committee, Hellenic Ministry of Health (2026–present), with a
-        focus on neurological therapies. <a href="/about">About</a> · <a href="/cv">CV</a>
+      <p class="pivot">
+        Since 2026 I’ve been a clinical expert on the Hellenic Ministry of Health’s HTA
+        Committee, with a focus on neurological therapies.
       </p>
     </div>
     <div class="motif" aria-hidden="true">
@@ -59,12 +59,6 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
             ))}
           </div>
         )}
-        <p class="closing">
-          <span class="text-meta">More about me</span>
-          <a href="/about" class="link-plain">About</a>
-          <a href="/cv" class="link-plain">CV</a>
-          <a href="/contact" class="link-plain">Contact</a>
-        </p>
       </section>
     )
   }
@@ -101,17 +95,14 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
   }
 
   /* The second beat of the thesis (the pivot is the site's first success
-     measure), so full ink, not the muted secondary tone. */
+     measure), so full ink, not the muted secondary tone. The second paragraph
+     is its evidence: one real fact from cv.yaml. */
   .pivot {
     max-width: 46ch;
   }
 
-  /* The pivot's evidence, set as an annotation under it: one real, checkable
-     fact from cv.yaml and the two pages that back it up. */
-  .proof {
-    max-width: 46ch;
+  .pivot + .pivot {
     margin-top: var(--space-3);
-    color: var(--ink-soft);
   }
 
   /* Geometric motif — same visual vocabulary as the generated covers. All
@@ -186,41 +177,6 @@ const rest = posts.filter((p) => p !== lead).slice(0, 3);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-5);
-  }
-
-  /* The page ends on a way onward, not on the last card. Mono lead-in and
-     plain links under a hairline: no buttons (none anywhere on the site). */
-  .closing {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-2) var(--space-4);
-    margin-top: var(--space-6);
-    padding-top: var(--space-4);
-    border-top: var(--border-hair);
-  }
-
-  .closing a {
-    position: relative;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.94rem;
-    color: var(--cobalt-deep);
-    border-bottom: 2px solid transparent;
-    transition: border-color var(--transition-quick);
-  }
-
-  .closing a:hover {
-    border-color: var(--cobalt);
-  }
-
-  /* Touch: stretch the hit area to ~44px without moving the text. */
-  @media (pointer: coarse) {
-    .closing a::before {
-      content: '';
-      position: absolute;
-      inset: -0.8rem -0.5rem;
-    }
   }
 
   /* The cards' own side-by-side switch (PostCard) covers 641–820px; below that
